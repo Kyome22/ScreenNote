@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="Hy3-gm-cDc">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="0P2-hP-cd5">
+            <objects>
+                <windowController showSeguePresentationStyle="single" id="Hy3-gm-cDc" sceneMemberID="viewController">
+                    <window key="window" title="環境設定" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="Zdt-WS-sRi" customClass="CancelWindow" customModule="ScreenNote" customModuleProvider="target">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <rect key="contentRect" x="425" y="313" width="300" height="188"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1057"/>
+                        <connections>
+                            <outlet property="delegate" destination="Hy3-gm-cDc" id="1Gk-UD-p3c"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Rbw-JP-VAb" kind="relationship" relationship="window.shadowedContentViewController" id="gTK-P0-Tqb"/>
+                    </connections>
+                </windowController>
+                <customObject id="MEF-3R-RFR" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101" y="-34"/>
+        </scene>
+        <!--PreferencesVC-->
+        <scene sceneID="aOq-cL-PDc">
+            <objects>
+                <viewController showSeguePresentationStyle="single" id="Rbw-JP-VAb" customClass="PreferencesVC" customModule="ScreenNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="KBc-rS-FVF">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="188"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avS-0v-h3R">
+                                <rect key="frame" x="38" y="23" width="104" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="ツールバーの位置:" id="vWN-Y7-Vkl">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fwH-3D-Tb3">
+                                <rect key="frame" x="38" y="152" width="224" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="トグルの方法（ノートの表示／非表示）:" id="ABh-eB-E0X">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="APC-fO-c0J">
+                                <rect key="frame" x="98" y="53" width="149" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="⌘ コマンドキー" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OfB-sx-CPP" id="FQH-Tl-rGB">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="xXv-Ny-PQr">
+                                        <items>
+                                            <menuItem title="⌘ コマンドキー" state="on" id="OfB-sx-CPP">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="⇧ シフトキー" id="k2m-T0-g3J">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="⌥ オプションキー" id="5I8-46-IS4">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="⌃ コントロールキー" id="DQ9-rZ-3xm">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="changedModifierKey:" target="Rbw-JP-VAb" id="NhQ-wy-TRk"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Nl-Wb-VtQ">
+                                <rect key="frame" x="38" y="59" width="56" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="修飾キー:" id="WZW-ol-Hxn">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Aek-H8-SgE">
+                                <rect key="frame" x="54" y="120" width="167" height="18"/>
+                                <buttonCell key="cell" type="radio" title="左右の修飾キーの同時押し" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Ibn-yA-d6d">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="changedPress:" target="Rbw-JP-VAb" id="MU1-Tu-vTA"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="v11-5M-uAl">
+                                <rect key="frame" x="54" y="94" width="119" height="18"/>
+                                <buttonCell key="cell" type="radio" title="修飾キーの長押し" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Fd4-AF-gaX">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="changedPress:" target="Rbw-JP-VAb" id="hmd-eO-jke"/>
+                                </connections>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ija-pW-Ulk">
+                                <rect key="frame" x="146" y="17" width="87" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="画面上部" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Lju-wp-moB" id="qOp-Zn-M8s">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="F4n-KV-7x3">
+                                        <items>
+                                            <menuItem title="画面上部" state="on" id="Lju-wp-moB">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="画面下部" id="gLz-wG-8Ta">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="changedPosition:" target="Rbw-JP-VAb" id="Fdx-fN-PVI"/>
+                                </connections>
+                            </popUpButton>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="6Nl-Wb-VtQ" firstAttribute="top" secondItem="v11-5M-uAl" secondAttribute="bottom" constant="20" id="4yo-HS-aJo"/>
+                            <constraint firstItem="avS-0v-h3R" firstAttribute="top" secondItem="6Nl-Wb-VtQ" secondAttribute="bottom" constant="20" id="6Gk-QG-wIi"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Aek-H8-SgE" secondAttribute="trailing" constant="20" symbolic="YES" id="6va-hp-6mt"/>
+                            <constraint firstItem="Ija-pW-Ulk" firstAttribute="leading" secondItem="avS-0v-h3R" secondAttribute="trailing" constant="8" id="8jQ-n3-n7T"/>
+                            <constraint firstItem="avS-0v-h3R" firstAttribute="firstBaseline" secondItem="Ija-pW-Ulk" secondAttribute="firstBaseline" id="9CY-Km-ppk"/>
+                            <constraint firstItem="avS-0v-h3R" firstAttribute="leading" secondItem="KBc-rS-FVF" secondAttribute="leading" constant="40" id="CBe-VP-siT"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="v11-5M-uAl" secondAttribute="trailing" constant="20" symbolic="YES" id="CFz-pp-sBc"/>
+                            <constraint firstItem="fwH-3D-Tb3" firstAttribute="leading" secondItem="KBc-rS-FVF" secondAttribute="leading" constant="40" id="H2A-Id-H4O"/>
+                            <constraint firstItem="fwH-3D-Tb3" firstAttribute="top" secondItem="KBc-rS-FVF" secondAttribute="top" constant="20" id="PtP-Cq-PE6"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fwH-3D-Tb3" secondAttribute="trailing" constant="20" symbolic="YES" id="TyO-VU-Nht"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="APC-fO-c0J" secondAttribute="trailing" constant="20" symbolic="YES" id="Zov-aM-kO7"/>
+                            <constraint firstItem="Aek-H8-SgE" firstAttribute="leading" secondItem="KBc-rS-FVF" secondAttribute="leading" constant="55" id="bea-mv-8OY"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ija-pW-Ulk" secondAttribute="trailing" constant="20" symbolic="YES" id="gIu-y4-Uaj"/>
+                            <constraint firstItem="6Nl-Wb-VtQ" firstAttribute="firstBaseline" secondItem="APC-fO-c0J" secondAttribute="firstBaseline" id="hD2-zd-9il"/>
+                            <constraint firstItem="6Nl-Wb-VtQ" firstAttribute="leading" secondItem="KBc-rS-FVF" secondAttribute="leading" constant="40" id="jEL-nh-1B4"/>
+                            <constraint firstItem="Aek-H8-SgE" firstAttribute="top" secondItem="fwH-3D-Tb3" secondAttribute="bottom" constant="15" id="nzN-zr-fxR"/>
+                            <constraint firstItem="v11-5M-uAl" firstAttribute="leading" secondItem="KBc-rS-FVF" secondAttribute="leading" constant="55" id="pHN-Pr-6m4"/>
+                            <constraint firstItem="v11-5M-uAl" firstAttribute="top" secondItem="Aek-H8-SgE" secondAttribute="bottom" constant="10" id="qwg-78-pGX"/>
+                            <constraint firstItem="APC-fO-c0J" firstAttribute="leading" secondItem="6Nl-Wb-VtQ" secondAttribute="trailing" constant="8" id="vDq-WO-oyX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bothRadioButton" destination="Aek-H8-SgE" id="IbF-VG-TgC"/>
+                        <outlet property="longRadioButton" destination="v11-5M-uAl" id="Eod-ax-gGA"/>
+                        <outlet property="modifierKeyPopUp" destination="APC-fO-c0J" id="Fue-iI-cmi"/>
+                        <outlet property="positionPopUp" destination="Ija-pW-Ulk" id="Gbr-Vw-N9Y"/>
+                    </connections>
+                </viewController>
+                <customObject id="W2h-We-siF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101" y="315"/>
+        </scene>
+    </scenes>
+</document>

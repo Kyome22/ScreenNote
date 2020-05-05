@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+    </dependencies>
+    <scenes>
+        <!--Application-->
+        <scene sceneID="JPo-4y-FX3">
+            <objects>
+                <application id="hnw-xV-0zn" sceneMemberID="viewController">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
+                        <items>
+                            <menuItem title="ScreenNote" id="1Xt-HY-uBw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="ScreenNote" systemMenu="apple" id="uQy-DD-JDr">
+                                    <items>
+                                        <menuItem title="About ScreenNote" id="5kV-Vb-QxS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Quit ScreenNote" keyEquivalent="q" id="4sb-4s-VLi"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
+                    </connections>
+                </application>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ScreenNote" customModuleProvider="target">
+                    <connections>
+                        <outlet property="menu" destination="Ahq-Jl-6aK" id="bIm-AL-zGW"/>
+                    </connections>
+                </customObject>
+                <menu id="Ahq-Jl-6aK">
+                    <items>
+                        <menuItem title="Show ScreenNote" id="lXa-UL-YJ1">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="showHide:" target="Ady-hI-5gd" id="UGa-wb-IBr"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="ACd-Vi-SWq"/>
+                        <menuItem title="Preferences…" id="3KS-0G-R8O">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="openPreference:" target="Ady-hI-5gd" id="EUd-xR-8Yu"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="NXK-sV-FFS"/>
+                        <menuItem title="About ScreenNote" tag="1" id="Eff-Fe-Dws">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="openAbout:" target="Ady-hI-5gd" id="nvB-XC-LY7"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Report an Issue" id="6Ag-m0-aF9">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="sendIssueReport:" target="Ady-hI-5gd" id="SaH-wM-Lu3"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Quit ScreenNote" tag="2" id="Wai-2d-pgv">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="terminate:" target="Ady-hI-5gd" id="HUf-Yz-V0T"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
+                <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="0.0"/>
+        </scene>
+    </scenes>
+</document>

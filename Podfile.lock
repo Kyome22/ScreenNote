@@ -1,0 +1,16 @@
+PODS:
+  - SpiceKey (2.7)
+
+DEPENDENCIES:
+  - SpiceKey
+
+SPEC REPOS:
+  trunk:
+    - SpiceKey
+
+SPEC CHECKSUMS:
+  SpiceKey: f1b827cde968eab2add47db0c7f1bb83c2fece8f
+
+PODFILE CHECKSUM: 8681f887bb93c4f8812ad265840a56ff3b73d4c6
+
+COCOAPODS: 1.9.1

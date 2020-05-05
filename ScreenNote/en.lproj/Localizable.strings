@@ -1,0 +1,45 @@
+/* 
+  Localizable.strings
+  ScreenNote
+
+  Created by Takuto Nakamura on 2020/05/03.
+  Copyright © 2020 Kyome. All rights reserved.
+*/
+
+// Mail
+"issueReport" = "Issue Report";
+"environment" = "# Environment";
+"whatYouTried" = "# What You Tried\n- Relaunched the app: Yes/No\n";
+"shortDescription" = "# Short Description\n\n";
+"reproduceIssue" = "# Steps to Reproduce the Issue\n\n";
+"expectedResult" = "# Expected Result\n\n";
+
+// Tutorial
+"command" = "command";
+"shift" = "shift";
+"option" = "option";
+"control" = "control";
+
+"both" = "Press left & right MOD keys at the same time.";
+"long" = "Long press the MOD key.";
+
+"here" = "Here!";
+
+// ToolTip
+"show" = "Show ScreenNote";
+"hide" = "Hide ScreenNote";
+"prev" = "Go Back";
+"next" = "Go Forward";
+"delete" = "Delete";
+"select" = "Select Tool";
+"pen" = "Pen Tool";
+"line" = "Line Tool";
+"fillRect" = "Fill Rectangle Tool";
+"lineRect" = "Line Rectangle Tool";
+"fillOval" = "Fill Oval Tool";
+"lineOval" = "Line Oval Tool";
+"colorPopUp" = "Change Color";
+"alpha" = "Change Alpha";
+"lineWidth" = "Change Line Width";
+"bringFront" = "Bring to Front";
+"sendBack" = "Send to Back";

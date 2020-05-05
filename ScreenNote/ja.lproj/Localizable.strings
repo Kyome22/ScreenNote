@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  ScreenNote
+
+  Created by Takuto Nakamura on 2020/05/03.
+  Copyright © 2020 Kyome. All rights reserved.
+*/
+
+// Mail
+"issueReport" = "不具合の報告";
+"environment" = "# 環境";
+"whatYouTried" = "# 試したこと\n- アプリの再起動: はい/いいえ\n";
+"shortDescription" = "# 不具合の簡単な説明\n\n";
+"reproduceIssue" = "# 不具合の再現手順（不具合が発生した際に行なっていた操作）\n\n";
+"expectedResult" = "# 本来期待される挙動\n\n";
+
+// Tutorial
+"command" = "コマンド";
+"shift" = "シフト";
+"option" = "オプション";
+"control" = "コントロール";
+
+"both" = "左右のMODキーを同時に押してください。";
+"long" = "MODキーを長押ししてください。";
+
+"here" = "ここです!";
+
+
+// ToolTip
+"show" = "ScreenNoteを表示";
+"hide" = "ScreenNoteを隠す";
+"prev" = "取り消す";
+"next" = "やり直す";
+"delete" = "削除";
+"select" = "選択ツール";
+"pen" = "ペンツール";
+"line" = "直線ツール";
+"fillRect" = "長方形ツール（中塗り）";
+"lineRect" = "長方形ツール（枠のみ）";
+"fillOval" = "楕円ツール（中塗り）";
+"lineOval" = "楕円ツール（枠のみ）";
+"colorPopUp" = "描画色の変更";
+"alpha" = "透明度の変更";
+"lineWidth" = "線幅の変更";
+"bringFront" = "最前面へ";
+"sendBack" = "最背面へ";
