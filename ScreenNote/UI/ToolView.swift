@@ -14,6 +14,7 @@ class ToolView: NSView {
     @IBOutlet weak var prevButton: NSButton!
     @IBOutlet weak var nextButton: NSButton!
     @IBOutlet weak var deleteButton: NSButton!
+    @IBOutlet weak var cleanButton: NSButton!
     @IBOutlet weak var selectButton: NSButton!
     @IBOutlet weak var penButton: NSButton!
     @IBOutlet weak var lineButton: NSButton!
@@ -33,6 +34,7 @@ class ToolView: NSView {
     
     var historyHandler: ((_ direction: Bool) -> Void)?
     var deleteHandler: (() -> Void)?
+    var cleanHandler: (() -> Void)?
     var changeColorHandler: ((_ colorID: Int) -> Void)?
     var changeAlphaHandler: ((_ alpha: Float, _ start: Bool) -> Void)?
     var changeLineWidthHandler: ((_ lineWidth: Float, _ start: Bool) -> Void)?
@@ -47,6 +49,7 @@ class ToolView: NSView {
         initialize(button: &prevButton, toolTip: "prev".localized, isDark)
         initialize(button: &nextButton, toolTip: "next".localized, isDark)
         initialize(button: &deleteButton, toolTip: "delete".localized, isDark)
+        initialize(button: &cleanButton, toolTip: "clean".localized, isDark)
         initialize(button: &selectButton, toolTip: "select".localized, isDark)
         initialize(button: &penButton, toolTip: "pen".localized, isDark)
         initialize(button: &lineButton, toolTip: "line".localized, isDark)
@@ -71,7 +74,7 @@ class ToolView: NSView {
         button.toolTip = toolTip
     }
     
-    private func updateState() {
+    func updateState() {
         let type = om.currentType
         selectButton.state = (type == .select ? .on : .off)
         penButton.state = (type == .pen ? .on : .off)
@@ -110,6 +113,10 @@ class ToolView: NSView {
     
     @IBAction func pushDelete(_ sender: Any) {
         deleteHandler?()
+    }
+    
+    @IBAction func pushClean(_ sender: Any) {
+        cleanHandler?()
     }
     
     @IBAction func pushSelectTool(_ sender: Any) {

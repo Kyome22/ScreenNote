@@ -49,6 +49,7 @@ extension NSColor {
     static let tutorialBG = NSColor(named: "tutorialBG")!
     static let tutorialText = NSColor(named: "tutorialText")!
     
+    static let mixed = NSColor.clear
     static let uniqueRed = NSColor(named: "uniqueRed")!
     static let uniqueOrange = NSColor(named: "uniqueOrange")!
     static let uniqueYello = NSColor(named: "uniqueYello")!
@@ -62,6 +63,9 @@ extension NSColor {
     }
 
     var swatch: NSImage {
+        if self == NSColor.mixed {
+            return NSImage(named: "Mixed")!
+        }
         let image = NSImage(size: CGSize(19))
         image.lockFocus()
         let rect = NSRect(origin: CGPoint.zero, size: CGSize(19))

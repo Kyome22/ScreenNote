@@ -28,16 +28,17 @@
 // ToolTip
 "show" = "Show ScreenNote";
 "hide" = "Hide ScreenNote";
-"prev" = "Go Back";
-"next" = "Go Forward";
-"delete" = "Delete";
-"select" = "Select Tool";
-"pen" = "Pen Tool";
-"line" = "Line Tool";
-"fillRect" = "Fill Rectangle Tool";
-"lineRect" = "Line Rectangle Tool";
-"fillOval" = "Fill Oval Tool";
-"lineOval" = "Line Oval Tool";
+"prev" = "Go Back: ⌘Z";
+"next" = "Go Forward: ⇧⌘Z";
+"delete" = "Delete selected objects: ⌫";
+"clean" = "Clean up the note: C";
+"select" = "Select Tool: S";
+"pen" = "Pen Tool: P";
+"line" = "Line Tool: L";
+"fillRect" = "Fill Rectangle Tool: R";
+"lineRect" = "Line Rectangle Tool: ⇧R";
+"fillOval" = "Fill Oval Tool: O";
+"lineOval" = "Line Oval Tool: ⇧O";
 "colorPopUp" = "Change Color";
 "alpha" = "Change Alpha";
 "lineWidth" = "Change Line Width";

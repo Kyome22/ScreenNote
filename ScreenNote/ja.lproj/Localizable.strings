@@ -29,16 +29,17 @@
 // ToolTip
 "show" = "ScreenNoteを表示";
 "hide" = "ScreenNoteを隠す";
-"prev" = "取り消す";
-"next" = "やり直す";
-"delete" = "削除";
-"select" = "選択ツール";
-"pen" = "ペンツール";
-"line" = "直線ツール";
-"fillRect" = "長方形ツール（中塗り）";
-"lineRect" = "長方形ツール（枠のみ）";
-"fillOval" = "楕円ツール（中塗り）";
-"lineOval" = "楕円ツール（枠のみ）";
+"prev" = "取り消す: ⌘Z";
+"next" = "やり直す: ⇧⌘Z";
+"delete" = "選択中のオブジェクトの削除: ⌫";
+"clean" = "ノート上のオブジェクトを一掃: C";
+"select" = "選択ツール: S";
+"pen" = "ペンツール: P";
+"line" = "直線ツール: L";
+"fillRect" = "長方形ツール（中塗り）: R";
+"lineRect" = "長方形ツール（枠のみ）: ⇧R";
+"fillOval" = "楕円ツール（中塗り）: O";
+"lineOval" = "楕円ツール（枠のみ）: ⇧O";
 "colorPopUp" = "描画色の変更";
 "alpha" = "透明度の変更";
 "lineWidth" = "線幅の変更";

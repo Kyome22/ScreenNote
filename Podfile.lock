@@ -1,5 +1,5 @@
 PODS:
-  - SpiceKey (2.7)
+  - SpiceKey (2.8)
 
 DEPENDENCIES:
   - SpiceKey
@@ -9,7 +9,7 @@ SPEC REPOS:
     - SpiceKey
 
 SPEC CHECKSUMS:
-  SpiceKey: f1b827cde968eab2add47db0c7f1bb83c2fece8f
+  SpiceKey: 4cdc9d099fa485378d2681040466eda61a1b1c1f
 
 PODFILE CHECKSUM: 8681f887bb93c4f8812ad265840a56ff3b73d4c6
 

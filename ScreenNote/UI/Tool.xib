@@ -70,7 +70,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-ar-Zdp">
-                    <rect key="frame" x="275" y="8" width="45" height="30"/>
+                    <rect key="frame" x="330" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="M3p-DK-llI"/>
                         <constraint firstAttribute="width" constant="45" id="UfL-U1-qoi"/>
@@ -84,7 +84,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="TQs-0F-ebs">
-                    <rect key="frame" x="330" y="8" width="45" height="30"/>
+                    <rect key="frame" x="385" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="EcU-5A-EtI"/>
                         <constraint firstAttribute="height" constant="30" id="hOs-PQ-s6C"/>
@@ -98,7 +98,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="CFh-yE-F55">
-                    <rect key="frame" x="385" y="8" width="45" height="30"/>
+                    <rect key="frame" x="440" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="bNX-bA-Pww"/>
                         <constraint firstAttribute="height" constant="30" id="lLZ-Wp-c2y"/>
@@ -112,7 +112,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="v40-oD-GA1">
-                    <rect key="frame" x="440" y="8" width="45" height="30"/>
+                    <rect key="frame" x="495" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="87c-f6-b6V"/>
                         <constraint firstAttribute="width" constant="45" id="rhj-MX-4y9"/>
@@ -126,7 +126,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="fdz-kh-cVX">
-                    <rect key="frame" x="495" y="8" width="45" height="30"/>
+                    <rect key="frame" x="550" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="20p-xS-ldY"/>
                         <constraint firstAttribute="height" constant="30" id="r64-df-HKX"/>
@@ -140,7 +140,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="QsS-b7-nFK">
-                    <rect key="frame" x="550" y="8" width="45" height="30"/>
+                    <rect key="frame" x="605" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="I1d-fZ-hPI"/>
                         <constraint firstAttribute="height" constant="30" id="hCf-rC-KL2"/>
@@ -154,7 +154,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="KAp-hI-lNQ">
-                    <rect key="frame" x="605" y="8" width="45" height="30"/>
+                    <rect key="frame" x="660" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="Ksx-pU-I1s"/>
                         <constraint firstAttribute="height" constant="30" id="ZBs-eP-qyT"/>
@@ -168,7 +168,7 @@
                     </connections>
                 </button>
                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="Cby-6q-iP7">
-                    <rect key="frame" x="675" y="8" width="45" height="30"/>
+                    <rect key="frame" x="730" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="4zc-Hv-PXZ"/>
                         <constraint firstAttribute="height" constant="30" id="Ta2-nc-ij2"/>
@@ -178,7 +178,7 @@
                         <font key="font" metaFont="system"/>
                         <menu key="menu" id="O5h-FY-EEr">
                             <items>
-                                <menuItem state="on" image="tmpColor" id="YFi-kZ-Oob">
+                                <menuItem state="on" image="Mixed" id="YFi-kZ-Oob">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
@@ -189,7 +189,7 @@
                     </connections>
                 </popUpButton>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eAu-YC-cB4">
-                    <rect key="frame" x="730" y="11" width="24" height="24"/>
+                    <rect key="frame" x="785" y="11" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="1JX-Dr-AHt"/>
                         <constraint firstAttribute="width" constant="24" id="yRb-de-BNH"/>
@@ -197,7 +197,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="alpha" id="1tu-dj-AY1"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cnx-RW-mie">
-                    <rect key="frame" x="829" y="11" width="24" height="24"/>
+                    <rect key="frame" x="884" y="11" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="8MJ-kK-LJs"/>
                         <constraint firstAttribute="height" constant="24" id="tug-Do-dne"/>
@@ -205,7 +205,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="line_width" id="pLN-Vf-eji"/>
                 </imageView>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xMM-yz-voU">
-                    <rect key="frame" x="757" y="13" width="64" height="19"/>
+                    <rect key="frame" x="812" y="13" width="64" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="L4r-Cd-IhI"/>
                     </constraints>
@@ -215,7 +215,7 @@
                     </connections>
                 </slider>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="inm-O0-5IQ">
-                    <rect key="frame" x="856" y="13" width="64" height="19"/>
+                    <rect key="frame" x="911" y="13" width="64" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="LC1-dx-37P"/>
                     </constraints>
@@ -225,7 +225,7 @@
                     </connections>
                 </slider>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="LTS-hy-b8U">
-                    <rect key="frame" x="983" y="8" width="45" height="30"/>
+                    <rect key="frame" x="1038" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="8Bh-wf-l5o"/>
                         <constraint firstAttribute="width" constant="45" id="PyS-WJ-ccV"/>
@@ -239,7 +239,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="cHQ-Pz-R5h">
-                    <rect key="frame" x="928" y="8" width="45" height="30"/>
+                    <rect key="frame" x="983" y="8" width="45" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ESz-mC-cNb"/>
                         <constraint firstAttribute="width" constant="45" id="c4n-1c-AZc"/>
@@ -252,6 +252,20 @@
                         <action selector="pushBringFront:" target="c22-O7-iKe" id="8VJ-fD-mqE"/>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="lYq-hE-oH3">
+                    <rect key="frame" x="260" y="8" width="45" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="LEg-yL-DvX"/>
+                        <constraint firstAttribute="height" constant="30" id="s7C-py-QUM"/>
+                    </constraints>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="clean" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="klq-vx-1I1">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="pushClean:" target="c22-O7-iKe" id="vZe-GC-OgP"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="xMM-yz-voU" firstAttribute="leading" secondItem="eAu-YC-cB4" secondAttribute="trailing" constant="5" id="5ca-UT-hrt"/>
@@ -261,7 +275,6 @@
                 <constraint firstItem="Cby-6q-iP7" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="As7-g0-E06"/>
                 <constraint firstItem="ZXl-BO-UNT" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="Blo-sM-U0e"/>
                 <constraint firstItem="cnx-RW-mie" firstAttribute="leading" secondItem="xMM-yz-voU" secondAttribute="trailing" constant="10" id="D5J-qx-OZx"/>
-                <constraint firstItem="6Lk-ar-Zdp" firstAttribute="leading" secondItem="1MC-DE-fec" secondAttribute="trailing" constant="25" id="Fnx-Jn-5aD"/>
                 <constraint firstItem="TQs-0F-ebs" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="Hkx-TU-4J4"/>
                 <constraint firstItem="xMM-yz-voU" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="Isr-fF-AqN"/>
                 <constraint firstItem="Cby-6q-iP7" firstAttribute="leading" secondItem="KAp-hI-lNQ" secondAttribute="trailing" constant="25" id="Ko6-H9-ZTd"/>
@@ -275,6 +288,7 @@
                 <constraint firstItem="LTS-hy-b8U" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="TOO-oZ-5H4"/>
                 <constraint firstItem="ZXl-BO-UNT" firstAttribute="leading" secondItem="OJV-Kh-bVo" secondAttribute="trailing" constant="25" id="Tdo-qI-BsT"/>
                 <constraint firstItem="y7A-X2-YT6" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="Z3s-BB-omJ"/>
+                <constraint firstItem="lYq-hE-oH3" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="bGo-7e-QPe"/>
                 <constraint firstItem="KAp-hI-lNQ" firstAttribute="leading" secondItem="QsS-b7-nFK" secondAttribute="trailing" constant="10" id="eVU-ba-Mkf"/>
                 <constraint firstItem="y7A-X2-YT6" firstAttribute="leading" secondItem="ZXl-BO-UNT" secondAttribute="trailing" constant="10" id="eYl-1S-vBK"/>
                 <constraint firstItem="eAu-YC-cB4" firstAttribute="leading" secondItem="Cby-6q-iP7" secondAttribute="trailing" constant="10" id="f1o-rF-Z5u"/>
@@ -284,7 +298,9 @@
                 <constraint firstItem="eAu-YC-cB4" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hb4-Vs-0tI"/>
                 <constraint firstItem="fdz-kh-cVX" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hmf-pO-ppV"/>
                 <constraint firstItem="v40-oD-GA1" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="ikK-RE-Xzr"/>
+                <constraint firstItem="6Lk-ar-Zdp" firstAttribute="leading" secondItem="lYq-hE-oH3" secondAttribute="trailing" constant="25" id="kP9-gp-xuY"/>
                 <constraint firstItem="1MC-DE-fec" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="miQ-pc-Ou1"/>
+                <constraint firstItem="lYq-hE-oH3" firstAttribute="leading" secondItem="1MC-DE-fec" secondAttribute="trailing" constant="10" id="nq7-j8-foN"/>
                 <constraint firstItem="cHQ-Pz-R5h" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="oHb-3w-doG"/>
                 <constraint firstItem="QsS-b7-nFK" firstAttribute="leading" secondItem="fdz-kh-cVX" secondAttribute="trailing" constant="10" id="pdm-Xn-2iW"/>
                 <constraint firstItem="inm-O0-5IQ" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="rcv-O3-bPY"/>
@@ -294,6 +310,7 @@
             <connections>
                 <outlet property="alphaSlider" destination="xMM-yz-voU" id="rJT-Tw-01Q"/>
                 <outlet property="bringFrontButton" destination="cHQ-Pz-R5h" id="Yfd-bY-MGn"/>
+                <outlet property="cleanButton" destination="lYq-hE-oH3" id="lBb-vD-ATY"/>
                 <outlet property="colorPopUp" destination="Cby-6q-iP7" id="b0p-cA-bpn"/>
                 <outlet property="deleteButton" destination="1MC-DE-fec" id="cTk-fA-qPx"/>
                 <outlet property="fillOvalButton" destination="QsS-b7-nFK" id="fmf-4T-0tH"/>
@@ -313,8 +330,10 @@
         </customView>
     </objects>
     <resources>
+        <image name="Mixed" width="19" height="19"/>
         <image name="alpha" width="24" height="24"/>
         <image name="bring_to_front" width="24" height="24"/>
+        <image name="clean" width="24" height="24"/>
         <image name="fill_oval" width="24" height="24"/>
         <image name="fill_rect" width="24" height="24"/>
         <image name="hide" width="24" height="24"/>
@@ -327,7 +346,6 @@
         <image name="prev" width="24" height="24"/>
         <image name="select" width="24" height="24"/>
         <image name="send_to_back" width="24" height="24"/>
-        <image name="tmpColor" width="19" height="19"/>
         <image name="trash" width="24" height="24"/>
     </resources>
 </document>

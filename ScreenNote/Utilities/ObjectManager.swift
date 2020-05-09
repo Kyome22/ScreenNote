@@ -39,7 +39,7 @@ final class ObjectManager {
         .uniqueViolet,
         .uniquePurple,
         .white,
-        .black
+        .black,
     ]
     
     var objects: [Object] {
@@ -312,6 +312,23 @@ final class ObjectManager {
             }
             overwrite(obs)
         }
+    }
+    
+    func clean() {
+        if objects.isEmpty { return }
+        addStock()
+        overwrite([])
+    }
+    
+    func allSelect() {
+        if objects.isEmpty { return }
+        if selectedObjects.count == objects.count { return }
+        addStock()
+        var obs = objects
+        for i in (0 ..< obs.count) {
+            obs[i].isSelected = true
+        }
+        overwrite(obs)
     }
     
     func bringToFront() {

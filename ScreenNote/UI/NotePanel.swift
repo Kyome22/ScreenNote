@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SpiceKey
 
 class NotePanel: NSPanel {
 
@@ -43,6 +44,15 @@ class NotePanel: NSPanel {
         monitors.removeAll()
         super.close()
     }
+    
+    override var canBecomeKey: Bool {
+        return true
+    }
+    
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        return true
+    }
+    
     
     private func setViews() {
         let nib = NSNib(nibNamed: "Tool", bundle: Bundle.main)!
@@ -103,6 +113,10 @@ class NotePanel: NSPanel {
             om.delete()
             noteView?.needsDisplay = true
         }
+        toolView.cleanHandler = { [om, noteView] in
+            om.clean()
+            noteView?.needsDisplay = true
+        }
         toolView.changeColorHandler = { [om, noteView] (colorID) in
             om.changeColor(colorID)
             noteView?.needsDisplay = true
@@ -141,6 +155,15 @@ class NotePanel: NSPanel {
             self.mouseUp()
             return event
         }))
+        
+        monitors.append(NSEvent.addLocalMonitorForEvents(matching: .keyDown, handler: { (event) -> NSEvent? in
+            let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+            let mod = ModifierFlags(flags: flags)
+            if let key = Key(keyCode: event.keyCode) {
+                self.keyDown(key, mod)
+            }
+            return event
+        }))
     }
     
     private func mouseDown() {
@@ -164,6 +187,30 @@ class NotePanel: NSPanel {
             noteView.needsDisplay = true
         }
         isValid = false
+    }
+    
+    private func keyDown(_ key: Key, _ mod: ModifierFlags) {
+        switch (key, mod) {
+        case (.a, .cmd):        om.allSelect()
+        case (.z, .cmd):        om.undo()
+        case (.z, .sftCmd):     om.redo()
+        case (.delete, .empty): om.delete()
+        case (.c, .empty):      om.clean()
+        case (.s, .empty): changeType(.select)
+        case (.p, .empty): changeType(.pen)
+        case (.l, .empty): changeType(.line)
+        case (.r, .empty): changeType(.fillRect)
+        case (.r, .sft):   changeType(.lineRect)
+        case (.o, .empty): changeType(.fillOval)
+        case (.o, .sft):   changeType(.lineOval)
+        default: break
+        }
+        noteView?.needsDisplay = true
+    }
+    
+    private func changeType(_ type: ObjectType) {
+        om.changeType(type)
+        toolView.updateState()
     }
     
     func fadeIn() {
