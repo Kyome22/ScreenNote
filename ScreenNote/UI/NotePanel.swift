@@ -191,7 +191,9 @@ class NotePanel: NSPanel {
     
     private func keyDown(_ key: Key, _ mod: ModifierFlags) {
         switch (key, mod) {
-        case (.a, .cmd):        om.allSelect()
+        case (.a, .cmd):
+            om.allSelect()
+            changeType(.select)
         case (.z, .cmd):        om.undo()
         case (.z, .sftCmd):     om.redo()
         case (.delete, .empty): om.delete()

@@ -129,12 +129,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         spiceKey?.unregister()
         if dm.press == 0 {
-            spiceKey = SpiceKey(modifierFlag, bothSideModifierKeysPressHandler: {
-                self.showHide(nil)
+            spiceKey = SpiceKey(modifierFlag, bothSideModifierKeysPressHandler: { [weak self] in
+                self?.showHide(nil)
             })
         } else {
-            spiceKey = SpiceKey(modifierFlag.flags, 0.5, modifierKeylongPressHandler: {
-                self.showHide(nil)
+            spiceKey = SpiceKey(modifierFlag, 0.5, modifierKeyLongPressHandler: { [weak self] in
+                self?.showHide(nil)
             })
         }
         spiceKey?.register()
