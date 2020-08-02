@@ -40,6 +40,7 @@
 "lineRect" = "長方形ツール（枠のみ）: ⇧R";
 "fillOval" = "楕円ツール（中塗り）: O";
 "lineOval" = "楕円ツール（枠のみ）: ⇧O";
+"text" = "テキストツール: T";
 "colorPopUp" = "描画色の変更";
 "alpha" = "透明度の変更";
 "lineWidth" = "線幅の変更";

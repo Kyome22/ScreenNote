@@ -16,6 +16,7 @@ enum ObjectType: Int {
     case lineRect
     case fillOval
     case lineOval
+    case text
 }
 
 struct Object {
@@ -59,6 +60,8 @@ struct Object {
             path.appendRect(bounds)
         case .fillOval, .lineOval:
             path.appendOval(in: bounds)
+        case .text:
+            break
         }
         return path
     }

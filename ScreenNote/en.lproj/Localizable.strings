@@ -39,6 +39,7 @@
 "lineRect" = "Line Rectangle Tool: ⇧R";
 "fillOval" = "Fill Oval Tool: O";
 "lineOval" = "Line Oval Tool: ⇧O";
+"text" = "Text Tool: T";
 "colorPopUp" = "Change Color";
 "alpha" = "Change Alpha";
 "lineWidth" = "Change Line Width";

@@ -22,6 +22,7 @@ class ToolView: NSView {
     @IBOutlet weak var lineRectButton: NSButton!
     @IBOutlet weak var fillOvalButton: NSButton!
     @IBOutlet weak var lineOvalButton: NSButton!
+    @IBOutlet weak var TextButton: NSButton!
     @IBOutlet weak var colorPopUp: NSPopUpButton!
     @IBOutlet weak var alphaSlider: NSSlider!
     @IBOutlet weak var lineWidthSlider: NSSlider!
@@ -57,6 +58,7 @@ class ToolView: NSView {
         initialize(button: &lineRectButton, toolTip: "lineRect".localized, isDark)
         initialize(button: &fillOvalButton, toolTip: "fillOval".localized, isDark)
         initialize(button: &lineOvalButton, toolTip: "lineOval".localized, isDark)
+        initialize(button: &TextButton, toolTip: "text".localized, isDark)
         updateState()
         initializeColorPopUp(isDark)
         alphaSlider.toolTip = "alpha".localized
@@ -151,6 +153,11 @@ class ToolView: NSView {
     
     @IBAction func pushLineOvalTool(_ sender: Any) {
         om.changeType(.lineOval)
+        updateState()
+    }
+
+    @IBAction func pushTextTool(_ sender: Any) {
+        om.changeType(.text)
         updateState()
     }
     
