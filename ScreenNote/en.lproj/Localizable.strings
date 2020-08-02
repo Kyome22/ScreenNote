@@ -40,6 +40,7 @@
 "fillOval" = "Fill Oval Tool: O";
 "lineOval" = "Line Oval Tool: ⇧O";
 "text" = "Text Tool: T";
+"unfocus" = "Unfocus Text Field: esc";
 "colorPopUp" = "Change Color";
 "alpha" = "Change Alpha";
 "lineWidth" = "Change Line Width";

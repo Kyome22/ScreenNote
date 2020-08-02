@@ -25,7 +25,8 @@ class NoteView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         for object in om.objects {
-            om.colors[object.colorID].withAlphaComponent(object.alpha).set()
+            let color = om.colors[object.colorID].withAlphaComponent(object.alpha)
+            color.set()
             let path = object.path
             switch object.type {
             case .pen, .line:
@@ -40,6 +41,10 @@ class NoteView: NSView {
                 path.fill()
             case .lineRect, .lineOval:
                 path.stroke()
+            case .text:
+                if let textImage = object.textImage {
+                    textImage.overlay(tint: color).draw(in: object.bounds)
+                }
             default:
                 break
             }

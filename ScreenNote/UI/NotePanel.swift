@@ -48,11 +48,13 @@ class NotePanel: NSPanel {
     override var canBecomeKey: Bool {
         return true
     }
-    
+
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        if firstResponder === toolView.textField.currentEditor() {
+            return super.performKeyEquivalent(with: event)
+        }
         return true
     }
-    
     
     private func setViews() {
         let nib = NSNib(nibNamed: "Tool", bundle: Bundle.main)!
@@ -137,6 +139,10 @@ class NotePanel: NSPanel {
             }
             noteView?.needsDisplay = true
         }
+        toolView.textDidEndEditHandler = { [om, noteView] (text) in
+            om.changeText(text)
+            noteView?.needsDisplay = true
+        }
     }
     
     private func setMonitors() {
@@ -160,7 +166,7 @@ class NotePanel: NSPanel {
             let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
             let mod = ModifierFlags(flags: flags)
             if let key = Key(keyCode: event.keyCode) {
-                self.keyDown(key, mod)
+                return self.keyDown(key, mod, event)
             }
             return event
         }))
@@ -169,31 +175,33 @@ class NotePanel: NSPanel {
     private func mouseDown() {
         if noteView.frame.contains(point) {
             isValid = true
-            ObjectManager.shared.mouseDown(point)
+            om.mouseDown(point, toolView.currentText)
             noteView.needsDisplay = true
         }
     }
     
     private func mouseDragged() {
         if isValid {
-            ObjectManager.shared.mouseDragged(point)
+            om.mouseDragged(point)
             noteView.needsDisplay = true
         }
     }
     
     private func mouseUp() {
         if isValid {
-            ObjectManager.shared.mouseUp(point)
+            om.mouseUp(point)
             noteView.needsDisplay = true
         }
         isValid = false
     }
     
-    private func keyDown(_ key: Key, _ mod: ModifierFlags) {
+    private func keyDown(_ key: Key, _ mod: ModifierFlags, _ event: NSEvent?) -> NSEvent? {
+        if firstResponder === toolView.textField.currentEditor() {
+            if key == .escape { makeFirstResponder(nil) }
+            return event
+        }
         switch (key, mod) {
-        case (.a, .cmd):
-            om.allSelect()
-            changeType(.select)
+        case (.a, .cmd): om.allSelect(); changeType(.select)
         case (.z, .cmd):        om.undo()
         case (.z, .sftCmd):     om.redo()
         case (.delete, .empty): om.delete()
@@ -205,9 +213,11 @@ class NotePanel: NSPanel {
         case (.r, .sft):   changeType(.lineRect)
         case (.o, .empty): changeType(.fillOval)
         case (.o, .sft):   changeType(.lineOval)
+        case (.t, .empty): changeType(.text)
         default: break
         }
         noteView?.needsDisplay = true
+        return key == .t ? nil : event
     }
     
     private func changeType(_ type: ObjectType) {

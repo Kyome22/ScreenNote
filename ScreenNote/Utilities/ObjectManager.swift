@@ -153,7 +153,7 @@ final class ObjectManager {
     }
     
     // MARK: Mouse Event
-    func mouseDown(_ point: CGPoint) {
+    func mouseDown(_ point: CGPoint, _ text: String) {
         switch currentType {
         case .select:
             var obs = objects
@@ -192,7 +192,9 @@ final class ObjectManager {
         default:
             addStock()
             var obs = objects
-            obs.append(Object(currentType, currentColorID, currentAlpha, currentLineWidth, [point, point]))
+            var obj = Object(currentType, currentColorID, currentAlpha, currentLineWidth, [point, point])
+            if currentType == .text { obj.text = text }
+            obs.append(obj)
             overwrite(obs)
         }
     }
@@ -259,6 +261,19 @@ final class ObjectManager {
             obs[i].isSelected = false
         }
         overwrite(obs)
+    }
+
+    func changeText(_ text: String) {
+        if currentType == .select {
+            addStock()
+            var obs = objects
+            for i in (0 ..< obs.count) {
+                if obs[i].isSelected && obs[i].type == .text {
+                    obs[i].text = text
+                }
+            }
+            overwrite(obs)
+        }
     }
     
     func changeColor(_ colorID: Int) {

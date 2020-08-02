@@ -219,3 +219,22 @@ extension NSBezierPath {
     }
     
 }
+
+extension NSImage {
+    var ciImage: CIImage? {
+        guard let imageData = self.tiffRepresentation else { return nil }
+        return CIImage(data: imageData)
+    }
+
+    func overlay(tint: NSColor) -> NSImage {
+        let colorImage = CIImage(color: CIColor(color: tint)!)
+        guard let sourceInFilter = CIFilter(name: "CISourceInCompositing") else { return self }
+        sourceInFilter.setValue(colorImage, forKey: kCIInputImageKey)
+        sourceInFilter.setValue(self.ciImage, forKey: kCIInputBackgroundImageKey)
+        guard let output = sourceInFilter.outputImage else { return self }
+        let rep = NSCIImageRep(ciImage: output)
+        let nsImage = NSImage(size: rep.size)
+        nsImage.addRepresentation(rep)
+        return nsImage
+    }
+}

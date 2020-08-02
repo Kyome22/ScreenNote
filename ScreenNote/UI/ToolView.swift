@@ -22,7 +22,8 @@ class ToolView: NSView {
     @IBOutlet weak var lineRectButton: NSButton!
     @IBOutlet weak var fillOvalButton: NSButton!
     @IBOutlet weak var lineOvalButton: NSButton!
-    @IBOutlet weak var TextButton: NSButton!
+    @IBOutlet weak var textButton: NSButton!
+    @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var colorPopUp: NSPopUpButton!
     @IBOutlet weak var alphaSlider: NSSlider!
     @IBOutlet weak var lineWidthSlider: NSSlider!
@@ -32,7 +33,16 @@ class ToolView: NSView {
     private var w: CGFloat { return self.frame.width  }
     private var h: CGFloat { return self.frame.height }
     private let om = ObjectManager.shared
-    
+
+    var currentText: String {
+        if textField.isHidden {
+            return ""
+        } else if textField.stringValue.isEmpty {
+            return "Text"
+        }
+        return textField.stringValue
+    }
+
     var historyHandler: ((_ direction: Bool) -> Void)?
     var deleteHandler: (() -> Void)?
     var cleanHandler: (() -> Void)?
@@ -40,6 +50,7 @@ class ToolView: NSView {
     var changeAlphaHandler: ((_ alpha: Float, _ start: Bool) -> Void)?
     var changeLineWidthHandler: ((_ lineWidth: Float, _ start: Bool) -> Void)?
     var arrangeHandler: ((_ direction: Bool) -> Void)?
+    var textDidEndEditHandler: ((_ text: String) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,7 +69,9 @@ class ToolView: NSView {
         initialize(button: &lineRectButton, toolTip: "lineRect".localized, isDark)
         initialize(button: &fillOvalButton, toolTip: "fillOval".localized, isDark)
         initialize(button: &lineOvalButton, toolTip: "lineOval".localized, isDark)
-        initialize(button: &TextButton, toolTip: "text".localized, isDark)
+        initialize(button: &textButton, toolTip: "text".localized, isDark)
+        textField.delegate = self
+        textField.toolTip = "unfocus".localized
         updateState()
         initializeColorPopUp(isDark)
         alphaSlider.toolTip = "alpha".localized
@@ -85,6 +98,13 @@ class ToolView: NSView {
         lineRectButton.state = (type == .lineRect ? .on : .off)
         fillOvalButton.state = (type == .fillOval ? .on : .off)
         lineOvalButton.state = (type == .lineOval ? .on : .off)
+        textButton.state = (type == .text ? .on : .off)
+        if type == .text {
+            textField.refusesFirstResponder = false
+            self.window?.makeFirstResponder(textField)
+        } else {
+            self.window?.makeFirstResponder(nil)
+        }
     }
     
     private func initializeColorPopUp(_ isDark: Bool) {
@@ -185,4 +205,13 @@ class ToolView: NSView {
         arrangeHandler?(false)
     }
     
+}
+
+
+extension ToolView: NSTextFieldDelegate {
+
+    func controlTextDidEndEditing(_ obj: Notification) {
+        textDidEndEditHandler?(currentText)
+    }
+
 }

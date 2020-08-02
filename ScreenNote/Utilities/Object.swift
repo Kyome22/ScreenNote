@@ -27,6 +27,12 @@ struct Object {
     var lineWidth: CGFloat
     var points: [CGPoint]
     var isSelected: Bool
+    var text: String = "" {
+        didSet {
+            setTextImage()
+        }
+    }
+    var textImage: NSImage?
     
     var bounds: CGRect {
         let minX = points.min(by: { (a, b) -> Bool in return a.x < b.x })?.x ?? 0
@@ -56,12 +62,10 @@ struct Object {
         case .line:
             path.move(to: points[0])
             path.line(to: points[1])
-        case .fillRect, .lineRect:
+        case .fillRect, .lineRect, .text:
             path.appendRect(bounds)
         case .fillOval, .lineOval:
             path.appendOval(in: bounds)
-        case .text:
-            break
         }
         return path
     }
@@ -73,13 +77,17 @@ struct Object {
         self.lineWidth = lineWidth
         self.points = points
         self.isSelected = false
+        if self.type == .text {
+            self.text = "Text"
+            setTextImage()
+        }
     }
     
     func isHit(_ point: CGPoint) -> Bool {
         switch type {
         case .pen, .line, .lineRect, .lineOval:
             return path.intersects(with: point, radius: max(4.0, 0.5 * lineWidth))
-        case .fillRect, .fillOval:
+        case .fillRect, .fillOval, .text:
             return path.contains(point)
         default:
             return false
@@ -91,6 +99,25 @@ struct Object {
             return true
         }
         return path.intersects(NSBezierPath(rect: selectRect))
+    }
+
+    private mutating func setTextImage() {
+        let str = NSString(string: text)
+        let attr: [NSAttributedString.Key : Any] = [.font : NSFont.systemFont(ofSize: 100.0)]
+        let size = str.size(withAttributes: attr)
+        let image = NSImage(size: size)
+        image.lockFocus()
+        str.draw(at: .zero, withAttributes: attr)
+        image.unlockFocus()
+        textImage = image
+
+        // update size
+        let newWidth = size.width / size.height * bounds.height
+        if points[0].x <= points[1].x {
+            points[1].x = points[0].x + newWidth
+        } else {
+            points[0].x = points[1].x + newWidth
+        }
     }
     
 }
