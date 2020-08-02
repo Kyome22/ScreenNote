@@ -8,7 +8,7 @@
 
 // Mail
 "issueReport" = "Issue Report";
-"environment" = "# Environment";
+"environment" = "# Environment\n- %@: ver %@\n- macOS: %@\n";
 "whatYouTried" = "# What You Tried\n- Relaunched the app: Yes/No\n";
 "shortDescription" = "# Short Description\n\n";
 "reproduceIssue" = "# Steps to Reproduce the Issue\n\n";

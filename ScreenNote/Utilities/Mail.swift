@@ -22,9 +22,7 @@ class Mail {
         service.recipients = ["kyomesuke@icloud.com"]
         service.subject = "\(appName) \("issueReport".localized)"
         service.perform(withItems: [
-            "environment".localized,
-            "- \(appName): ver \(appVersion)",
-            "- macOS: \(systemVersion)\n",
+            String(format: "environment".localized, appName, appVersion, systemVersion),
             "whatYouTried".localized,
             "shortDescription".localized,
             "reproduceIssue".localized,
