@@ -48,9 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.image = NSImage(named: "statusIcon")
         
         setTrigger()
-        dm.ifNotYetTutorial {
-            openLookMe()
-        }
+        #if DEBUG
+        openLookMe()
+        #else
+        dm.ifNotYetTutorial { openLookMe() }
+        #endif
         openTutorial()
         setNotification()
 	}
