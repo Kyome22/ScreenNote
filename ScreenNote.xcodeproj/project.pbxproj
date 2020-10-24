@@ -12,14 +12,15 @@
 		1C31EEAA246182EA00DFEDD5 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C31EEA9246182EA00DFEDD5 /* Line.swift */; };
 		1C31EEAC2461914900DFEDD5 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C31EEAB2461914900DFEDD5 /* Curve.swift */; };
 		1C31EEAE2461D6CC00DFEDD5 /* Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C31EEAD2461D6CC00DFEDD5 /* Resize.swift */; };
-		1C31EEB02461E16700DFEDD5 /* LookMePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C31EEAF2461E16700DFEDD5 /* LookMePanel.swift */; };
 		1C31EEB32461E34400DFEDD5 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C31EEB52461E34400DFEDD5 /* Preferences.storyboard */; };
 		1C31EEB92461E49300DFEDD5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C31EEBB2461E49300DFEDD5 /* Localizable.strings */; };
+		1C4D98E225441BD900F3D479 /* FirstPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4D98E125441BD900F3D479 /* FirstPopover.swift */; };
+		1C4D98EE25441D0800F3D479 /* FirstPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4D98F025441D0800F3D479 /* FirstPopover.xib */; };
 		1C5251D1245DA4A500A728B2 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5251D0245DA4A500A728B2 /* DataManager.swift */; };
 		1C5251D3245E784900A728B2 /* CancelWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5251D2245E784900A728B2 /* CancelWindow.swift */; };
 		1C5251D5245E7C2900A728B2 /* Mail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5251D4245E7C2900A728B2 /* Mail.swift */; };
 		1C5251D9245EBC6700A728B2 /* Tool.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C5251D8245EBC6700A728B2 /* Tool.xib */; };
-		1C640F2C22B0EC2D00611CE4 /* TutorialPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C640F2B22B0EC2D00611CE4 /* TutorialPanel.swift */; };
+		1C640F2C22B0EC2D00611CE4 /* HotKeyPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C640F2B22B0EC2D00611CE4 /* HotKeyPanel.swift */; };
 		1C6B164422ABBC9F00361DFA /* ToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6B164322ABBC9F00361DFA /* ToolView.swift */; };
 		1C6B164622ABC05C00361DFA /* NotePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6B164522ABC05C00361DFA /* NotePanel.swift */; };
 		1C6B164822ABC09600361DFA /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6B164722ABC09600361DFA /* NoteView.swift */; };
@@ -59,17 +60,19 @@
 		1C31EEA9246182EA00DFEDD5 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		1C31EEAB2461914900DFEDD5 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		1C31EEAD2461D6CC00DFEDD5 /* Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resize.swift; sourceTree = "<group>"; };
-		1C31EEAF2461E16700DFEDD5 /* LookMePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookMePanel.swift; sourceTree = "<group>"; };
 		1C31EEB22461E2FE00DFEDD5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C31EEB42461E34400DFEDD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		1C31EEB82461E34C00DFEDD5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/Preferences.storyboard; sourceTree = "<group>"; };
 		1C31EEBA2461E49300DFEDD5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C31EEBC2461E49700DFEDD5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1C4D98E125441BD900F3D479 /* FirstPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPopover.swift; sourceTree = "<group>"; };
+		1C4D98EF25441D0800F3D479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FirstPopover.xib; sourceTree = "<group>"; };
+		1C4D98F225441D1000F3D479 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/FirstPopover.strings; sourceTree = "<group>"; };
 		1C5251D0245DA4A500A728B2 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1C5251D2245E784900A728B2 /* CancelWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelWindow.swift; sourceTree = "<group>"; };
 		1C5251D4245E7C2900A728B2 /* Mail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mail.swift; sourceTree = "<group>"; };
 		1C5251D8245EBC6700A728B2 /* Tool.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tool.xib; sourceTree = "<group>"; };
-		1C640F2B22B0EC2D00611CE4 /* TutorialPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPanel.swift; sourceTree = "<group>"; };
+		1C640F2B22B0EC2D00611CE4 /* HotKeyPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyPanel.swift; sourceTree = "<group>"; };
 		1C6B164322ABBC9F00361DFA /* ToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolView.swift; sourceTree = "<group>"; };
 		1C6B164522ABC05C00361DFA /* NotePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePanel.swift; sourceTree = "<group>"; };
 		1C6B164722ABC09600361DFA /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -130,8 +133,9 @@
 		1C5251CC245DA2AD00A728B2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				1C640F2B22B0EC2D00611CE4 /* TutorialPanel.swift */,
-				1C31EEAF2461E16700DFEDD5 /* LookMePanel.swift */,
+				1C4D98E125441BD900F3D479 /* FirstPopover.swift */,
+				1C4D98F025441D0800F3D479 /* FirstPopover.xib */,
+				1C640F2B22B0EC2D00611CE4 /* HotKeyPanel.swift */,
 				772526611EF6069D008F8A81 /* Main.storyboard */,
 				1C6B164522ABC05C00361DFA /* NotePanel.swift */,
 				1C5251D8245EBC6700A728B2 /* Tool.xib */,
@@ -304,7 +308,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Kyome;
 				TargetAttributes = {
 					772526571EF6069D008F8A81 = {
@@ -361,6 +365,7 @@
 				1C5251D9245EBC6700A728B2 /* Tool.xib in Resources */,
 				1C31EEB92461E49300DFEDD5 /* Localizable.strings in Resources */,
 				772526601EF6069D008F8A81 /* Assets.xcassets in Resources */,
+				1C4D98EE25441D0800F3D479 /* FirstPopover.xib in Resources */,
 				772526631EF6069D008F8A81 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,6 +482,7 @@
 				1C6B164422ABBC9F00361DFA /* ToolView.swift in Sources */,
 				1C6B164822ABC09600361DFA /* NoteView.swift in Sources */,
 				1C31EEA8245F20AA00DFEDD5 /* Stock.swift in Sources */,
+				1C4D98E225441BD900F3D479 /* FirstPopover.swift in Sources */,
 				1C31EEAA246182EA00DFEDD5 /* Line.swift in Sources */,
 				1C5251D3245E784900A728B2 /* CancelWindow.swift in Sources */,
 				1C6B164622ABC05C00361DFA /* NotePanel.swift in Sources */,
@@ -487,8 +493,7 @@
 				7725265C1EF6069D008F8A81 /* AppDelegate.swift in Sources */,
 				1C5251D1245DA4A500A728B2 /* DataManager.swift in Sources */,
 				1C31EEA6245F18D800DFEDD5 /* Object.swift in Sources */,
-				1C31EEB02461E16700DFEDD5 /* LookMePanel.swift in Sources */,
-				1C640F2C22B0EC2D00611CE4 /* TutorialPanel.swift in Sources */,
+				1C640F2C22B0EC2D00611CE4 /* HotKeyPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +547,15 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		1C4D98F025441D0800F3D479 /* FirstPopover.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C4D98EF25441D0800F3D479 /* Base */,
+				1C4D98F225441D1000F3D479 /* ja */,
+			);
+			name = FirstPopover.xib;
+			sourceTree = "<group>";
+		};
 		772526611EF6069D008F8A81 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -580,6 +594,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -607,7 +622,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -640,6 +655,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -661,6 +677,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -674,7 +691,7 @@
 				CODE_SIGN_ENTITLEMENTS = ScreenNote/ScreenNote.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.2.0;
+				CURRENT_PROJECT_VERSION = 3.3.0;
 				DEVELOPMENT_TEAM = VJ5N2X84K8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -688,7 +705,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyome.ScreenNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -704,7 +721,7 @@
 				CODE_SIGN_ENTITLEMENTS = ScreenNote/ScreenNote.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3.2.0;
+				CURRENT_PROJECT_VERSION = 3.3.0;
 				DEVELOPMENT_TEAM = VJ5N2X84K8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -718,7 +735,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyome.ScreenNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

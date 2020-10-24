@@ -27,6 +27,7 @@ class ToolView: NSView {
     @IBOutlet weak var colorPopUp: NSPopUpButton!
     @IBOutlet weak var alphaSlider: NSSlider!
     @IBOutlet weak var lineWidthSlider: NSSlider!
+    @IBOutlet weak var copyButton: NSButton!
     @IBOutlet weak var bringFrontButton: NSButton!
     @IBOutlet weak var sendBackButton: NSButton!
     
@@ -49,6 +50,7 @@ class ToolView: NSView {
     var changeColorHandler: ((_ colorID: Int) -> Void)?
     var changeAlphaHandler: ((_ alpha: Float, _ start: Bool) -> Void)?
     var changeLineWidthHandler: ((_ lineWidth: Float, _ start: Bool) -> Void)?
+    var copyHandler: (() -> Void)?
     var arrangeHandler: ((_ direction: Bool) -> Void)?
     var textDidEndEditHandler: ((_ text: String) -> Void)?
     
@@ -78,6 +80,7 @@ class ToolView: NSView {
         alphaSlider.floatValue = Float(om.currentAlpha)
         lineWidthSlider.toolTip = "lineWidth".localized
         lineWidthSlider.floatValue = Float(om.currentLineWidth)
+        initialize(button: &copyButton, toolTip: "copy".localized, isDark)
         initialize(button: &bringFrontButton, toolTip: "bringFront".localized, isDark)
         initialize(button: &sendBackButton, toolTip: "sendBack".localized, isDark)
     }
@@ -196,7 +199,11 @@ class ToolView: NSView {
         let start: Bool = (event?.type == NSEvent.EventType.leftMouseDown)
         changeLineWidthHandler?(sender.floatValue, start)
     }
-    
+
+    @IBAction func pushCopy(_ sender: Any) {
+        copyHandler?()
+    }
+
     @IBAction func pushBringFront(_ sender: Any) {
         arrangeHandler?(true)
     }

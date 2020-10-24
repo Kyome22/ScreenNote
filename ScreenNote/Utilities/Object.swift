@@ -69,6 +69,18 @@ struct Object {
         }
         return path
     }
+
+    var copy: Object {
+        let newPoints = self.points.map { (p) -> CGPoint in
+            return CGPoint(x: p.x + 20, y: p.y - 20)
+        }
+        var obj = Object(self.type, self.colorID, self.alpha, self.lineWidth, newPoints)
+        obj.isSelected = true
+        if self.type == .text {
+            obj.text = self.text
+        }
+        return obj
+    }
     
     init(_ type: ObjectType, _ colorID: Int, _ alpha: CGFloat, _ lineWidth: CGFloat, _ points: [CGPoint]) {
         self.type = type
@@ -119,5 +131,5 @@ struct Object {
             points[0].x = points[1].x + newWidth
         }
     }
-    
+
 }

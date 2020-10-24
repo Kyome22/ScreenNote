@@ -345,6 +345,19 @@ final class ObjectManager {
         }
         overwrite(obs)
     }
+
+    func copySelectedObjects() {
+        let sObs = selectedObjects
+        if sObs.isEmpty { return }
+        addStock()
+        var obs = objects
+        for i in (0 ..< obs.count) {
+            obs[i].isSelected = false
+        }
+        let newObs = sObs.map { $0.copy }
+        obs.append(contentsOf: newObs)
+        overwrite(obs)
+    }
     
     func bringToFront() {
         let sObs = selectedObjects

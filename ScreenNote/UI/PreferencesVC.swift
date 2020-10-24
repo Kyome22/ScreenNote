@@ -14,7 +14,8 @@ class PreferencesVC: NSViewController {
     @IBOutlet weak var longRadioButton: NSButton!
     @IBOutlet weak var modifierKeyPopUp: NSPopUpButton!
     @IBOutlet weak var positionPopUp: NSPopUpButton!
-    
+    @IBOutlet weak var toggleMethodCheckBox: NSButton!
+
     let dm = DataManager.shared
 
 	override func viewWillAppear() {
@@ -24,13 +25,13 @@ class PreferencesVC: NSViewController {
         longRadioButton.state = (press != 0 ? .on : .off)
         modifierKeyPopUp.selectItem(at: dm.key)
         positionPopUp.selectItem(at: dm.position)
+        toggleMethodCheckBox.state = (dm.showToggleMethod ? .on : .off)
 	}
     
     @IBAction func changedPress(_ sender: NSButton) {
         dm.press = sender.tag
         AppDelegate.shared.setTrigger()
     }
-    
 
     @IBAction func changedModifierKey(_ sender: NSPopUpButton) {
         dm.key = sender.indexOfSelectedItem
@@ -41,5 +42,9 @@ class PreferencesVC: NSViewController {
         dm.position = sender.indexOfSelectedItem
         AppDelegate.shared.setPosition()
     }
-        
+
+    @IBAction func changeShowToggleMethod(_ sender: NSButton) {
+        dm.showToggleMethod = (sender.state == .on)
+    }
+
 }

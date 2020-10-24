@@ -43,6 +43,7 @@
 "unfocus" = "Unfocus Text Field: esc";
 "colorPopUp" = "Change Color";
 "alpha" = "Change Alpha";
+"copy" = "Copy selected objects";
 "lineWidth" = "Change Line Width";
 "bringFront" = "Bring to Front";
 "sendBack" = "Send to Back";

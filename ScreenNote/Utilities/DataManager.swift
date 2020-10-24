@@ -32,6 +32,10 @@ class DataManager {
         get { return userDefaults.integer(forKey: "position") }
         set { userDefaults.set(newValue, forKey: "position") }
     }
+    var showToggleMethod: Bool {
+        get { return userDefaults.bool(forKey: "showToggleMethod") }
+        set { userDefaults.set(newValue, forKey: "showToggleMethod")}
+    }
 
     private init() {
         #if DEBUG
@@ -39,9 +43,10 @@ class DataManager {
             userDefaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
         }
         #endif
-        userDefaults.register(defaults: ["press" : Int(0),
-                                         "key" : Int(0),
-                                         "position" : Int(0)])
+        userDefaults.register(defaults: ["press": Int(0),
+                                         "key": Int(0),
+                                         "position": Int(0),
+                                         "showToggleMethod": true])
     }
     
     func ifNotYetTutorial(_ callback: () -> Void) {

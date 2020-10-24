@@ -44,6 +44,7 @@
 "unfocus" = "テキストフィールドからフォーカスを外す: esc";
 "colorPopUp" = "描画色の変更";
 "alpha" = "透明度の変更";
+"copy" = "選択中のオブジェクトの複製";
 "lineWidth" = "線幅の変更";
 "bringFront" = "最前面へ";
 "sendBack" = "最背面へ";

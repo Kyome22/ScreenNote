@@ -17,8 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let dm = DataManager.shared
     private var spiceKey: SpiceKey?
-    private var lookMePanel: LookMePanel?
-    private var tutorialPanel: TutorialPanel?
+    private let popover = FirstPopover()
+    private var hotKeyPanel: HotKeyPanel?
     private var notePanel: NotePanel?
     private var preferencesWC: NSWindowController?
     
@@ -49,11 +49,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         setTrigger()
         #if DEBUG
-        openLookMe()
-        #else
-        dm.ifNotYetTutorial { openLookMe() }
+        openFirstPopover()
         #endif
-        openTutorial()
+        #if RELEASE
+        dm.ifNotYetTutorial { openFirstPopover() }
+        #endif
+        if dm.showToggleMethod {
+            openHotKeyPanel()
+        }
         setNotification()
 	}
 
@@ -61,14 +64,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         spiceKey?.unregister()
 	}
     
-    private func openLookMe() {
-        if let window = statusItem.button?.window {
-            let x = window.frame.midX
-            let y = window.frame.origin.y
-            let rect = NSRect(x: x - 90.0, y: y - 222, width: 180.0, height: 220.0)
-            lookMePanel = LookMePanel(frame: rect)
-            lookMePanel?.delegate = self
-            lookMePanel?.orderFrontRegardless()
+    private func openFirstPopover() {
+        if let button = statusItem.button {
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
         }
     }
     
@@ -102,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notePanel?.close()
     }
     
-    private func openTutorial() {
+    private func openHotKeyPanel() {
         var rect = screen.visibleFrame
         if dm.press == 0 {
             let lRSize = CGSize(width: 380, height: 150)
@@ -115,9 +113,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                      y: 0.5 * (rect.height - lPSize.height))
             rect = NSRect(origin: lPLocation, size: lPSize)
         }
-        tutorialPanel = TutorialPanel(frame: rect, press: dm.press, key: dm.key)
-        tutorialPanel?.delegate = self
-        tutorialPanel?.orderFrontRegardless()
+        hotKeyPanel = HotKeyPanel(frame: rect, press: dm.press, key: dm.key)
+        hotKeyPanel?.delegate = self
+        hotKeyPanel?.orderFrontRegardless()
     }
     
 	func setTrigger() {
@@ -163,8 +161,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu.item(at: 0)?.title = "show".localized
             panel.fadeOut()
         } else {
-            if tutorialPanel != nil {
-                tutorialPanel?.fadeOut {
+            if hotKeyPanel != nil {
+                hotKeyPanel?.fadeOut {
                     self.show()
                 }
             } else {
@@ -179,10 +177,8 @@ extension AppDelegate: NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         guard let window = notification.object as? NSWindow else { return }
-        if window === lookMePanel {
-            lookMePanel = nil
-        } else if window === tutorialPanel {
-            tutorialPanel = nil
+        if window === hotKeyPanel {
+            hotKeyPanel = nil
         } else if window === notePanel {
             notePanel = nil
         } else if window === preferencesWC?.window {
@@ -195,8 +191,8 @@ extension AppDelegate: NSWindowDelegate {
 extension AppDelegate: NSMenuDelegate {
     
     func menuWillOpen(_ menu: NSMenu) {
-        if lookMePanel != nil {
-            lookMePanel?.fadeOut()
+        if popover.isShown {
+            popover.performClose(nil)
         }
     }
     

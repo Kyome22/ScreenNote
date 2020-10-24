@@ -131,6 +131,10 @@ class NotePanel: NSPanel {
             om.changeLineWidth(CGFloat(lineWidth), start)
             noteView?.needsDisplay = true
         }
+        toolView.copyHandler = { [om, noteView] in
+            om.copySelectedObjects()
+            noteView?.needsDisplay = true
+        }
         toolView.arrangeHandler = { [om, noteView] (direction) in
             if direction {
                 om.bringToFront()

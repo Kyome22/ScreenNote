@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TutorialPanel: NSPanel {
+class HotKeyPanel: NSPanel {
     
     private var topLbl: NSTextField!
     private var leftLbl: NSTextField!
