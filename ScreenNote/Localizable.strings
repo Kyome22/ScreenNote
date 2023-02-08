@@ -1,0 +1,82 @@
+/* 
+  Localizable.strings
+  ScreenNote
+
+  Created by Takuto Nakamura on 2023/01/30.
+  
+*/
+
+// Menu
+"showCanvas" = "Show Canvas";
+"hideCanvas" = "Hide Canvas";
+"preferences" = "Preferences…";
+"aboutApp" = "About ScreenNote";
+"reportAnIssue" = "Report an Issue";
+"terminateApp" = "Quit ScreenNote";
+
+// Settings
+"general" = "General";
+"toggleMethod:" = "Toggle Method (show/hide the canvas):";
+"longPressModifierKey" = "Long press a modifier key.";
+"pressBothSideModifierKeys" = "Press left & right modifier keys at the same time.";
+"modifierKey:" = "Modifier Key:";
+"controlKey" = "⌃ Control Key";
+"optionKey" = "⌥ Option Key";
+"shiftKey" = "⇧ Shift Key";
+"commandKey" = "⌘ Command Key";
+"toolBarPosition:" = "Tool Bar Position:";
+"top" = "Top";
+"right" = "Right";
+"bottom" = "Bottom";
+"left" = "Left";
+"launchAtLogin:" = "Launch at Login:";
+"enable" = "Enable";
+
+// ShortcutPanel
+"control" = "control";
+"option" = "option";
+"shift" = "shift";
+"command" = "command";
+"longPress" = "Long press the %@ key.";
+"pressBothSide" = "Press left & right %@ keys at the same time.";
+
+// ToolTip
+"goBack" = "Go Back: ⌘Z";
+"goForward" = "Go Forward: ⇧⌘Z";
+"select" = "Select Tool: S";
+"text" = "Text Tool: T";
+"pen" = "Pen Tool: P";
+"line" = "Line Tool: L";
+"fillRect" = "Fill Rectangle Tool: R";
+"lineRect" = "Line Rectangle Tool: ⇧R";
+"fillOval" = "Fill Oval Tool: O";
+"lineOval" = "Line Oval Tool: ⇧O";
+"colorPalette" = "Change Color";
+"alpha" = "Change Alpha";
+"lineWidth" = "Change Line Width";
+"arrange" = "Arrange";
+"bringFront" = "Bring to Frontmost";
+"sendBack" = "Send to Backmost";
+"align" = "Align";
+"horizontalAlignLeft" = "Horizontal Align Left";
+"horizontalAlignCenter" = "Horizontal Align Center";
+"horizontalAlignRight" = "Horizontal Align Right";
+"verticalAlignTop" = "Vertical Align Top";
+"verticalAlignCenter" = "Vertical Align Center";
+"verticalAlignBottom" = "Vertical Align Bottom";
+"flip" = "Flip";
+"horizontalFlip" = "Horizontal Flip";
+"verticalFlip" = "Vertical Flip";
+"rotate" = "Rotate";
+"rotateCounterClockwise" = "Rotate Counter-Clockwise";
+"rotateClockwise" = "Rotate Clockwise";
+"duplicate" = "Duplicate";
+"delete" = "Delete: ⌫";
+
+// Mail
+"issueReport" = "Issue Report";
+"environment" = "# Environment\n- %@: ver %@\n- macOS: %@\n";
+"whatYouTried" = "# What You Tried\n- Relaunched the app: Yes/No\n";
+"shortDescription" = "# Short Description\n\n";
+"reproduceIssue" = "# Steps to Reproduce the Issue\n\n";
+"expectedResult" = "# Expected Result\n\n";
