@@ -1,4 +1,10 @@
+# macOS
 .DS_Store
-*.xcuserstate
-Pods/
 
+# ScreenNote
+materials/
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xccheckout
