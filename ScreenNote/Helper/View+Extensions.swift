@@ -23,7 +23,7 @@ extension View {
     ) -> some View {
         return Text(maxKey)
             .hidden()
-            .overlay(alignment: .leading) {
+            .overlay(alignment: .trailing) {
                 Text(key)
             }
             .fixedSize()

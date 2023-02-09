@@ -70,16 +70,19 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 } label: {
                     Image(systemName: "drop.fill")
                         .foregroundColor(objectModel.color)
-                        .opacity(objectModel.alpha)
+                        .opacity(objectModel.opacity)
                 }
                 .buttonStyle(.toolBar(.horizontal))
                 .help("colorPalette")
                 .popover(isPresented: $showColorPopover, arrowEdge: arrowEdge) {
-                    ColorPalettePopover(color: $objectModel.color,
-                                        alpha: $objectModel.alpha,
-                                        colors: objectModel.colors) {
-                        objectModel.willUpdateAlpha()
-                    }
+                    ColorPalettePopover(
+                        color: $objectModel.color,
+                        opacity: $objectModel.opacity,
+                        colors: objectModel.colors,
+                        startUpdatingOpacityHandler: {
+                            objectModel.startUpdatingOpacity()
+                        }
+                    )
                 }
                 Button {
                     showLineWidthPopover = true
@@ -89,11 +92,14 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 .buttonStyle(.toolBar(.horizontal))
                 .help("lineWidth")
                 .popover(isPresented: $showLineWidthPopover, arrowEdge: arrowEdge) {
-                    LineWidthPopover(lineWidth: $objectModel.lineWidth,
-                                     color: $objectModel.color,
-                                     alpha: $objectModel.alpha) {
-                        objectModel.willUpdateLineWidth()
-                    }
+                    LineWidthPopover(
+                        lineWidth: $objectModel.lineWidth,
+                        color: $objectModel.color,
+                        opacity: $objectModel.opacity,
+                        startUpdatingLineWidthHandler: {
+                            objectModel.startUpdatingLineWidth()
+                        }
+                    )
                 }
                 Button {
                     showArrangePopover = true

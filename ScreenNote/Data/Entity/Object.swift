@@ -12,7 +12,7 @@ struct Object: Identifiable {
     let id: String = UUID().uuidString
     let type: ObjectType
     var color_: Color
-    var alpha: CGFloat
+    var opacity: CGFloat
     var lineWidth: CGFloat
     var points: [CGPoint]
     var text: String
@@ -75,7 +75,7 @@ struct Object: Identifiable {
     }
 
     var color: Color {
-        return color_.opacity(alpha)
+        return color_.opacity(opacity)
     }
 
     var fontSize: CGFloat {
@@ -94,14 +94,14 @@ struct Object: Identifiable {
     init (
         _ type: ObjectType,
         _ color: Color,
-        _ alpha: CGFloat,
+        _ opacity: CGFloat,
         _ lineWidth: CGFloat,
         _ points: [CGPoint],
         isSelected: Bool = false
     ) {
         self.type = type
         self.color_ = color
-        self.alpha = alpha
+        self.opacity = opacity
         self.lineWidth = lineWidth
         self.points = points
         self.text = ""
@@ -111,14 +111,14 @@ struct Object: Identifiable {
 
     init (
         _ color: Color,
-        _ alpha: CGFloat,
+        _ opacity: CGFloat,
         _ points: [CGPoint],
         _ text: String,
         isSelected: Bool = false
     ) {
         self.type = .text
         self.color_ = color
-        self.alpha = alpha
+        self.opacity = opacity
         self.lineWidth = 1.0
         self.points = points
         self.text = text
@@ -147,9 +147,9 @@ struct Object: Identifiable {
     func copy(needsOffset: Bool = false) -> Object {
         let newPoints = needsOffset ? points.map { $0 + CGPoint(20) } : points
         if type == .text {
-            return Object(color_, alpha, newPoints, text, isSelected: true)
+            return Object(color_, opacity, newPoints, text, isSelected: true)
         } else {
-            return Object(type, color_, alpha, lineWidth, newPoints, isSelected: true)
+            return Object(type, color_, opacity, lineWidth, newPoints, isSelected: true)
         }
     }
 }

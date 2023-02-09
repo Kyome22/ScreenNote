@@ -15,6 +15,7 @@ protocol ScreenNoteAppModel: ObservableObject {
     associatedtype LR: LaunchAtLoginRepository
     associatedtype SM: ShortcutModel
 
+    var settingsTab: SettingsTabType { get set }
     var userDefaultsRepository: UR { get }
     var launchAtLoginRepository: LR { get }
     var shortcutModel: SM { get }
@@ -24,13 +25,15 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     typealias UR = UserDefaultsRepositoryImpl
     typealias LR = LaunchAtLoginRepositoryImpl
     typealias SM = ShortcutModelImpl
-    typealias WMConcrete = WindowModelImpl<UR, SM<UR>, ObjectModelImpl>
+    typealias WMConcrete = WindowModelImpl<UR, SM<UR>, ObjectModelImpl<UR>>
     typealias MMConcrete = MenuBarModelImpl<IssueReporterImpl, WMConcrete>
+
+    @Published var settingsTab: SettingsTabType = .general
 
     let userDefaultsRepository: UR
     let launchAtLoginRepository: LR
     let shortcutModel: SM<UR>
-    private let objectModel: ObjectModelImpl
+    private let objectModel: ObjectModelImpl<UR>
     private let windowModel: WMConcrete
     private let menuBarModel: MMConcrete
     private var menuBar: MenuBar<MMConcrete>?
@@ -40,17 +43,19 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
         userDefaultsRepository = UR()
         launchAtLoginRepository = LR()
         shortcutModel = SM(userDefaultsRepository)
-        objectModel = ObjectModelImpl()
+        objectModel = ObjectModelImpl(userDefaultsRepository)
         windowModel = WMConcrete(userDefaultsRepository, shortcutModel, objectModel)
         menuBarModel = MMConcrete(windowModel)
         super.init()
 
-        NotificationCenter.default.publisher(for: NSApplication.didFinishLaunchingNotification)
+        NotificationCenter.default
+            .publisher(for: NSApplication.didFinishLaunchingNotification)
             .sink { [weak self] _ in
                 self?.applicationDidFinishLaunching()
             }
             .store(in: &cancellables)
-        NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)
+        NotificationCenter.default
+            .publisher(for: NSApplication.willTerminateNotification)
             .sink { [weak self] _ in
                 self?.applicationWillTerminate()
             }
@@ -77,6 +82,7 @@ extension PreviewMock {
         typealias LR = LaunchAtLoginRepositoryMock
         typealias SM = ShortcutModelMock
 
+        @Published var settingsTab: SettingsTabType = .general
         var userDefaultsRepository = UR()
         var launchAtLoginRepository = LR()
         var shortcutModel = SM()

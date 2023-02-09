@@ -18,6 +18,10 @@ protocol UserDefaultsRepository: AnyObject {
     var toggleMethod: ToggleMethod { get set }
     var modifierFlag: ModifierFlag { get set }
     var toolBarPosition: ToolBarPosition { get set }
+    var clearAllObjects: Bool { get set }
+    var defaultColorIndex: Int { get set }
+    var defaultOpacity: CGFloat { get set }
+    var defaultLineWidth: CGFloat { get set }
 }
 
 final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
@@ -47,6 +51,26 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         set { userDefaults.set(newValue.rawValue, forKey: "toolBarPosition") }
     }
 
+    var clearAllObjects: Bool {
+        get { userDefaults.bool(forKey: "clearAllObjects") }
+        set { userDefaults.set(newValue, forKey: "clearAllObjects") }
+    }
+
+    var defaultColorIndex: Int {
+        get { userDefaults.integer(forKey: "defaultColorIndex") }
+        set { userDefaults.set(newValue, forKey: "defaultColorIndex") }
+    }
+
+    var defaultOpacity: CGFloat {
+        get { userDefaults.double(forKey: "defaultOpacity") }
+        set { userDefaults.set(newValue, forKey: "defaultOpacity") }
+    }
+
+    var defaultLineWidth: CGFloat {
+        get { userDefaults.double(forKey: "defaultLineWidth") }
+        set { userDefaults.set(newValue, forKey: "defaultLineWidth") }
+    }
+
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
 #if DEBUG
@@ -57,7 +81,11 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         self.userDefaults.register(defaults: [
             "toggleMethod": ToggleMethod.longPressKey.rawValue,
             "modifierFlag": ModifierFlag.control.rawValue,
-            "toolBarPosition": ToolBarPosition.top.rawValue
+            "toolBarPosition": ToolBarPosition.top.rawValue,
+            "clearAllObjects": false,
+            "defaultColorIndex": Int(0),
+            "defaultOpacity": Double(0.8),
+            "defaultLineWidth": Double(4.0)
         ])
 #if DEBUG
         showAllData()
@@ -83,5 +111,9 @@ extension PreviewMock {
         var toggleMethod: ToggleMethod = .longPressKey
         var modifierFlag: ModifierFlag = .control
         var toolBarPosition: ToolBarPosition = .top
+        var clearAllObjects: Bool = false
+        var defaultColorIndex: Int = 0
+        var defaultOpacity: CGFloat = 0.8
+        var defaultLineWidth: CGFloat = 4.0
     }
 }

@@ -9,21 +9,23 @@
 import SwiftUI
 
 struct SettingsView<SAM: ScreenNoteAppModel,
-                    GVM: GeneralSettingsViewModel>: View {
+                    GVM: GeneralSettingsViewModel,
+                    CVM: CanvasSettingsViewModel>: View {
     @EnvironmentObject private var appModel: SAM
 
-    private enum Tabs: Hashable {
-        case general
-    }
-
     var body: some View {
-        TabView {
+        TabView(selection: $appModel.settingsTab) {
             GeneralSettingsView(viewModel: GVM(appModel.userDefaultsRepository,
                                                appModel.launchAtLoginRepository))
             .tabItem {
                 Label("general", systemImage: "gear")
             }
-            .tag(Tabs.general)
+            .tag(SettingsTabType.general)
+            CanvasSettingsView(viewModel: CVM(appModel.userDefaultsRepository))
+                .tabItem {
+                    Label("canvas", systemImage: "square.and.pencil")
+                }
+                .tag(SettingsTabType.canvas)
         }
         .padding(.horizontal, 40)
         .padding(.vertical, 20)
@@ -34,7 +36,8 @@ struct SettingsView<SAM: ScreenNoteAppModel,
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView<PreviewMock.ScreenNoteAppModelMock,
-                     PreviewMock.GeneralSettingsViewModelMock>()
+                     PreviewMock.GeneralSettingsViewModelMock,
+                     PreviewMock.CanvasSettingsViewModelMock>()
             .environmentObject(PreviewMock.ScreenNoteAppModelMock())
     }
 }

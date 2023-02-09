@@ -28,8 +28,9 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
                 EmptyView()
             }
             .pickerStyle(.radioGroup)
+            .padding(.bottom, 8)
             HStack(alignment: .center, spacing: 8) {
-                Text("modifierKey:")
+                wrapText(maxKey: "wrapTextGeneralTab", key: "modifierKey:")
                 Picker(selection: $viewModel.modifierFlag) {
                     ForEach(ModifierFlag.allCases, id: \.rawValue) { modifierFlag in
                         Text(LocalizedStringKey(stringLiteral: "\(modifierFlag.title)Key"))
@@ -43,7 +44,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
                 Spacer()
             }
             HStack(alignment: .center, spacing: 8) {
-                Text("toolBarPosition:")
+                wrapText(maxKey: "wrapTextGeneralTab", key: "toolBarPosition:")
                 Picker(selection: $viewModel.toolBarPosition) {
                     ForEach(ToolBarPosition.allCases, id: \.rawValue) { position in
                         Text(position.localizedKey)
@@ -59,9 +60,9 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
             if macOS13OrLater {
                 Divider()
                 HStack(alignment: .center, spacing: 8) {
-                    Text("launchAtLogin:")
+                    Text("launch:")
                     Toggle(isOn: $viewModel.launchAtLogin) {
-                        Text("enable")
+                        Text("launchAtLogin")
                     }
                 }
             }

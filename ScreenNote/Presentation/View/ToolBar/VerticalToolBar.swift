@@ -78,16 +78,19 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     } label: {
                         Image(systemName: "drop.fill")
                             .foregroundColor(objectModel.color)
-                            .opacity(objectModel.alpha)
+                            .opacity(objectModel.opacity)
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("colorPalette")
                     .popover(isPresented: $showColorPopover, arrowEdge: arrowEdge) {
-                        ColorPalettePopover(color: $objectModel.color,
-                                            alpha: $objectModel.alpha,
-                                            colors: objectModel.colors) {
-                            objectModel.willUpdateAlpha()
-                        }
+                        ColorPalettePopover(
+                            color: $objectModel.color,
+                            opacity: $objectModel.opacity,
+                            colors: objectModel.colors,
+                            startUpdatingOpacityHandler: {
+                                objectModel.startUpdatingOpacity()
+                            }
+                        )
                     }
                     Button {
                         showLineWidthPopover = true
@@ -97,11 +100,14 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     .buttonStyle(.toolBar(.vertical))
                     .help("lineWidth")
                     .popover(isPresented: $showLineWidthPopover, arrowEdge: arrowEdge) {
-                        LineWidthPopover(lineWidth: $objectModel.lineWidth,
-                                         color: $objectModel.color,
-                                         alpha: $objectModel.alpha) {
-                            objectModel.willUpdateLineWidth()
-                        }
+                        LineWidthPopover(
+                            lineWidth: $objectModel.lineWidth,
+                            color: $objectModel.color,
+                            opacity: $objectModel.opacity,
+                            startUpdatingLineWidthHandler: {
+                                objectModel.startUpdatingLineWidth()
+                            }
+                        )
                     }
                 }
                 HStack(spacing: 8) {
@@ -126,7 +132,7 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                         Image(systemName: "align.horizontal.left.fill")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .help("alignment")
+                    .help("align")
                     .popover(isPresented: $showAlignPopover, arrowEdge: arrowEdge) {
                         ObjectAlignPopover(
                             toolBarDirection: .vertical,

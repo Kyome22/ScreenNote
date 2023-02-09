@@ -1,0 +1,91 @@
+/* 
+  Localizable.strings
+  ScreenNote
+
+  Created by Takuto Nakamura on 2023/01/30.
+  
+*/
+
+// Menu
+"showCanvas" = "キャンバスを表示";
+"hideCanvas" = "キャンバスを非表示";
+"preferences" = "環境設定…";
+"aboutApp" = "ScreenNoteについて";
+"reportAnIssue" = "不具合の報告";
+"terminateApp" = "ScreenNoteを終了";
+
+// Settings
+"general" = "一般";
+"wrapTextGeneralTab" = "ツールバーの位置:";
+"toggleMethod:" = "キャンバス表示／非表示のトグル方法:";
+"longPressModifierKey" = "修飾キーの長押し";
+"pressBothSideModifierKeys" = "左右の修飾キーの同時押し";
+"modifierKey:" = "修飾キー:";
+"controlKey" = "⌃ コントロールキー";
+"optionKey" = "⌥ オプションキー";
+"shiftKey" = "⇧ シフトキー";
+"commandKey" = "⌘ コマンドキー";
+"toolBarPosition:" = "ツールバーの位置:";
+"top" = "画面上部";
+"right" = "画面右側";
+"bottom" = "画面下部";
+"left" = "画面左側";
+"launch:" = "起動:";
+"launchAtLogin" = "ログイン時に自動でScreenNoteを起動";
+
+"canvas" = "キャンバス";
+"wrapTextCanvasTab" = "デフォルトの不透明度:";
+"objects:" = "オブジェクト:";
+"clearAllObjects" = "表示の度に全てのオブジェクトを削除する";
+"defaultColor:" = "デフォルトのカラー:";
+"defaultOpacity:" = "デフォルトの不透明度:";
+"defaultLineWidth:" = "デフォルトの線幅:";
+
+// ShortcutPanel
+"control" = "コントロール";
+"option" = "オプション";
+"shift" = "シフト";
+"command" = "コマンド";
+"longPress" = "%@キーを長押ししてください。";
+"pressBothSide" = "左右の%@キーを同時に押してください。";
+
+// ToolTip
+"goBack" = "元に戻す: ⌘Z";
+"goForward" = "やり直す: ⇧⌘Z";
+"select" = "選択ツール: S";
+"text" = "テキストツール: T";
+"pen" = "ペンツール: P";
+"line" = "直線ツール: L";
+"fillRect" = "長方形ツール（塗りつぶし）: R";
+"lineRect" = "長方形ツール（輪郭線）: ⇧R";
+"fillOval" = "楕円ツール（塗りつぶし）: O";
+"lineOval" = "楕円ツール（輪郭線）: ⇧O";
+"colorPalette" = "描画色の変更";
+"opacity" = "不透明度の変更";
+"lineWidth" = "線幅の変更";
+"arrange" = "配置";
+"bringFront" = "最前面へ配置";
+"sendBack" = "最背面へ配置";
+"align" = "整列";
+"horizontalAlignLeft" = "水平方向左に整列";
+"horizontalAlignCenter" = "水平方向中央に整列";
+"horizontalAlignRight" = "水平方向右に整列";
+"verticalAlignTop" = "垂直方向上に整列";
+"verticalAlignCenter" = "垂直方向中央に整列";
+"verticalAlignBottom" = "垂直方向下に整列";
+"flip" = "反転";
+"horizontalFlip" = "水平方向に反転";
+"verticalFlip" = "垂直方向に反転";
+"rotate" = "回転";
+"rotateCounterClockwise" = "半時計周りに回転";
+"rotateClockwise" = "時計周りに回転";
+"duplicate" = "複製";
+"delete" = "削除: ⌫";
+
+// Mail
+"issueReport" = "不具合の報告";
+"environment" = "# 環境\n- %@: ver %@\n- macOS: %@\n";
+"whatYouTried" = "# 試したこと\n- アプリの再起動: はい/いいえ\n";
+"shortDescription" = "# 不具合の簡単な説明\n\n";
+"reproduceIssue" = "# 不具合の再現手順（不具合が発生した際に行なっていた操作）\n\n";
+"expectedResult" = "# 本来期待される挙動\n\n";

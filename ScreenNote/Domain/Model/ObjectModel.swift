@@ -14,7 +14,7 @@ protocol ObjectModel: ObservableObject {
     var selectedObjectsBounds: CGRect? { get set }
     var objects: [Object] { get set }
     var color: Color { get set }
-    var alpha: CGFloat { get set }
+    var opacity: CGFloat { get set }
     var lineWidth: CGFloat { get set }
     var textFieldPosition: CGPoint? { get set }
     var inputText: String { get set }
@@ -28,8 +28,9 @@ protocol ObjectModel: ObservableObject {
 
     func undo()
     func redo()
-    func willUpdateAlpha()
-    func willUpdateLineWidth()
+    func resetHistory()
+    func startUpdatingOpacity()
+    func startUpdatingLineWidth()
     func arrange(_ arrangeMethod: ObjectArrangeMethod)
     func align(_ alignment: ObjectAlignment)
     func flip(_ flipDirection: ObjectFlipDirection)
@@ -39,7 +40,7 @@ protocol ObjectModel: ObservableObject {
     func selectAll()
 }
 
-final class ObjectModelImpl: ObjectModel {
+final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     enum Action {
         case none
         case move
@@ -52,7 +53,7 @@ final class ObjectModelImpl: ObjectModel {
         case keep
     }
 
-    @Published var objectType: ObjectType = .select {
+    @Published var objectType: ObjectType = .pen {
         didSet { updatedObjectType(oldValue) }
     }
     @Published var rectangleForSelection: Object?
@@ -60,13 +61,13 @@ final class ObjectModelImpl: ObjectModel {
     @Published var objects = [Object]() {
         didSet { updateSelectedObjectsBounds() }
     }
-    @Published var color: Color = Color.clear {
+    @Published var color: Color {
         didSet { updatedColor(oldValue) }
     }
-    @Published var alpha: CGFloat = 0.8 {
-        didSet { updatedAlpha() }
+    @Published var opacity: CGFloat {
+        didSet { updatedOpacity() }
     }
-    @Published var lineWidth: CGFloat = 4.0 {
+    @Published var lineWidth: CGFloat {
         didSet { updatedLineWidth() }
     }
     @Published var textFieldPosition: CGPoint?
@@ -75,6 +76,7 @@ final class ObjectModelImpl: ObjectModel {
 
     let colors: [[Color]]
 
+    private let userDefaultsRepository: UR
     private let undoManager = UndoManager()
     private var lastObjects = [Object]()
     private var currentAction: Action = .none
@@ -85,23 +87,13 @@ final class ObjectModelImpl: ObjectModel {
         return objects.filter { $0.isSelected }
     }
 
-    init() {
-        let primaries: [NSColor] = [
-            NSColor(named: "UniqueWhite")!,
-            NSColor(named: "UniqueRed")!,
-            NSColor(named: "UniqueOrange")!,
-            NSColor(named: "UniqueYello")!,
-            NSColor(named: "UniqueGreen")!,
-            NSColor(named: "UniqueBlue")!,
-            NSColor(named: "UniqueViolet")!,
-            NSColor(named: "UniquePurple")!
-        ]
-        colors = primaries.map { primary in
-            return (0 ..< 5).map { i in
-                Color(primary.blended(withFraction: 0.2 * CGFloat(i), of: .black)!)
-            }
-        }
-        color = colors[0][0]
+    init(_ userDefaultsRepository: UR) {
+        self.userDefaultsRepository = userDefaultsRepository
+        colors = Color.palette
+        let index = userDefaultsRepository.defaultColorIndex
+        color = colors[index % 8][index / 8]
+        opacity = userDefaultsRepository.defaultOpacity
+        lineWidth = userDefaultsRepository.defaultLineWidth
         undoManager.levelsOfUndo = 15
     }
 
@@ -211,12 +203,12 @@ final class ObjectModelImpl: ObjectModel {
         case .pen:
             pushHistory()
             objects.append(
-                Object(.pen, color, alpha, lineWidth, [location])
+                Object(.pen, color, opacity, lineWidth, [location])
             )
         default:
             pushHistory()
             objects.append(
-                Object(objectType, color, alpha, lineWidth, [location, location])
+                Object(objectType, color, opacity, lineWidth, [location, location])
             )
         }
     }
@@ -301,7 +293,7 @@ final class ObjectModelImpl: ObjectModel {
             if !inputText.isEmpty {
                 pushHistory()
                 objects.append(
-                    Object(color, alpha, [position, endPosition], inputText)
+                    Object(color, opacity, [position, endPosition], inputText)
                 )
             }
         }
@@ -341,6 +333,19 @@ final class ObjectModelImpl: ObjectModel {
         }
     }
 
+    func resetHistory() {
+        objectType = .pen
+        objects.removeAll()
+        let index = userDefaultsRepository.defaultColorIndex
+        color = colors[index % 8][index / 8]
+        opacity = userDefaultsRepository.defaultOpacity
+        lineWidth = userDefaultsRepository.defaultLineWidth
+        textFieldPosition = nil
+        inputText = ""
+        fontSize = 40.0
+        undoManager.removeAllActions()
+    }
+
     // MARK: Operation to Selected Objects
     private func updatedObjectType(_ oldValue: ObjectType) {
         if objectType == oldValue { return }
@@ -360,19 +365,19 @@ final class ObjectModelImpl: ObjectModel {
         }
     }
 
-    func willUpdateAlpha() {
+    func startUpdatingOpacity() {
         if selectedObjects.isEmpty { return }
         pushHistory()
     }
 
-    private func updatedAlpha() {
+    private func updatedOpacity() {
         if selectedObjects.isEmpty { return }
         for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].alpha = alpha
+            objects[i].opacity = opacity
         }
     }
 
-    func willUpdateLineWidth() {
+    func startUpdatingLineWidth() {
         if selectedObjects.isEmpty { return }
         pushHistory()
     }
@@ -494,16 +499,19 @@ extension PreviewMock {
         @Published var rectangleForSelection: Object?
         @Published var selectedObjectsBounds: CGRect?
         @Published var objects: [Object] = []
-        @Published var color: Color = Color("UniqueRed")
-        @Published var alpha: CGFloat = 0.8
+        @Published var color: Color
+        @Published var opacity: CGFloat = 0.8
         @Published var lineWidth: CGFloat = 4.0
         @Published var textFieldPosition: CGPoint?
         @Published var inputText: String = ""
         @Published var fontSize: CGFloat = 40.0
 
-        var colors: [[Color]] = []
+        var colors: [[Color]]
 
-        init() {}
+        init() {
+            colors = Color.palette
+            color = colors[0][0]
+        }
 
         func endEditing(position: CGPoint) {}
         func dragBegan(location: CGPoint) {}
@@ -512,8 +520,9 @@ extension PreviewMock {
 
         func undo() {}
         func redo() {}
-        func willUpdateAlpha() {}
-        func willUpdateLineWidth() {}
+        func resetHistory() {}
+        func startUpdatingOpacity() {}
+        func startUpdatingLineWidth() {}
         func arrange(_ arrangeMethod: ObjectArrangeMethod) {}
         func align(_ alignment: ObjectAlignment) {}
         func flip(_ flipDirection: ObjectFlipDirection) {}

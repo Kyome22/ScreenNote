@@ -67,7 +67,7 @@ struct CanvasView<OM: ObjectModel>: View {
             if let position = objectModel.textFieldPosition {
                 TextField(" ", text: $objectModel.inputText)
                     .textFieldStyle(.plain)
-                    .foregroundColor(objectModel.color.opacity(objectModel.alpha))
+                    .foregroundColor(objectModel.color.opacity(objectModel.opacity))
                     .font(.system(size: objectModel.fontSize))
                     .lineLimit(1)
                     .fixedSize()

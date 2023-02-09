@@ -33,6 +33,9 @@ final class WorkspacePanel<UR: UserDefaultsRepository, OM: ObjectModel>: NSPanel
         self.backgroundColor = NSColor(white: 0.0, alpha: 0.01)
         self.alphaValue = 0.0
 
+        if userDefaultsRepository.clearAllObjects {
+            objectModel.resetHistory()
+        }
         let viewModel = WorkspaceViewModelImpl<UR>(userDefaultsRepository)
         let workspaceView = WorkspaceView(viewModel: viewModel, objectModel: objectModel)
         self.contentView = WorkspaceHostingView(rootView: workspaceView)

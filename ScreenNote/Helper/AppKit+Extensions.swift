@@ -93,3 +93,16 @@ extension String {
         return NSAttributedString(string: self, attributes: attributes).size()
     }
 }
+
+extension NSColor {
+    static let primaries: [NSColor] = [
+        NSColor(named: "UniqueWhite")!,
+        NSColor(named: "UniqueRed")!,
+        NSColor(named: "UniqueOrange")!,
+        NSColor(named: "UniqueYello")!,
+        NSColor(named: "UniqueGreen")!,
+        NSColor(named: "UniqueBlue")!,
+        NSColor(named: "UniqueViolet")!,
+        NSColor(named: "UniquePurple")!
+    ]
+}

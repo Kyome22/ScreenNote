@@ -16,7 +16,8 @@
 
 // Settings
 "general" = "General";
-"toggleMethod:" = "Toggle Method (show/hide the canvas):";
+"wrapTextGeneralTab" = "Tool Bar Position:";
+"toggleMethod:" = "How to Toggle Canvas Show/Hide:";
 "longPressModifierKey" = "Long press a modifier key.";
 "pressBothSideModifierKeys" = "Press left & right modifier keys at the same time.";
 "modifierKey:" = "Modifier Key:";
@@ -29,8 +30,17 @@
 "right" = "Right";
 "bottom" = "Bottom";
 "left" = "Left";
-"launchAtLogin:" = "Launch at Login:";
-"enable" = "Enable";
+"launch:" = "Launch:";
+"launchAtLogin" = "Launch ScreenNote automatically at login.";
+
+
+"canvas" = "Canvas";
+"wrapTextCanvasTab" = "Default Line Width:";
+"objects:" = "Objects:";
+"clearAllObjects" = "Clear all objects each time.";
+"defaultColor:" = "Default Color:";
+"defaultOpacity:" = "Default Opacity:";
+"defaultLineWidth:" = "Default Line Width:";
 
 // ShortcutPanel
 "control" = "control";
@@ -52,7 +62,7 @@
 "fillOval" = "Fill Oval Tool: O";
 "lineOval" = "Line Oval Tool: ⇧O";
 "colorPalette" = "Change Color";
-"alpha" = "Change Alpha";
+"opacity" = "Change Opacity";
 "lineWidth" = "Change Line Width";
 "arrange" = "Arrange";
 "bringFront" = "Bring to Frontmost";

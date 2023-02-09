@@ -10,20 +10,20 @@ import SwiftUI
 
 struct ColorPalettePopover: View {
     @Binding private var color: Color
-    @Binding private var alpha: CGFloat
+    @Binding private var opacity: CGFloat
     private let colors: [[Color]]
-    private let willUpdateAlphaHandler: () -> Void
+    private let startUpdatingOpacityHandler: () -> Void
 
     init(
         color: Binding<Color>,
-        alpha: Binding<CGFloat>,
+        opacity: Binding<CGFloat>,
         colors: [[Color]],
-        willUpdateAlphaHandler: @escaping () -> Void
+        startUpdatingOpacityHandler: @escaping () -> Void
     ) {
         _color = color
-        _alpha = alpha
+        _opacity = opacity
         self.colors = colors
-        self.willUpdateAlphaHandler = willUpdateAlphaHandler
+        self.startUpdatingOpacityHandler = startUpdatingOpacityHandler
     }
 
     var body: some View {
@@ -46,17 +46,19 @@ struct ColorPalettePopover: View {
                 }
             }
             HStack(spacing: 8) {
-                Image(systemName: "checkerboard.rectangle")
-                    .frame(height: 20)
-                    .opacity(alpha)
-                Slider(value: $alpha, in: (0.2 ... 1)) { flag in
+                Text(String(format: "%3.1f", opacity))
+                    .font(.system(.body, design: .monospaced))
+                Slider(value: $opacity, in: (0.2 ... 1)) { flag in
                     if flag {
-                        willUpdateAlphaHandler()
+                        startUpdatingOpacityHandler()
                     }
                 }
                 .frame(height: 20)
+                Image(systemName: "checkerboard.rectangle")
+                    .frame(height: 20)
+                    .opacity(opacity)
             }
-            .help("alpha")
+            .help("opacity")
         }
         .padding(8)
     }
@@ -65,8 +67,8 @@ struct ColorPalettePopover: View {
 struct ColorPalettePopover_Previews: PreviewProvider {
     static var previews: some View {
         ColorPalettePopover(color: .constant(.white),
-                            alpha: .constant(0.8),
+                            opacity: .constant(0.8),
                             colors: [[]],
-                            willUpdateAlphaHandler: {})
+                            startUpdatingOpacityHandler: {})
     }
 }
