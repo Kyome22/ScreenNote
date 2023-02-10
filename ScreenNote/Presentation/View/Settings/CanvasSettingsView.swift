@@ -1,10 +1,10 @@
 /*
-  CanvasSettingsView.swift
-  ScreenNote
+ CanvasSettingsView.swift
+ ScreenNote
 
-  Created by Takuto Nakamura on 2023/02/08.
-  
-*/
+ Created by Takuto Nakamura on 2023/02/08.
+
+ */
 
 import SwiftUI
 
@@ -24,6 +24,7 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                 }
             }
             .frame(height: 20)
+            Divider()
             HStack(alignment: .center, spacing: 8) {
                 wrapText(maxKey: "wrapTextCanvasTab", key: "defaultColor:")
                 Button {
@@ -37,11 +38,11 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                 }
             }
             .frame(height: 20)
-            HStack(alignment: .center) {
+            HStack(alignment: .center, spacing: 8) {
                 wrapText(maxKey: "wrapTextCanvasTab", key: "defaultOpacity:")
                 Text(String(format: "%4.1f", viewModel.defaultOpacity))
                     .font(.system(.body, design: .monospaced))
-                Slider(value: $viewModel.defaultOpacity, in: (0.2 ... 1)) { flag in
+                Slider(value: $viewModel.defaultOpacity, in: (0.2 ... 1.0)) { flag in
                     if !flag {
                         viewModel.endUpdatingDefaultOpacity()
                     }
@@ -52,7 +53,7 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                     .opacity(viewModel.defaultOpacity)
             }
             .frame(height: 20)
-            HStack(alignment: .center) {
+            HStack(alignment: .center, spacing: 8) {
                 wrapText(maxKey: "wrapTextCanvasTab", key: "defaultLineWidth:")
                 Text(String(format: "%4.1f", viewModel.defaultLineWidth))
                     .font(.system(.body, design: .monospaced))
@@ -71,6 +72,37 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                     )
                     .frame(width: 18, height: 20)
             }
+            Divider()
+            HStack(alignment: .center, spacing: 8) {
+                wrapText(maxKey: "wrapTextCanvasTab", key: "backgroundColor:")
+                ForEach(viewModel.backgrounds, id: \.hashValue) { color in
+                    Button {
+                        viewModel.backgroundColor = color
+                    } label: {
+                        EmptyView()
+                    }
+                    .buttonStyle(.selectableColor(color, Binding<Bool>(
+                        get: { viewModel.backgroundColor == color },
+                        set: { _, _ in }
+                    )))
+                }
+            }
+            .frame(height: 20)
+            HStack(alignment: .center, spacing: 8) {
+                wrapText(maxKey: "wrapTextCanvasTab", key: "backgroundOpacity:")
+                Text(String(format: "%4.2f", viewModel.backgroundOpacity))
+                    .font(.system(.body, design: .monospaced))
+                Slider(value: $viewModel.backgroundOpacity, in: (0.02 ... 1.0)) { flag in
+                    if !flag {
+                        viewModel.endUpdatingBackgroundOpacity()
+                    }
+                }
+                .frame(height: 20)
+                Image(systemName: "checkerboard.rectangle")
+                    .frame(height: 20)
+                    .opacity(viewModel.backgroundOpacity)
+            }
+            .frame(height: 20)
         }
         .fixedSize()
     }

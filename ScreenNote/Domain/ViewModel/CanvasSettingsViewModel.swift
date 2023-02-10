@@ -14,12 +14,16 @@ protocol CanvasSettingsViewModel: ObservableObject {
     var defaultColor: Color { get set }
     var defaultOpacity: CGFloat { get set }
     var defaultLineWidth: CGFloat { get set }
+    var backgroundColor: Color { get set }
+    var backgroundOpacity: CGFloat { get set }
     var colors: [[Color]] { get }
+    var backgrounds: [Color] { get }
 
     init(_ userDefaultsRepository: UserDefaultsRepository)
 
     func endUpdatingDefaultOpacity()
     func endUpdatingDefaultLineWidth()
+    func endUpdatingBackgroundOpacity()
 }
 
 final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSettingsViewModel {
@@ -28,11 +32,16 @@ final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSetti
     }
     @Published var showColorPopover: Bool = false
     @Published var defaultColor: Color {
-        didSet { updatedColor() }
+        didSet { updatedDefaultColor() }
     }
     @Published var defaultOpacity: CGFloat
     @Published var defaultLineWidth: CGFloat
+    @Published var backgroundColor: Color {
+        didSet { updatedBackgroundColor() }
+    }
+    @Published var backgroundOpacity: CGFloat
     let colors: [[Color]]
+    let backgrounds: [Color] = [.white, .black]
     private let userDefaultsRepository: UR
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
@@ -43,14 +52,21 @@ final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSetti
         defaultColor = colors[index % 8][index / 8]
         defaultOpacity = userDefaultsRepository.defaultOpacity
         defaultLineWidth = userDefaultsRepository.defaultLineWidth
+        backgroundColor = backgrounds[userDefaultsRepository.backgroundColorIndex]
+        backgroundOpacity = userDefaultsRepository.backgroundOpacity
     }
 
-    private func updatedColor() {
+    private func updatedDefaultColor() {
         for i in (0 ..< 40) {
             if colors[i % 8][i / 8] == defaultColor {
                 userDefaultsRepository.defaultColorIndex = i
             }
         }
+    }
+
+    private func updatedBackgroundColor() {
+        let index = backgrounds.firstIndex(of: backgroundColor) ?? 0
+        userDefaultsRepository.backgroundColorIndex = index
     }
 
     func endUpdatingDefaultOpacity() {
@@ -59,6 +75,10 @@ final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSetti
 
     func endUpdatingDefaultLineWidth() {
         userDefaultsRepository.defaultLineWidth = defaultLineWidth
+    }
+
+    func endUpdatingBackgroundOpacity() {
+        userDefaultsRepository.backgroundOpacity = backgroundOpacity
     }
 }
 
@@ -71,7 +91,10 @@ extension PreviewMock {
         @Published var defaultColor: Color = .clear
         @Published var defaultOpacity: CGFloat = 0.8
         @Published var defaultLineWidth: CGFloat = 4.0
+        @Published var backgroundColor: Color = .white
+        @Published var backgroundOpacity: CGFloat = 0.0
         let colors: [[Color]]
+        let backgrounds: [Color] = [.white, .black]
 
         init(_ userDefaultsRepository: UserDefaultsRepository) {
             colors = []
@@ -83,5 +106,6 @@ extension PreviewMock {
 
         func endUpdatingDefaultOpacity() {}
         func endUpdatingDefaultLineWidth() {}
+        func endUpdatingBackgroundOpacity() {}
     }
 }

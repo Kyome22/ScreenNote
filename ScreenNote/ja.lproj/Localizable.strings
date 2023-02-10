@@ -40,6 +40,8 @@
 "defaultColor:" = "デフォルトの描画色:";
 "defaultOpacity:" = "デフォルトの不透明度:";
 "defaultLineWidth:" = "デフォルトの線幅:";
+"backgroundColor:" = "背景色:";
+"backgroundOpacity:" = "背景の不透明度:";
 
 // ShortcutPanel
 "control" = "コントロール";

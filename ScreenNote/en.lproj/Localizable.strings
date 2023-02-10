@@ -35,12 +35,14 @@
 
 
 "canvas" = "Canvas";
-"wrapTextCanvasTab" = "Default Line Width:";
+"wrapTextCanvasTab" = "Background Opacity:";
 "objects:" = "Objects:";
 "clearAllObjects" = "Clear all objects each time.";
 "defaultColor:" = "Default Color:";
 "defaultOpacity:" = "Default Opacity:";
 "defaultLineWidth:" = "Default Line Width:";
+"backgroundColor:" = "Background Color:";
+"backgroundOpacity:" = "Background Opacity:";
 
 // ShortcutPanel
 "control" = "control";

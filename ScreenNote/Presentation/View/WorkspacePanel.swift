@@ -30,9 +30,10 @@ final class WorkspacePanel<UR: UserDefaultsRepository, OM: ObjectModel>: NSPanel
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         self.isOpaque = false
         self.hasShadow = false
-        self.backgroundColor = NSColor(white: 0.0, alpha: 0.01)
+        let white = 1.0 - CGFloat(userDefaultsRepository.backgroundColorIndex)
+        let alpha = max(0.01, userDefaultsRepository.backgroundOpacity)
+        self.backgroundColor = NSColor(white: white, alpha: alpha)
         self.alphaValue = 0.0
-
         if userDefaultsRepository.clearAllObjects {
             objectModel.resetHistory()
         }

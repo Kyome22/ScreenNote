@@ -43,6 +43,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
                 .fixedSize(horizontal: true, vertical: false)
                 Spacer()
             }
+            Divider()
             HStack(alignment: .center, spacing: 8) {
                 wrapText(maxKey: "wrapTextGeneralTab", key: "toolBarPosition:")
                 Picker(selection: $viewModel.toolBarPosition) {

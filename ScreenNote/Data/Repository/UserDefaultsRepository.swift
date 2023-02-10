@@ -22,6 +22,8 @@ protocol UserDefaultsRepository: AnyObject {
     var defaultColorIndex: Int { get set }
     var defaultOpacity: CGFloat { get set }
     var defaultLineWidth: CGFloat { get set }
+    var backgroundColorIndex: Int { get set }
+    var backgroundOpacity: CGFloat { get set }
 }
 
 final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
@@ -71,6 +73,16 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         set { userDefaults.set(newValue, forKey: "defaultLineWidth") }
     }
 
+    var backgroundColorIndex: Int {
+        get { userDefaults.integer(forKey: "backgroundColorIndex") }
+        set { userDefaults.set(newValue, forKey: "backgroundColorIndex") }
+    }
+
+    var backgroundOpacity: CGFloat  {
+        get { userDefaults.double(forKey: "backgroundOpacity") }
+        set { userDefaults.set(newValue, forKey: "backgroundOpacity") }
+    }
+
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
 #if DEBUG
@@ -85,7 +97,9 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             "clearAllObjects": false,
             "defaultColorIndex": Int(0),
             "defaultOpacity": Double(0.8),
-            "defaultLineWidth": Double(4.0)
+            "defaultLineWidth": Double(4.0),
+            "backgroundColorIndex": Int(0),
+            "backgroundOpacity": Double(0.02)
         ])
 #if DEBUG
         showAllData()
@@ -115,5 +129,7 @@ extension PreviewMock {
         var defaultColorIndex: Int = 0
         var defaultOpacity: CGFloat = 0.8
         var defaultLineWidth: CGFloat = 4.0
+        var backgroundColorIndex: Int = 0
+        var backgroundOpacity: CGFloat = 0.02
     }
 }

@@ -19,6 +19,7 @@
 		1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */; };
 		1C8BB4A92995589700EE5E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AB2995589700EE5E66 /* Localizable.strings */; };
 		1C8BB4AE2995CEE900EE5E66 /* TextOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */; };
+		1C8BB4E62996EC2900EE5E66 /* SelectableColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4E52996EC2900EE5E66 /* SelectableColorButtonStyle.swift */; };
 		1C9A541029879F4A008B5AAE /* ScreenNoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A540F29879F4A008B5AAE /* ScreenNoteApp.swift */; };
 		1C9A541429879F4B008B5AAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9A541329879F4B008B5AAE /* Assets.xcassets */; };
 		1C9A541729879F4B008B5AAE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9A541629879F4B008B5AAE /* Preview Assets.xcassets */; };
@@ -81,6 +82,7 @@
 		1C8BB4AA2995589700EE5E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C8BB4AC2995589A00EE5E66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOrientation.swift; sourceTree = "<group>"; };
+		1C8BB4E52996EC2900EE5E66 /* SelectableColorButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableColorButtonStyle.swift; sourceTree = "<group>"; };
 		1C9A540C29879F4A008B5AAE /* ScreenNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9A540F29879F4A008B5AAE /* ScreenNoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenNoteApp.swift; sourceTree = "<group>"; };
 		1C9A541329879F4B008B5AAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				1C9A54482987F04B008B5AAE /* GeneralSettingsView.swift */,
 				1C8BB4A22993E70300EE5E66 /* CanvasSettingsView.swift */,
 				1C8BB4A42994ABDE00EE5E66 /* ColorButtonStyle.swift */,
+				1C8BB4E52996EC2900EE5E66 /* SelectableColorButtonStyle.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				1C8BB49D2993C4E700EE5E66 /* RotateMethod.swift in Sources */,
 				1C9A545D2987F9CA008B5AAE /* Line.swift in Sources */,
 				1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */,
+				1C8BB4E62996EC2900EE5E66 /* SelectableColorButtonStyle.swift in Sources */,
 				1C9A54352987A1DD008B5AAE /* String+Extensions.swift in Sources */,
 				1C9A542E2987A099008B5AAE /* LaunchAtLoginRepository.swift in Sources */,
 				1C9A54552987F91A008B5AAE /* Anchor.swift in Sources */,
