@@ -24,6 +24,28 @@ enum TextOrientation: Int, CaseIterable {
         case .right:         return Angle(degrees: 90)
         case .down:          return Angle(degrees: 180)
         case .left:          return Angle(degrees: 270)
+        case .upMirrored:    return Angle(degrees: 0)
+        case .rightMirrored: return Angle(degrees: 90)
+        case .downMirrored:  return Angle(degrees: 180)
+        case .leftMirrored:  return Angle(degrees: 270)
+        }
+    }
+
+    var scale: CGFloat {
+        switch self {
+        case .up, .right, .down, .left:
+            return 1.0
+        case .upMirrored, .rightMirrored, .downMirrored, .leftMirrored:
+            return -1.0
+        }
+    }
+
+    var angle3D: Angle {
+        switch self {
+        case .up:            return Angle(degrees: 0)
+        case .right:         return Angle(degrees: 90)
+        case .down:          return Angle(degrees: 180)
+        case .left:          return Angle(degrees: 270)
         case .upMirrored:    return Angle(degrees: 180)
         case .rightMirrored: return Angle(degrees: 180)
         case .downMirrored:  return Angle(degrees: 180)
@@ -44,7 +66,16 @@ enum TextOrientation: Int, CaseIterable {
         }
     }
 
-    func rotateRight() -> Self {
+    func size(of bounds: CGRect) -> CGSize {
+        switch self {
+        case .up, .down, .upMirrored, .downMirrored:
+            return CGSize(width: bounds.width, height: bounds.height)
+        case .right, .left, .rightMirrored, .leftMirrored:
+            return CGSize(width: bounds.height, height: bounds.width)
+        }
+    }
+
+    private func rotateRight() -> Self {
         switch self {
         case .up:            return .right
         case .right:         return .down
@@ -57,7 +88,7 @@ enum TextOrientation: Int, CaseIterable {
         }
     }
 
-    func rotateLeft() -> Self {
+    private func rotateLeft() -> Self {
         switch self {
         case .up:            return .left
         case .right:         return .up
@@ -70,7 +101,16 @@ enum TextOrientation: Int, CaseIterable {
         }
     }
 
-    func flipHorizontal() -> Self {
+    func rotate(_ rotateMethod: RotateMethod) -> Self {
+        switch rotateMethod {
+        case .rotateRight:
+            return rotateRight()
+        case .rotateLeft:
+            return rotateLeft()
+        }
+    }
+
+    private func flipHorizontal() -> Self {
         switch self {
         case .up:            return .upMirrored
         case .right:         return .rightMirrored
@@ -83,7 +123,7 @@ enum TextOrientation: Int, CaseIterable {
         }
     }
 
-    func flipVertical() -> Self {
+    private func flipVertical() -> Self {
         switch self {
         case .up:            return .downMirrored
         case .right:         return .leftMirrored
@@ -93,6 +133,36 @@ enum TextOrientation: Int, CaseIterable {
         case .rightMirrored: return .left
         case .downMirrored:  return .up
         case .leftMirrored:  return .right
+        }
+    }
+
+    func flip(_ flipMethod: FlipMethod) -> Self {
+        switch flipMethod {
+        case .flipHorizontal:
+            return flipHorizontal()
+        case .flipVertical:
+            return flipVertical()
+        }
+    }
+
+    func endPosition(with position: CGPoint, size: CGSize) -> CGPoint {
+        switch self {
+        case .up:
+            return CGPoint(x: position.x + size.width, y: position.y + size.height)
+        case .right:
+            return CGPoint(x: position.x - size.height, y: position.y + size.width)
+        case .down:
+            return CGPoint(x: position.x - size.width, y: position.y - size.height)
+        case .left:
+            return CGPoint(x: position.x + size.height, y: position.y - size.width)
+        case .upMirrored:
+            return CGPoint(x: position.x - size.width, y: position.y + size.height)
+        case .rightMirrored:
+            return CGPoint(x: position.x + size.height, y: position.y + size.width)
+        case .downMirrored:
+            return CGPoint(x: position.x + size.width, y: position.y - size.height)
+        case .leftMirrored:
+            return CGPoint(x: position.x - size.height, y: position.y - size.width)
         }
     }
 }

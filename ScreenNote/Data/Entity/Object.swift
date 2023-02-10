@@ -81,7 +81,7 @@ struct Object: Identifiable {
 
     var fontSize: CGFloat {
         let numberOfLines = text.components(separatedBy: .newlines).count
-        let height = bounds.height
+        let height = textOrientation.size(of: bounds).height
         let heightOfLine = height / CGFloat(numberOfLines)
         var estimatedFontSize = (2.0 * (heightOfLine - 0.2078) / 1.176).rounded() / 2.0
         var estimatedSize = text.calculateSize(using: NSFont.systemFont(ofSize: estimatedFontSize))
@@ -155,5 +155,21 @@ struct Object: Identifiable {
         } else {
             return Object(type, color_, opacity, lineWidth, newPoints, isSelected: true)
         }
+    }
+
+    func textOffset(from bounds: CGRect) -> CGPoint {
+        return CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+
+    func textRect(from bounds: CGRect) -> CGRect {
+        let size = textOrientation.size(of: bounds)
+        return CGRect(x: -0.5 * size.width,
+                      y: -0.5 * size.height,
+                      width: size.width,
+                      height: size.height)
+    }
+
+    func inputTextOffset(from bounds: CGRect) -> CGSize {
+        return CGSize(width: bounds.minX, height: bounds.minY)
     }
 }

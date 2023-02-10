@@ -27,12 +27,21 @@ struct CanvasView<OM: ObjectModel>: View {
                         break
                     case .text:
                         if object.isHidden { break }
+                        let bounds = object.bounds
+                        let offset = object.textOffset(from: bounds)
+                        let orientation = object.textOrientation
+                        context.translateBy(x: offset.x, y: offset.y)
+                        context.scaleBy(x: orientation.scale, y: 1.0)
+                        context.rotate(by: orientation.angle)
                         context.draw(
                             Text(object.text)
                                 .foregroundColor(object.color)
                                 .font(.system(size: object.fontSize)),
-                            in: object.bounds
+                            in: object.textRect(from: bounds)
                         )
+                        context.rotate(by: -orientation.angle)
+                        context.scaleBy(x: orientation.scale, y: 1.0)
+                        context.translateBy(x: -offset.x, y: -offset.y)
                     case .pen:
                         if let strokeStyle = object.strokeStyle {
                             context.stroke(object.path, with: .color(object.color), style: strokeStyle)
@@ -64,7 +73,7 @@ struct CanvasView<OM: ObjectModel>: View {
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0))
                 }
             }
-            if let position = objectModel.textFieldPosition {
+            if let textObject = objectModel.objectForInputText {
                 TextField(" ", text: $objectModel.inputText)
                     .textFieldStyle(.plain)
                     .foregroundColor(objectModel.color.opacity(objectModel.opacity))
@@ -77,13 +86,13 @@ struct CanvasView<OM: ObjectModel>: View {
                             .opacity(0.5)
                             .padding(-4.0)
                     )
-                    .offset(x: position.x, y: position.y)
+                    .offset(textObject.inputTextOffset(from: textObject.bounds))
                     .focused($isFocused)
                     .onAppear {
                         isFocused = true
                     }
                     .onSubmit {
-                        objectModel.endEditing(position: position)
+                        objectModel.endEditing(textObject)
                     }
             }
         }

@@ -16,12 +16,12 @@ protocol ObjectModel: ObservableObject {
     var color: Color { get set }
     var opacity: CGFloat { get set }
     var lineWidth: CGFloat { get set }
-    var textFieldPosition: CGPoint? { get set }
+    var objectForInputText: Object? { get set }
     var inputText: String { get set }
     var fontSize: CGFloat { get set }
     var colors: [[Color]] { get }
 
-    func endEditing(position: CGPoint)
+    func endEditing(_ textObject: Object)
     func dragBegan(location: CGPoint)
     func dragMoved(startLocation: CGPoint, location: CGPoint)
     func dragEnded(startLocation: CGPoint, location: CGPoint)
@@ -70,7 +70,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     @Published var lineWidth: CGFloat {
         didSet { updatedLineWidth() }
     }
-    @Published var textFieldPosition: CGPoint?
+    @Published var objectForInputText: Object?
     @Published var inputText: String = ""
     @Published var fontSize: CGFloat = 40.0
 
@@ -185,18 +185,18 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
             }
             lastObjects = objects
         case .text:
-            if let position = textFieldPosition {
-                endEditing(position: position)
+            if let textObject = objectForInputText {
+                endEditing(textObject)
             }
             if let index = objects.lastIndex(where: { object in
                 object.type == .text && object.isHit(point: location)
             }) {
-                textFieldPosition = objects[index].points[0]
+                objectForInputText = objects[index]
                 inputText = objects[index].text
                 fontSize = objects[index].fontSize
                 objects[index].isHidden = true
             } else {
-                textFieldPosition = location
+                objectForInputText = Object(color, opacity, [location], "", .up)
                 inputText = ""
                 fontSize = 40.0
             }
@@ -252,8 +252,9 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
                 objects[index].isSelected = true
             } else if case .rectangle = currentSelectType {
                 if let rectangleForSelection {
+                    let bounds = rectangleForSelection.bounds
                     for i in (0 ..< objects.count) {
-                        objects[i].isSelected = objects[i].isHit(rect: rectangleForSelection.bounds)
+                        objects[i].isSelected = objects[i].isHit(rect: bounds)
                     }
                 }
             }
@@ -271,10 +272,9 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         }
     }
 
-    func endEditing(position: CGPoint) {
+    func endEditing(_ textObject: Object) {
+        let position = textObject.points[0]
         let size = inputText.calculateSize(using: NSFont.systemFont(ofSize: fontSize))
-        let endPosition = CGPoint(x: position.x + size.width,
-                                  y: position.y + size.height)
         if let index = objects.firstIndex(where: { object in
             object.type == .text && object.isHidden
         }) {
@@ -284,6 +284,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
                 pushHistory()
                 objects.remove(at: index)
             } else if inputText != objects[index].text {
+                let endPosition = objects[index].textOrientation.endPosition(with: position, size: size)
                 pushHistory()
                 objects[index].points = [position, endPosition]
                 objects[index].text = inputText
@@ -291,13 +292,15 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         } else {
             // 新規テキスト
             if !inputText.isEmpty {
+                let endPosition = CGPoint(x: position.x + size.width,
+                                          y: position.y + size.height)
                 pushHistory()
                 objects.append(
                     Object(color, opacity, [position, endPosition], inputText, .up)
                 )
             }
         }
-        textFieldPosition = nil
+        objectForInputText = nil
         inputText = ""
         fontSize = 40.0
     }
@@ -340,7 +343,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         color = colors[index % 8][index / 8]
         opacity = userDefaultsRepository.defaultOpacity
         lineWidth = userDefaultsRepository.defaultLineWidth
-        textFieldPosition = nil
+        objectForInputText = nil
         inputText = ""
         fontSize = 40.0
         undoManager.removeAllActions()
@@ -349,8 +352,8 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     // MARK: Operation to Selected Objects
     private func updatedObjectType(_ oldValue: ObjectType) {
         if objectType == oldValue { return }
-        if oldValue == .text, let position = textFieldPosition {
-            endEditing(position: position)
+        if oldValue == .text, let textObject = objectForInputText {
+            endEditing(textObject)
         }
         if objectType != .select, !selectedObjects.isEmpty {
             unselectAllObjects()
@@ -445,6 +448,9 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
                     return CGPoint(x: point.x, y: 2.0 * center.y - point.y)
                 }
             }
+            if objects[i].type == .text {
+                objects[i].textOrientation = objects[i].textOrientation.flip(flipMethod)
+            }
         }
     }
 
@@ -463,6 +469,9 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
                 return transforms.reduce(point) { partialResult, transform in
                     partialResult.applying(transform)
                 }
+            }
+            if objects[i].type == .text {
+                objects[i].textOrientation = objects[i].textOrientation.rotate(rotateMethod)
             }
         }
     }
@@ -501,7 +510,7 @@ extension PreviewMock {
         @Published var color: Color
         @Published var opacity: CGFloat = 0.8
         @Published var lineWidth: CGFloat = 4.0
-        @Published var textFieldPosition: CGPoint?
+        @Published var objectForInputText: Object?
         @Published var inputText: String = ""
         @Published var fontSize: CGFloat = 40.0
 
@@ -512,7 +521,7 @@ extension PreviewMock {
             color = colors[0][0]
         }
 
-        func endEditing(position: CGPoint) {}
+        func endEditing(_ textObject: Object) {}
         func dragBegan(location: CGPoint) {}
         func dragMoved(startLocation: CGPoint, location: CGPoint) {}
         func dragEnded(startLocation: CGPoint, location: CGPoint) {}
