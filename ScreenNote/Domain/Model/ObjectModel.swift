@@ -31,10 +31,10 @@ protocol ObjectModel: ObservableObject {
     func resetHistory()
     func startUpdatingOpacity()
     func startUpdatingLineWidth()
-    func arrange(_ arrangeMethod: ObjectArrangeMethod)
-    func align(_ alignment: ObjectAlignment)
-    func flip(_ flipDirection: ObjectFlipDirection)
-    func rotate(_ rotateDirection: ObjectRotateDirection)
+    func arrange(_ arrangeMethod: ArrangeMethod)
+    func align(_ alignMethod: AlignMethod)
+    func flip(_ flipMethod: FlipMethod)
+    func rotate(_ rotateMethod: RotateMethod)
     func duplicateSelectedObjects()
     func delete()
     func selectAll()
@@ -389,7 +389,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         }
     }
 
-    func arrange(_ arrangeMethod: ObjectArrangeMethod) {
+    func arrange(_ arrangeMethod: ArrangeMethod) {
         guard objectType == .select else { return }
         let targetObjects = selectedObjects
         if targetObjects.isEmpty { return }
@@ -403,60 +403,59 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         }
     }
 
-    func align(_ alignment: ObjectAlignment) {
+    func align(_ alignMethod: AlignMethod) {
         guard objectType == .select, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         for i in (0 ..< objects.count) where objects[i].isSelected {
             let diff: CGFloat
-            switch alignment {
-            case .left:
+            switch alignMethod {
+            case .horizontalAlignLeft:
                 diff = bounds.minX - objects[i].bounds.minX
-            case .hCenter:
+            case .horizontalAlignCenter:
                 diff = bounds.midX - objects[i].bounds.midX
-            case .right:
+            case .horizontalAlignRight:
                 diff = bounds.maxX - objects[i].bounds.maxX
-            case .top:
+            case .verticalAlignTop:
                 diff = bounds.minY - objects[i].bounds.minY
-            case .vCenter:
+            case .verticalAlignCenter:
                 diff = bounds.midY - objects[i].bounds.midY
-            case .bottom:
+            case .verticalAlignBottom:
                 diff = bounds.maxY - objects[i].bounds.maxY
             }
             for j in (0 ..< objects[i].points.count) {
-                switch alignment {
-                case .top, .vCenter, .bottom:
-                    objects[i].points[j].y += diff
-                case .left, .hCenter, .right:
+                if AlignMethod.horizontals.contains(alignMethod) {
                     objects[i].points[j].x += diff
+                } else {
+                    objects[i].points[j].y += diff
                 }
             }
         }
     }
 
-    func flip(_ flipDirection: ObjectFlipDirection) {
+    func flip(_ flipMethod: FlipMethod) {
         guard objectType == .select, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         for i in (0 ..< objects.count) where objects[i].isSelected {
             let center = CGPoint(x: bounds.midX, y: bounds.midY)
             objects[i].points = objects[i].points.map { point in
-                switch flipDirection {
-                case .horizontal:
+                switch flipMethod {
+                case .flipHorizontal:
                     return CGPoint(x: 2.0 * center.x - point.x, y: point.y)
-                case .vertical:
+                case .flipVertical:
                     return CGPoint(x: point.x, y: 2.0 * center.y - point.y)
                 }
             }
         }
     }
 
-    func rotate(_ rotateDirection: ObjectRotateDirection) {
+    func rotate(_ rotateMethod: RotateMethod) {
         guard objectType == .select, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         let offset = CGPoint(x: bounds.origin.x + 0.5 * bounds.width,
                              y: bounds.origin.y + 0.5 * bounds.height)
         let transforms: [CGAffineTransform] = [
             .init(translationX: -offset.x, y: -offset.y),
-            .init(rotationAngle: rotateDirection.angle),
+            .init(rotationAngle: rotateMethod.angle),
             .init(translationX: offset.x, y: offset.y)
         ]
         for i in (0 ..< objects.count) where objects[i].isSelected {
@@ -523,10 +522,10 @@ extension PreviewMock {
         func resetHistory() {}
         func startUpdatingOpacity() {}
         func startUpdatingLineWidth() {}
-        func arrange(_ arrangeMethod: ObjectArrangeMethod) {}
-        func align(_ alignment: ObjectAlignment) {}
-        func flip(_ flipDirection: ObjectFlipDirection) {}
-        func rotate(_ rotateDirection: ObjectRotateDirection) {}
+        func arrange(_ arrangeMethod: ArrangeMethod) {}
+        func align(_ alignMethod: AlignMethod) {}
+        func flip(_ flipMethod: FlipMethod) {}
+        func rotate(_ rotateMethod: RotateMethod) {}
         func duplicateSelectedObjects() {}
         func delete() {}
         func selectAll() {}

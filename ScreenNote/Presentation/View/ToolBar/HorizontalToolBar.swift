@@ -119,45 +119,45 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 Button {
                     showAlignPopover = true
                 } label: {
-                    Image(systemName: ObjectAlignment.left.symbolName)
+                    Image(systemName: AlignMethod.horizontalAlignLeft.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
                 .help("align")
                 .popover(isPresented: $showAlignPopover, arrowEdge: arrowEdge) {
                     ObjectAlignPopover(
                         toolBarDirection: .horizontal,
-                        alignHandler: { alignment in
-                            objectModel.align(alignment)
+                        alignHandler: { alignMethod in
+                            objectModel.align(alignMethod)
                         }
                     )
                 }
                 Button {
                     showFlipPopover = true
                 } label: {
-                    Image(systemName: ObjectFlipDirection.horizontal.symbolName)
+                    Image(systemName: FlipMethod.flipHorizontal.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
                 .help("flip")
                 .popover(isPresented: $showFlipPopover, arrowEdge: arrowEdge) {
                     ObjectFlipPopover(
                         toolBarDirection: .horizontal,
-                        flipHandler: { flipDirection in
-                            objectModel.flip(flipDirection)
+                        flipHandler: { flipMethod in
+                            objectModel.flip(flipMethod)
                         }
                     )
                 }
                 Button {
                     showRotatePopover = true
                 } label: {
-                    Image(systemName: ObjectRotateDirection.counterClockwise.symbolName)
+                    Image(systemName: RotateMethod.rotateLeft.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
                 .help("rotate")
                 .popover(isPresented: $showRotatePopover) {
                     ObjectRotatePopover(
                         toolBarDirection: .horizontal,
-                        rotateHandler: { rotateDirection in
-                            objectModel.rotate(rotateDirection)
+                        rotateHandler: { rotateMethod in
+                            objectModel.rotate(rotateMethod)
                         }
                     )
                 }

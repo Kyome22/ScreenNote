@@ -1,5 +1,5 @@
 /*
-  ObjectArrangeMethod.swift
+  ArrangeMethod.swift
   ScreenNote
 
   Created by Takuto Nakamura on 2023/02/08.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum ObjectArrangeMethod: Int, CaseIterable {
+enum ArrangeMethod: Int, CaseIterable {
     case bringToFrontmost
     case sendToBackmost
 

@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ObjectArrangePopover: View {
     private let toolBarDirection: ToolBarDirection
-    private let arrangeHandler: (ObjectArrangeMethod) -> Void
+    private let arrangeHandler: (ArrangeMethod) -> Void
 
     init(
         toolBarDirection: ToolBarDirection,
-        arrangeHandler: @escaping (ObjectArrangeMethod) -> Void
+        arrangeHandler: @escaping (ArrangeMethod) -> Void
     ) {
         self.toolBarDirection = toolBarDirection
         self.arrangeHandler = arrangeHandler
@@ -22,7 +22,7 @@ struct ObjectArrangePopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(ObjectArrangeMethod.allCases, id: \.rawValue) { arrangeMethod in
+            ForEach(ArrangeMethod.allCases, id: \.rawValue) { arrangeMethod in
                 Button {
                     arrangeHandler(arrangeMethod)
                 } label: {

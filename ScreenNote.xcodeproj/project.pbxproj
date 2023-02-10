@@ -9,15 +9,16 @@
 /* Begin PBXBuildFile section */
 		1C8BB4952993A88600EE5E66 /* ObjectFlipPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */; };
 		1C8BB4972993AAC800EE5E66 /* ObjectRotatePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */; };
-		1C8BB4992993C09B00EE5E66 /* ObjectArrangeMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4982993C09B00EE5E66 /* ObjectArrangeMethod.swift */; };
-		1C8BB49B2993C1F600EE5E66 /* ObjectFlipDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB49A2993C1F600EE5E66 /* ObjectFlipDirection.swift */; };
-		1C8BB49D2993C4E700EE5E66 /* ObjectRotateDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB49C2993C4E700EE5E66 /* ObjectRotateDirection.swift */; };
+		1C8BB4992993C09B00EE5E66 /* ArrangeMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */; };
+		1C8BB49B2993C1F600EE5E66 /* FlipMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB49A2993C1F600EE5E66 /* FlipMethod.swift */; };
+		1C8BB49D2993C4E700EE5E66 /* RotateMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB49C2993C4E700EE5E66 /* RotateMethod.swift */; };
 		1C8BB49F2993D8F100EE5E66 /* CanvasSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB49E2993D8F100EE5E66 /* CanvasSettingsViewModel.swift */; };
 		1C8BB4A12993E64300EE5E66 /* SettingsTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */; };
 		1C8BB4A32993E70300EE5E66 /* CanvasSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A22993E70300EE5E66 /* CanvasSettingsView.swift */; };
 		1C8BB4A52994ABDE00EE5E66 /* ColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A42994ABDE00EE5E66 /* ColorButtonStyle.swift */; };
 		1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */; };
 		1C8BB4A92995589700EE5E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AB2995589700EE5E66 /* Localizable.strings */; };
+		1C8BB4AE2995CEE900EE5E66 /* TextOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */; };
 		1C9A541029879F4A008B5AAE /* ScreenNoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A540F29879F4A008B5AAE /* ScreenNoteApp.swift */; };
 		1C9A541429879F4B008B5AAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9A541329879F4B008B5AAE /* Assets.xcassets */; };
 		1C9A541729879F4B008B5AAE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9A541629879F4B008B5AAE /* Preview Assets.xcassets */; };
@@ -63,15 +64,15 @@
 		1C9A5488298D8243008B5AAE /* LineWidthPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A5487298D8243008B5AAE /* LineWidthPopover.swift */; };
 		1C9A548B298D859A008B5AAE /* ObjectArrangePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A548A298D859A008B5AAE /* ObjectArrangePopover.swift */; };
 		1C9A548D298D88C0008B5AAE /* ObjectAlignPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A548C298D88C0008B5AAE /* ObjectAlignPopover.swift */; };
-		1C9A548F298D8958008B5AAE /* ObjectAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A548E298D8958008B5AAE /* ObjectAlignment.swift */; };
+		1C9A548F298D8958008B5AAE /* AlignMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A548E298D8958008B5AAE /* AlignMethod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFlipPopover.swift; sourceTree = "<group>"; };
 		1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRotatePopover.swift; sourceTree = "<group>"; };
-		1C8BB4982993C09B00EE5E66 /* ObjectArrangeMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectArrangeMethod.swift; sourceTree = "<group>"; };
-		1C8BB49A2993C1F600EE5E66 /* ObjectFlipDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFlipDirection.swift; sourceTree = "<group>"; };
-		1C8BB49C2993C4E700EE5E66 /* ObjectRotateDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRotateDirection.swift; sourceTree = "<group>"; };
+		1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangeMethod.swift; sourceTree = "<group>"; };
+		1C8BB49A2993C1F600EE5E66 /* FlipMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipMethod.swift; sourceTree = "<group>"; };
+		1C8BB49C2993C4E700EE5E66 /* RotateMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateMethod.swift; sourceTree = "<group>"; };
 		1C8BB49E2993D8F100EE5E66 /* CanvasSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSettingsViewModel.swift; sourceTree = "<group>"; };
 		1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabType.swift; sourceTree = "<group>"; };
 		1C8BB4A22993E70300EE5E66 /* CanvasSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSettingsView.swift; sourceTree = "<group>"; };
@@ -126,7 +127,7 @@
 		1C9A5487298D8243008B5AAE /* LineWidthPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWidthPopover.swift; sourceTree = "<group>"; };
 		1C9A548A298D859A008B5AAE /* ObjectArrangePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectArrangePopover.swift; sourceTree = "<group>"; };
 		1C9A548C298D88C0008B5AAE /* ObjectAlignPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectAlignPopover.swift; sourceTree = "<group>"; };
-		1C9A548E298D8958008B5AAE /* ObjectAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectAlignment.swift; sourceTree = "<group>"; };
+		1C9A548E298D8958008B5AAE /* AlignMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignMethod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,10 +213,10 @@
 				1C9A545C2987F9CA008B5AAE /* Line.swift */,
 				1C9A545E2987F9E9008B5AAE /* Curve.swift */,
 				1C9A54542987F91A008B5AAE /* Anchor.swift */,
-				1C8BB4982993C09B00EE5E66 /* ObjectArrangeMethod.swift */,
-				1C9A548E298D8958008B5AAE /* ObjectAlignment.swift */,
-				1C8BB49A2993C1F600EE5E66 /* ObjectFlipDirection.swift */,
-				1C8BB49C2993C4E700EE5E66 /* ObjectRotateDirection.swift */,
+				1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */,
+				1C9A548E298D8958008B5AAE /* AlignMethod.swift */,
+				1C8BB49A2993C1F600EE5E66 /* FlipMethod.swift */,
+				1C8BB49C2993C4E700EE5E66 /* RotateMethod.swift */,
 				1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */,
 			);
 			path = Entity;
@@ -406,7 +407,7 @@
 				1C9A5486298C94C2008B5AAE /* ColorPaletteButtonStyle.swift in Sources */,
 				1C9A546B29889EF3008B5AAE /* CanvasView.swift in Sources */,
 				1C9A54632987FA59008B5AAE /* ObjectModel.swift in Sources */,
-				1C8BB4992993C09B00EE5E66 /* ObjectArrangeMethod.swift in Sources */,
+				1C8BB4992993C09B00EE5E66 /* ArrangeMethod.swift in Sources */,
 				1C8BB49F2993D8F100EE5E66 /* CanvasSettingsViewModel.swift in Sources */,
 				1C9A5482298C2BD5008B5AAE /* ToolBarRadioButtonStyle.swift in Sources */,
 				1C9A5484298C2CC5008B5AAE /* ColorPalettePopover.swift in Sources */,
@@ -416,13 +417,13 @@
 				1C9A5479298AAACB008B5AAE /* ToolBarButtonStyle.swift in Sources */,
 				1C9A543B2987A760008B5AAE /* MenuBarModel.swift in Sources */,
 				1C9A547E298B86CA008B5AAE /* Path+Extensions.swift in Sources */,
-				1C8BB49D2993C4E700EE5E66 /* ObjectRotateDirection.swift in Sources */,
+				1C8BB49D2993C4E700EE5E66 /* RotateMethod.swift in Sources */,
 				1C9A545D2987F9CA008B5AAE /* Line.swift in Sources */,
 				1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */,
 				1C9A54352987A1DD008B5AAE /* String+Extensions.swift in Sources */,
 				1C9A542E2987A099008B5AAE /* LaunchAtLoginRepository.swift in Sources */,
 				1C9A54552987F91A008B5AAE /* Anchor.swift in Sources */,
-				1C8BB49B2993C1F600EE5E66 /* ObjectFlipDirection.swift in Sources */,
+				1C8BB49B2993C1F600EE5E66 /* FlipMethod.swift in Sources */,
 				1C9A54412987ABAC008B5AAE /* GeneralSettingsViewModel.swift in Sources */,
 				1C9A54672987FBE4008B5AAE /* ShortcutView.swift in Sources */,
 				1C9A54592987F95A008B5AAE /* Object.swift in Sources */,
@@ -444,7 +445,7 @@
 				1C9A546F2988A00C008B5AAE /* HorizontalToolBar.swift in Sources */,
 				1C9A54492987F04B008B5AAE /* GeneralSettingsView.swift in Sources */,
 				1C9A541029879F4A008B5AAE /* ScreenNoteApp.swift in Sources */,
-				1C9A548F298D8958008B5AAE /* ObjectAlignment.swift in Sources */,
+				1C9A548F298D8958008B5AAE /* AlignMethod.swift in Sources */,
 				1C9A54372987A532008B5AAE /* AppKit+Extensions.swift in Sources */,
 				1C8BB4A52994ABDE00EE5E66 /* ColorButtonStyle.swift in Sources */,
 				1C9A54332987A0C7008B5AAE /* Utils.swift in Sources */,

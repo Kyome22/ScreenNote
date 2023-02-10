@@ -74,11 +74,11 @@
 "verticalAlignCenter" = "垂直方向中央に整列";
 "verticalAlignBottom" = "垂直方向下に整列";
 "flip" = "反転";
-"horizontalFlip" = "水平方向に反転";
-"verticalFlip" = "垂直方向に反転";
+"flipHorizontal" = "水平方向に反転";
+"flipVertical" = "垂直方向に反転";
 "rotate" = "回転";
-"rotateCounterClockwise" = "半時計周りに回転";
-"rotateClockwise" = "時計周りに回転";
+"rotateLeft" = "半時計回りに回転";
+"rotateRight" = "時計回りに回転";
 "duplicate" = "複製";
 "delete" = "削除: ⌫";
 

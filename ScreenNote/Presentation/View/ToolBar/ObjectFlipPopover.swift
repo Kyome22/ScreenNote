@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ObjectFlipPopover: View {
     private let toolBarDirection: ToolBarDirection
-    private let flipHandler: (ObjectFlipDirection) -> Void
+    private let flipHandler: (FlipMethod) -> Void
 
     init(
         toolBarDirection: ToolBarDirection,
-        flipHandler: @escaping (ObjectFlipDirection) -> Void
+        flipHandler: @escaping (FlipMethod) -> Void
     ) {
         self.toolBarDirection = toolBarDirection
         self.flipHandler = flipHandler
@@ -22,14 +22,14 @@ struct ObjectFlipPopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(ObjectFlipDirection.allCases, id: \.rawValue) { flipDirection in
+            ForEach(FlipMethod.allCases, id: \.rawValue) { flipMethod in
                 Button {
-                    flipHandler(flipDirection)
+                    flipHandler(flipMethod)
                 } label: {
-                    Image(systemName: flipDirection.symbolName)
+                    Image(systemName: flipMethod.symbolName)
                 }
                 .buttonStyle(.toolBar(toolBarDirection))
-                .help(flipDirection.help)
+                .help(flipMethod.help)
             }
         }
         .padding(8)

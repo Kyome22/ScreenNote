@@ -75,11 +75,11 @@
 "verticalAlignCenter" = "Vertical Align Center";
 "verticalAlignBottom" = "Vertical Align Bottom";
 "flip" = "Flip";
-"horizontalFlip" = "Horizontal Flip";
-"verticalFlip" = "Vertical Flip";
+"flipHorizontal" = "Flip Horizontal";
+"flipVertical" = "Flip Vertical";
 "rotate" = "Rotate";
-"rotateCounterClockwise" = "Rotate Counter-Clockwise";
-"rotateClockwise" = "Rotate Clockwise";
+"rotateLeft" = "Rotate Left";
+"rotateRight" = "Rotate Right";
 "duplicate" = "Duplicate";
 "delete" = "Delete: ⌫";
 

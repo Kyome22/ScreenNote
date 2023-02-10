@@ -136,8 +136,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     .popover(isPresented: $showAlignPopover, arrowEdge: arrowEdge) {
                         ObjectAlignPopover(
                             toolBarDirection: .vertical,
-                            alignHandler: { alignment in
-                                objectModel.align(alignment)
+                            alignHandler: { alignMethod in
+                                objectModel.align(alignMethod)
                             }
                         )
                     }
@@ -146,30 +146,30 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     Button {
                         showFlipPopover = true
                     } label: {
-                        Image(systemName: ObjectFlipDirection.horizontal.symbolName)
+                        Image(systemName: FlipMethod.flipHorizontal.symbolName)
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("flip")
                     .popover(isPresented: $showFlipPopover, arrowEdge: arrowEdge) {
                         ObjectFlipPopover(
                             toolBarDirection: .vertical,
-                            flipHandler: { flipDirection in
-                                objectModel.flip(flipDirection)
+                            flipHandler: { flipMethod in
+                                objectModel.flip(flipMethod)
                             }
                         )
                     }
                     Button {
                         showRotatePopover = true
                     } label: {
-                        Image(systemName: ObjectRotateDirection.counterClockwise.symbolName)
+                        Image(systemName: RotateMethod.rotateLeft.symbolName)
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("rotate")
                     .popover(isPresented: $showRotatePopover) {
                         ObjectRotatePopover(
                             toolBarDirection: .vertical,
-                            rotateHandler: { rotateDirection in
-                                objectModel.rotate(rotateDirection)
+                            rotateHandler: { rotateMethod in
+                                objectModel.rotate(rotateMethod)
                             }
                         )
                     }

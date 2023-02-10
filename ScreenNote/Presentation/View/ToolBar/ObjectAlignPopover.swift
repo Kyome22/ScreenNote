@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ObjectAlignPopover: View {
     private let toolBarDirection: ToolBarDirection
-    private let alignHandler: (ObjectAlignment) -> Void
+    private let alignHandler: (AlignMethod) -> Void
 
     init(
         toolBarDirection: ToolBarDirection,
-        alignHandler: @escaping (ObjectAlignment) -> Void
+        alignHandler: @escaping (AlignMethod) -> Void
     ) {
         self.toolBarDirection = toolBarDirection
         self.alignHandler = alignHandler
@@ -23,25 +23,25 @@ struct ObjectAlignPopover: View {
     var body: some View {
         VStack {
             HStack(spacing: 8) {
-                ForEach(ObjectAlignment.horizontals, id: \.rawValue) { alignment in
+                ForEach(AlignMethod.horizontals, id: \.rawValue) { alignMethod in
                     Button {
-                        alignHandler(alignment)
+                        alignHandler(alignMethod)
                     } label: {
-                        Image(systemName: alignment.symbolName)
+                        Image(systemName: alignMethod.symbolName)
                     }
                     .buttonStyle(.toolBar(toolBarDirection))
-                    .help(alignment.help)
+                    .help(alignMethod.help)
                 }
             }
             HStack(spacing: 8) {
-                ForEach(ObjectAlignment.verticals, id: \.rawValue) { alignment in
+                ForEach(AlignMethod.verticals, id: \.rawValue) { alignMethod in
                     Button {
-                        alignHandler(alignment)
+                        alignHandler(alignMethod)
                     } label: {
-                        Image(systemName: alignment.symbolName)
+                        Image(systemName: alignMethod.symbolName)
                     }
                     .buttonStyle(.toolBar(toolBarDirection))
-                    .help(alignment.help)
+                    .help(alignMethod.help)
                 }
             }
         }
@@ -49,7 +49,7 @@ struct ObjectAlignPopover: View {
     }
 }
 
-struct ObjectAlignmentPopover_Previews: PreviewProvider {
+struct ObjectAlignPopover_Previews: PreviewProvider {
     static var previews: some View {
         ObjectAlignPopover(toolBarDirection: .horizontal,
                            alignHandler: { _ in })

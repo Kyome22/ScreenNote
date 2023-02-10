@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ObjectRotatePopover: View {
     private let toolBarDirection: ToolBarDirection
-    private let rotateHandler: (ObjectRotateDirection) -> Void
+    private let rotateHandler: (RotateMethod) -> Void
 
     init(
         toolBarDirection: ToolBarDirection,
-        rotateHandler: @escaping (ObjectRotateDirection) -> Void
+        rotateHandler: @escaping (RotateMethod) -> Void
     ) {
         self.toolBarDirection = toolBarDirection
         self.rotateHandler = rotateHandler
@@ -22,14 +22,14 @@ struct ObjectRotatePopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(ObjectRotateDirection.allCases, id: \.rawValue) { rotateDirection in
+            ForEach(RotateMethod.allCases, id: \.rawValue) { rotateMethod in
                 Button {
-                    rotateHandler(rotateDirection)
+                    rotateHandler(rotateMethod)
                 } label: {
-                    Image(systemName: rotateDirection.symbolName)
+                    Image(systemName: rotateMethod.symbolName)
                 }
                 .buttonStyle(.toolBar(toolBarDirection))
-                .help(rotateDirection.help)
+                .help(rotateMethod.help)
             }
         }
         .padding(8)

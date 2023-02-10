@@ -1,5 +1,5 @@
 /*
-  ObjectFlipDirection.swift
+  FlipMethod.swift
   ScreenNote
 
   Created by Takuto Nakamura on 2023/02/08.
@@ -8,25 +8,25 @@
 
 import SwiftUI
 
-enum ObjectFlipDirection: Int, CaseIterable {
-    case horizontal
-    case vertical
+enum FlipMethod: Int, CaseIterable {
+    case flipHorizontal
+    case flipVertical
 
     var symbolName: String {
         switch self {
-        case .horizontal:
+        case .flipHorizontal:
             return "arrow.left.and.right.righttriangle.left.righttriangle.right.fill"
-        case .vertical:
+        case .flipVertical:
             return "arrow.up.and.down.righttriangle.up.righttriangle.down.fill"
         }
     }
 
     var help: LocalizedStringKey {
         switch self {
-        case .horizontal:
-            return "horizontalFlip"
-        case .vertical:
-            return "verticalFlip"
+        case .flipHorizontal:
+            return "flipHorizontal"
+        case .flipVertical:
+            return "flipVertical"
         }
     }
 }
