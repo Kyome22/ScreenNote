@@ -161,7 +161,7 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     Button {
                         showRotatePopover = true
                     } label: {
-                        Image(systemName: RotateMethod.rotateLeft.symbolName)
+                        Image(systemName: RotateMethod.rotateRight.symbolName)
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("rotate")

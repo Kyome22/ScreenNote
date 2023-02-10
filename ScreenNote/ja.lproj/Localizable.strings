@@ -37,7 +37,7 @@
 "wrapTextCanvasTab" = "デフォルトの不透明度:";
 "objects:" = "オブジェクト:";
 "clearAllObjects" = "表示の度に全てのオブジェクトを削除する";
-"defaultColor:" = "デフォルトのカラー:";
+"defaultColor:" = "デフォルトの描画色:";
 "defaultOpacity:" = "デフォルトの不透明度:";
 "defaultLineWidth:" = "デフォルトの線幅:";
 
@@ -77,8 +77,8 @@
 "flipHorizontal" = "水平方向に反転";
 "flipVertical" = "垂直方向に反転";
 "rotate" = "回転";
-"rotateLeft" = "半時計回りに回転";
 "rotateRight" = "時計回りに回転";
+"rotateLeft" = "半時計回りに回転";
 "duplicate" = "複製";
 "delete" = "削除: ⌫";
 

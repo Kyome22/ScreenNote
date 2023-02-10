@@ -78,8 +78,8 @@
 "flipHorizontal" = "Flip Horizontal";
 "flipVertical" = "Flip Vertical";
 "rotate" = "Rotate";
-"rotateLeft" = "Rotate Left";
 "rotateRight" = "Rotate Right";
+"rotateLeft" = "Rotate Left";
 "duplicate" = "Duplicate";
 "delete" = "Delete: ⌫";
 
