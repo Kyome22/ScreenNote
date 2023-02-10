@@ -80,6 +80,7 @@
 		1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		1C8BB4AA2995589700EE5E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C8BB4AC2995589A00EE5E66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOrientation.swift; sourceTree = "<group>"; };
 		1C9A540C29879F4A008B5AAE /* ScreenNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9A540F29879F4A008B5AAE /* ScreenNoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenNoteApp.swift; sourceTree = "<group>"; };
 		1C9A541329879F4B008B5AAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -217,6 +218,7 @@
 				1C9A548E298D8958008B5AAE /* AlignMethod.swift */,
 				1C8BB49A2993C1F600EE5E66 /* FlipMethod.swift */,
 				1C8BB49C2993C4E700EE5E66 /* RotateMethod.swift */,
+				1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */,
 				1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */,
 			);
 			path = Entity;
@@ -404,6 +406,7 @@
 				1C9A5475298A9F6D008B5AAE /* WorkspaceViewModel.swift in Sources */,
 				1C9A542C2987A08D008B5AAE /* UserDefaultsRepository.swift in Sources */,
 				1C9A548D298D88C0008B5AAE /* ObjectAlignPopover.swift in Sources */,
+				1C8BB4AE2995CEE900EE5E66 /* TextOrientation.swift in Sources */,
 				1C9A5486298C94C2008B5AAE /* ColorPaletteButtonStyle.swift in Sources */,
 				1C9A546B29889EF3008B5AAE /* CanvasView.swift in Sources */,
 				1C9A54632987FA59008B5AAE /* ObjectModel.swift in Sources */,

@@ -16,6 +16,7 @@ struct Object: Identifiable {
     var lineWidth: CGFloat
     var points: [CGPoint]
     var text: String
+    var textOrientation: TextOrientation
     var isSelected: Bool
     var isHidden: Bool
 
@@ -105,6 +106,7 @@ struct Object: Identifiable {
         self.lineWidth = lineWidth
         self.points = points
         self.text = ""
+        self.textOrientation = .up
         self.isSelected = isSelected
         self.isHidden = false
     }
@@ -114,6 +116,7 @@ struct Object: Identifiable {
         _ opacity: CGFloat,
         _ points: [CGPoint],
         _ text: String,
+        _ textOrientation: TextOrientation,
         isSelected: Bool = false
     ) {
         self.type = .text
@@ -122,6 +125,7 @@ struct Object: Identifiable {
         self.lineWidth = 1.0
         self.points = points
         self.text = text
+        self.textOrientation = textOrientation
         self.isSelected = isSelected
         self.isHidden = false
     }
@@ -147,7 +151,7 @@ struct Object: Identifiable {
     func copy(needsOffset: Bool = false) -> Object {
         let newPoints = needsOffset ? points.map { $0 + CGPoint(20) } : points
         if type == .text {
-            return Object(color_, opacity, newPoints, text, isSelected: true)
+            return Object(color_, opacity, newPoints, text, textOrientation, isSelected: true)
         } else {
             return Object(type, color_, opacity, lineWidth, newPoints, isSelected: true)
         }

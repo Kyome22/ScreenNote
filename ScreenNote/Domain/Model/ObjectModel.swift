@@ -293,7 +293,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
             if !inputText.isEmpty {
                 pushHistory()
                 objects.append(
-                    Object(color, opacity, [position, endPosition], inputText)
+                    Object(color, opacity, [position, endPosition], inputText, .up)
                 )
             }
         }
