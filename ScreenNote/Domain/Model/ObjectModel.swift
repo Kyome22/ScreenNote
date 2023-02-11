@@ -135,7 +135,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
             return lastObjects
         }
         let newBounds = currentAnchor.resize(bounds: oldBounds, with: diff)
-        // リファクタリング禁止
+        // Do not refactor
         let transforms: [CGAffineTransform] = [
             .init(translationX: -oldBounds.origin.x, y: -oldBounds.origin.y),
             .init(scaleX: newBounds.size.width / oldBounds.width,
