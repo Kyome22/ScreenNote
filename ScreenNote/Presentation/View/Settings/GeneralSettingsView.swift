@@ -61,7 +61,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
             if macOS13OrLater {
                 Divider()
                 HStack(alignment: .center, spacing: 8) {
-                    Text("launch:")
+                    wrapText(maxKey: "wrapTextGeneralTab", key: "launch:")
                     Toggle(isOn: $viewModel.launchAtLogin) {
                         Text("launchAtLogin")
                     }
