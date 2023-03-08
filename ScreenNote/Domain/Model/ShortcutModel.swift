@@ -6,19 +6,19 @@
   
 */
 
-import Foundation
 import Combine
+import Foundation
 import SpiceKey
 
 protocol ShortcutModel: AnyObject {
-    var showOrHideCanvasPublisher: AnyPublisher<ToolBarPosition, Never> { get }
+    var showOrHideCanvasPublisher: AnyPublisher<Void, Never> { get }
 
     func setShortcut()
 }
 
 final class ShortcutModelImpl<UR: UserDefaultsRepository>: ShortcutModel {
-    private let showOrHideCanvasSubject = PassthroughSubject<ToolBarPosition, Never>()
-    var showOrHideCanvasPublisher: AnyPublisher<ToolBarPosition, Never> {
+    private let showOrHideCanvasSubject = PassthroughSubject<Void, Never>()
+    var showOrHideCanvasPublisher: AnyPublisher<Void, Never> {
         return showOrHideCanvasSubject.eraseToAnyPublisher()
     }
 
@@ -42,16 +42,12 @@ final class ShortcutModelImpl<UR: UserDefaultsRepository>: ShortcutModel {
         switch toggleMethod {
         case .longPressKey:
             spiceKey = SpiceKey(modifierFlag.flags, 0.5, modifierKeysLongPressHandler: { [weak self] in
-                guard let self else { return }
-                let toolBarPosition = self.userDefaultsRepository.toolBarPosition
-                self.showOrHideCanvasSubject.send(toolBarPosition)
+                self?.showOrHideCanvasSubject.send()
             })
             spiceKey?.register()
-        case .pressBothSideKey:
+        case .pressBothSideKeys:
             spiceKey = SpiceKey(modifierFlag, bothModifierKeysPressHandler: { [weak self] in
-                guard let self else { return }
-                let toolBarPosition = self.userDefaultsRepository.toolBarPosition
-                self.showOrHideCanvasSubject.send(toolBarPosition)
+                self?.showOrHideCanvasSubject.send()
             })
             spiceKey?.register()
         }
@@ -61,8 +57,8 @@ final class ShortcutModelImpl<UR: UserDefaultsRepository>: ShortcutModel {
 // MARK: - Preview Mock
 extension PreviewMock {
     final class ShortcutModelMock: ShortcutModel {
-        var showOrHideCanvasPublisher: AnyPublisher<ToolBarPosition, Never> {
-            Just(ToolBarPosition.top).eraseToAnyPublisher()
+        var showOrHideCanvasPublisher: AnyPublisher<Void, Never> {
+            Just(()).eraseToAnyPublisher()
         }
 
         func setShortcut() {}

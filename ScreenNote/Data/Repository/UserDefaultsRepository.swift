@@ -6,8 +6,8 @@
   
 */
 
-import Foundation
 import Combine
+import Foundation
 import SpiceKey
 
 fileprivate let RESET_USER_DEFAULTS = false
@@ -38,14 +38,14 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         get { ToggleMethod(rawValue: userDefaults.integer(forKey: "toggleMethod"))! }
         set {
             userDefaults.set(newValue.rawValue, forKey: "toggleMethod")
-            updateShortcutSubject.send(())
+            updateShortcutSubject.send()
         }
     }
     var modifierFlag: ModifierFlag {
         get { ModifierFlag(rawValue: userDefaults.integer(forKey: "modifierFlag"))! }
         set {
             userDefaults.set(newValue.rawValue, forKey: "modifierFlag")
-            updateShortcutSubject.send(())
+            updateShortcutSubject.send()
         }
     }
     var toolBarPosition: ToolBarPosition {

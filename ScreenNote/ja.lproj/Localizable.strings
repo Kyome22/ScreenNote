@@ -83,6 +83,7 @@
 "rotateLeft" = "半時計回りに回転";
 "duplicate" = "複製";
 "delete" = "削除: ⌫";
+"clear" = "全てを削除: ⌘⌫";
 
 // Mail
 "issueReport" = "不具合の報告";

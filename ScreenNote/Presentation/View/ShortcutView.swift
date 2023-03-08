@@ -22,7 +22,7 @@ struct ShortcutView: View {
         switch toggleMethod {
         case .longPressKey:
             longPressNote
-        case .pressBothSideKey:
+        case .pressBothSideKeys:
             pressBothSideNote
         }
     }

@@ -35,7 +35,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 .buttonStyle(.toolBar(.horizontal))
                 .help("goBack")
                 .keyboardShortcut("z", modifiers: .command)
-                .disabled(objectModel.objectType == .text)
+                .disabled(objectModel.objectForInputText != nil)
                 Button {
                     objectModel.redo()
                 } label: {
@@ -44,7 +44,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 .buttonStyle(.toolBar(.horizontal))
                 .help("goForward")
                 .keyboardShortcut("z", modifiers: [.shift, .command])
-                .disabled(objectModel.objectType == .text)
+                .disabled(objectModel.objectForInputText != nil)
             }
             HStack(spacing: 8) {
                 objectTypeButton(.select)
@@ -107,6 +107,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: "square.3.stack.3d.middle.filled")
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("arrange")
                 .popover(isPresented: $showArrangePopover, arrowEdge: arrowEdge) {
                     ObjectArrangePopover(
@@ -122,6 +123,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: AlignMethod.horizontalAlignLeft.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("align")
                 .popover(isPresented: $showAlignPopover, arrowEdge: arrowEdge) {
                     ObjectAlignPopover(
@@ -137,6 +139,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: FlipMethod.flipHorizontal.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("flip")
                 .popover(isPresented: $showFlipPopover, arrowEdge: arrowEdge) {
                     ObjectFlipPopover(
@@ -152,8 +155,9 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: RotateMethod.rotateRight.symbolName)
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("rotate")
-                .popover(isPresented: $showRotatePopover) {
+                .popover(isPresented: $showRotatePopover, arrowEdge: arrowEdge) {
                     ObjectRotatePopover(
                         toolBarDirection: .horizontal,
                         rotateHandler: { rotateMethod in
@@ -167,6 +171,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("duplicate")
                 Button {
                     objectModel.delete()
@@ -174,7 +179,15 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: "trash.fill")
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(!objectModel.isSelecting)
                 .help("delete")
+                Button {
+                    objectModel.clear()
+                } label: {
+                    Image(systemName: "rays")
+                }
+                .buttonStyle(.toolBar(.horizontal))
+                .help("clear")
             }
             // Dummy Buttons for Keyboard Shortcut
             HStack(spacing: 8) {
@@ -182,11 +195,16 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     objectModel.selectAll()
                 }
                 .keyboardShortcut("a", modifiers: .command)
-                .disabled(objectModel.objectType == .text)
+                .disabled(objectModel.objectType != .select)
                 dummyButton {
                     objectModel.delete()
                 }
                 .keyboardShortcut(.delete, modifiers: [])
+                .disabled(!objectModel.isSelecting)
+                dummyButton {
+                    objectModel.clear()
+                }
+                .keyboardShortcut(.delete, modifiers: .command)
             }
             .overlay(Rectangle())
             .opacity(0)

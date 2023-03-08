@@ -11,17 +11,14 @@ import Foundation
 protocol WorkspaceViewModel: ObservableObject {
     var toolBarPosition: ToolBarPosition { get set }
 
-    init(_ userDefaultsRepository: UserDefaultsRepository)
+    init(_ toolBarPosition: ToolBarPosition)
 }
 
-final class WorkspaceViewModelImpl<UR: UserDefaultsRepository>: WorkspaceViewModel {
+final class WorkspaceViewModelImpl: WorkspaceViewModel {
     @Published var toolBarPosition: ToolBarPosition
 
-    private let userDefaultsRepository: UR
-
-    init(_ userDefaultsRepository: UserDefaultsRepository) {
-        self.userDefaultsRepository = userDefaultsRepository as! UR
-        toolBarPosition = userDefaultsRepository.toolBarPosition
+    init(_ toolBarPosition: ToolBarPosition) {
+        self.toolBarPosition = toolBarPosition
     }
 }
 
@@ -30,7 +27,7 @@ extension PreviewMock {
     final class WorkspaceViewModelMock: WorkspaceViewModel {
         @Published var toolBarPosition: ToolBarPosition = .top
 
-        init(_ userDefaultsRepository: UserDefaultsRepository) {}
+        init(_ toolBarPosition: ToolBarPosition) {}
         init() {}
     }
 }

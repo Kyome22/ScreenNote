@@ -8,7 +8,6 @@
 
 import AppKit
 import Combine
-import SpiceKey
 
 protocol MenuBarModel: AnyObject {
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> { get }
@@ -21,16 +20,14 @@ protocol MenuBarModel: AnyObject {
 }
 
 final class MenuBarModelImpl<IR: IssueReportModel,
-                             WM: WindowModel>: NSObject, MenuBarModel {
+                             WM: WindowModel>: MenuBarModel {
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never>
 
     private let windowModel: WM
-    private var cancellables = Set<AnyCancellable>()
 
     init(_ windowModel: WM) {
         self.windowModel = windowModel
         self.showOrHideCanvasPublisher = windowModel.showOrHideCanvasPublisher
-        super.init()
     }
 
     func toggleCanvasVisible(_ flag: Bool) {

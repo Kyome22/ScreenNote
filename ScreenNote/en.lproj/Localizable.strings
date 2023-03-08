@@ -84,6 +84,7 @@
 "rotateLeft" = "Rotate Left";
 "duplicate" = "Duplicate";
 "delete" = "Delete: ⌫";
+"clear" = "Clear All: ⌘⌫";
 
 // Mail
 "issueReport" = "Issue Report";

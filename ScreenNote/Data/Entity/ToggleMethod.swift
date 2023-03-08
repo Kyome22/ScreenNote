@@ -10,13 +10,13 @@ import SwiftUI
 
 enum ToggleMethod: Int, CaseIterable {
     case longPressKey
-    case pressBothSideKey
+    case pressBothSideKeys
 
     var localizedKey: LocalizedStringKey {
         switch self {
         case .longPressKey:
             return "longPressModifierKey"
-        case .pressBothSideKey:
+        case .pressBothSideKeys:
             return "pressBothSideModifierKeys"
         }
     }
@@ -25,7 +25,7 @@ enum ToggleMethod: Int, CaseIterable {
         switch self {
         case .longPressKey:
             return 280
-        case .pressBothSideKey:
+        case .pressBothSideKeys:
             return 380
         }
     }

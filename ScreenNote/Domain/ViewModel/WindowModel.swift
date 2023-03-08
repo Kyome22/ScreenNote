@@ -48,7 +48,7 @@ final class WindowModelImpl<UR: UserDefaultsRepository,
         self.objectModel = objectModel
         super.init()
         self.shortcutModel.showOrHideCanvasPublisher
-            .sink { [weak self] toolBarPosition in
+            .sink { [weak self] in
                 self?.showOrHideCanvas()
             }
             .store(in: &cancellables)

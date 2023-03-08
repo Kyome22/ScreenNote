@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ToolBarButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled: Bool
     let width: CGFloat
 
     func makeBody(configuration: Configuration) -> some View {
@@ -17,6 +18,7 @@ struct ToolBarButtonStyle: ButtonStyle {
             .frame(width: width, height: 30, alignment: .center)
             .background(Color.gray.opacity(configuration.isPressed ? 0.8 : 0.6))
             .cornerRadius(6)
+            .opacity(isEnabled ? 1.0 : 0.5)
     }
 }
 

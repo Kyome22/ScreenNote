@@ -19,6 +19,7 @@ protocol ObjectModel: ObservableObject {
     var objectForInputText: Object? { get set }
     var inputText: String { get set }
     var fontSize: CGFloat { get set }
+    var isSelecting: Bool { get set }
     var colors: [[Color]] { get }
 
     func endEditing(_ textObject: Object)
@@ -38,6 +39,7 @@ protocol ObjectModel: ObservableObject {
     func duplicateSelectedObjects()
     func delete()
     func selectAll()
+    func clear()
 }
 
 final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
@@ -59,7 +61,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     @Published var rectangleForSelection: Object?
     @Published var selectedObjectsBounds: CGRect?
     @Published var objects = [Object]() {
-        didSet { updateSelectedObjectsBounds() }
+        didSet { updatedObjects() }
     }
     @Published var color: Color {
         didSet { updatedColor(oldValue) }
@@ -73,6 +75,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     @Published var objectForInputText: Object?
     @Published var inputText: String = ""
     @Published var fontSize: CGFloat = 40.0
+    @Published var isSelecting: Bool = false
 
     let colors: [[Color]]
 
@@ -109,8 +112,9 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         }
     }
 
-    private func updateSelectedObjectsBounds() {
+    private func updatedObjects() {
         selectedObjectsBounds = objectsBounds(selectedObjects)
+        isSelecting = (objectType == .select && selectedObjectsBounds != nil)
     }
 
     private func hitAnchor(_ point: CGPoint) -> Anchor? {
@@ -323,15 +327,13 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func undo() {
-        if objectType == .text { return }
-        if undoManager.canUndo {
+        if objectForInputText == nil, undoManager.canUndo {
             undoManager.undo()
         }
     }
 
     func redo() {
-        if objectType == .text { return }
-        if undoManager.canRedo {
+        if objectForInputText == nil, undoManager.canRedo {
             undoManager.redo()
         }
     }
@@ -355,8 +357,11 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         if oldValue == .text, let textObject = objectForInputText {
             endEditing(textObject)
         }
-        if objectType != .select, !selectedObjects.isEmpty {
-            unselectAllObjects()
+        if objectType != .select {
+            isSelecting = false
+            if !selectedObjects.isEmpty {
+                unselectAllObjects()
+            }
         }
     }
 
@@ -393,9 +398,8 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func arrange(_ arrangeMethod: ArrangeMethod) {
-        guard objectType == .select else { return }
+        guard isSelecting else { return }
         let targetObjects = selectedObjects
-        if targetObjects.isEmpty { return }
         pushHistory()
         objects.removeAll { $0.isSelected }
         switch arrangeMethod {
@@ -407,7 +411,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func align(_ alignMethod: AlignMethod) {
-        guard objectType == .select, let bounds = selectedObjectsBounds else { return }
+        guard isSelecting, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         for i in (0 ..< objects.count) where objects[i].isSelected {
             let diff: CGFloat
@@ -436,7 +440,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func flip(_ flipMethod: FlipMethod) {
-        guard objectType == .select, let bounds = selectedObjectsBounds else { return }
+        guard isSelecting, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         for i in (0 ..< objects.count) where objects[i].isSelected {
             let center = CGPoint(x: bounds.midX, y: bounds.midY)
@@ -455,7 +459,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func rotate(_ rotateMethod: RotateMethod) {
-        guard objectType == .select, let bounds = selectedObjectsBounds else { return }
+        guard isSelecting, let bounds = selectedObjectsBounds else { return }
         pushHistory()
         let offset = CGPoint(x: bounds.origin.x + 0.5 * bounds.width,
                              y: bounds.origin.y + 0.5 * bounds.height)
@@ -477,9 +481,8 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func duplicateSelectedObjects() {
-        guard objectType == .select else { return }
+        guard isSelecting else { return }
         var targetObjects = selectedObjects
-        if targetObjects.isEmpty { return }
         pushHistory()
         unselectAllObjects()
         targetObjects = targetObjects.map { $0.copy(needsOffset: true) }
@@ -487,7 +490,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func delete() {
-        guard objectType == .select, !selectedObjects.isEmpty else { return }
+        guard isSelecting else { return }
         pushHistory()
         objects.removeAll { $0.isSelected }
     }
@@ -497,6 +500,12 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         for i in (0 ..< objects.count) {
             objects[i].isSelected = true
         }
+    }
+
+    func clear() {
+        if objects.isEmpty { return }
+        pushHistory()
+        objects.removeAll()
     }
 }
 
@@ -513,6 +522,7 @@ extension PreviewMock {
         @Published var objectForInputText: Object?
         @Published var inputText: String = ""
         @Published var fontSize: CGFloat = 40.0
+        @Published var isSelecting: Bool = false
 
         var colors: [[Color]]
 
@@ -538,5 +548,6 @@ extension PreviewMock {
         func duplicateSelectedObjects() {}
         func delete() {}
         func selectAll() {}
+        func clear() {}
     }
 }

@@ -37,25 +37,6 @@ extension NSMenuItem {
     }
 }
 
-extension NSScreen {
-    var displayID: CGDirectDisplayID {
-        let key = NSDeviceDescriptionKey("NSScreenNumber")
-        return self.deviceDescription[key] as! CGDirectDisplayID
-    }
-}
-
-extension Bool {
-    var state: NSControl.StateValue {
-        return self ? .on : .off
-    }
-}
-
-extension NSControl.StateValue {
-    var isOn: Bool {
-        return self == .on
-    }
-}
-
 extension NSTextField {
     open override func performKeyEquivalent(with event: NSEvent) -> Bool {
         let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
