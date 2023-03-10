@@ -13,6 +13,7 @@ enum ObjectType: Int, CaseIterable {
     case text
     case pen
     case line
+    case arrow
     case fillRect
     case lineRect
     case fillOval
@@ -24,6 +25,7 @@ enum ObjectType: Int, CaseIterable {
         case .text:     return "textbox"
         case .pen:      return "scribble"
         case .line:     return "line.diagonal"
+        case .arrow:    return "line.diagonal.arrow"
         case .fillRect: return "square.fill"
         case .lineRect: return "square"
         case .fillOval: return "oval.fill"
@@ -37,6 +39,7 @@ enum ObjectType: Int, CaseIterable {
         case .text:     return "text"
         case .pen:      return "pen"
         case .line:     return "line"
+        case .arrow:    return "arrow"
         case .fillRect: return "fillRect"
         case .lineRect: return "lineRect"
         case .fillOval: return "fillOval"

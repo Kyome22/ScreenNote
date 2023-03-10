@@ -503,9 +503,10 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     func clear() {
-        if objects.isEmpty { return }
-        pushHistory()
-        objects.removeAll()
+        if objectForInputText == nil, !objects.isEmpty {
+            pushHistory()
+            objects.removeAll()
+        }
     }
 }
 

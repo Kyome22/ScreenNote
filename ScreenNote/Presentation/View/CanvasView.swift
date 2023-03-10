@@ -54,7 +54,7 @@ struct CanvasView<OM: ObjectModel>: View {
                         } else {
                             fatalError("strokeStyle is not nil")
                         }
-                    case .fillRect, .fillOval:
+                    case .arrow, .fillRect, .fillOval:
                         context.fill(object.path, with: .color(object.color))
                     }
                 }

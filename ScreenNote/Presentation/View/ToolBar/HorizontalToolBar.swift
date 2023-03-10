@@ -47,14 +47,14 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                 .disabled(objectModel.objectForInputText != nil)
             }
             HStack(spacing: 8) {
-                objectTypeButton(.select)
-                    .keyboardShortcut("s", modifiers: [])
                 objectTypeButton(.text)
                     .keyboardShortcut("t", modifiers: [])
                 objectTypeButton(.pen)
                     .keyboardShortcut("p", modifiers: [])
                 objectTypeButton(.line)
                     .keyboardShortcut("l", modifiers: [])
+                objectTypeButton(.arrow)
+                    .keyboardShortcut("a", modifiers: [])
                 objectTypeButton(.fillRect)
                     .keyboardShortcut("r", modifiers: [])
                 objectTypeButton(.lineRect)
@@ -65,6 +65,8 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     .keyboardShortcut("O", modifiers: [.shift])
             }
             HStack(spacing: 8) {
+                objectTypeButton(.select)
+                    .keyboardShortcut("s", modifiers: [])
                 Button {
                     showColorPopover = true
                 } label: {
@@ -187,6 +189,7 @@ struct HorizontalToolBar<OM: ObjectModel>: View {
                     Image(systemName: "rays")
                 }
                 .buttonStyle(.toolBar(.horizontal))
+                .disabled(objectModel.objectForInputText != nil)
                 .help("clear")
             }
             // Dummy Buttons for Keyboard Shortcut

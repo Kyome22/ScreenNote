@@ -47,16 +47,16 @@ struct VerticalToolBar<OM: ObjectModel>: View {
             }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
-                    objectTypeButton(.select)
-                        .keyboardShortcut("s", modifiers: [])
                     objectTypeButton(.text)
                         .keyboardShortcut("t", modifiers: [])
-                }
-                HStack(spacing: 8) {
                     objectTypeButton(.pen)
                         .keyboardShortcut("p", modifiers: [])
+                }
+                HStack(spacing: 8) {
                     objectTypeButton(.line)
                         .keyboardShortcut("l", modifiers: [])
+                    objectTypeButton(.arrow)
+                        .keyboardShortcut("a", modifiers: [])
                 }
                 HStack(spacing: 8) {
                     objectTypeButton(.fillRect)
@@ -73,6 +73,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
             }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
+                    objectTypeButton(.select)
+                        .keyboardShortcut("s", modifiers: [])
                     Button {
                         showColorPopover = true
                     } label: {
@@ -92,6 +94,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
+                }
+                HStack(spacing: 8) {
                     Button {
                         showLineWidthPopover = true
                     } label: {
@@ -109,8 +113,6 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
-                }
-                HStack(spacing: 8) {
                     Button {
                         showArrangePopover = true
                     } label: {
@@ -127,6 +129,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
+                }
+                HStack(spacing: 8) {
                     Button {
                         showAlignPopover = true
                     } label: {
@@ -143,8 +147,6 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
-                }
-                HStack(spacing: 8) {
                     Button {
                         showFlipPopover = true
                     } label: {
@@ -161,6 +163,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
+                }
+                HStack(spacing: 8) {
                     Button {
                         showRotatePopover = true
                     } label: {
@@ -177,8 +181,6 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                             }
                         )
                     }
-                }
-                HStack(spacing: 8) {
                     Button {
                         objectModel.duplicateSelectedObjects()
                     } label: {
@@ -187,6 +189,8 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     .buttonStyle(.toolBar(.vertical))
                     .disabled(!objectModel.isSelecting)
                     .help("duplicate")
+                }
+                HStack(spacing: 8) {
                     Button {
                         objectModel.delete()
                     } label: {
@@ -195,14 +199,13 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     .buttonStyle(.toolBar(.vertical))
                     .disabled(!objectModel.isSelecting)
                     .help("delete")
-                }
-                HStack(spacing: 8) {
                     Button {
                         objectModel.clear()
                     } label: {
                         Image(systemName: "rays")
                     }
                     .buttonStyle(.toolBar(.vertical))
+                    .disabled(objectModel.objectForInputText != nil)
                     .help("clear")
                 }
             }

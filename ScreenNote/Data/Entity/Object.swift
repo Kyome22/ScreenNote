@@ -52,6 +52,43 @@ struct Object: Identifiable {
             path.move(to: points[0])
             path.addLine(to: points[1])
             return path
+        case .arrow:
+            var path = Path()
+            let p0 = points[0]
+            let p1 = points[1]
+            if p0 == p1 { return path }
+            let length = 3.0 * lineWidth
+            let d = 2.0 * lineWidth
+            let phi = p0.radian(from: p1)
+            let p2 = p1 + length * CGPoint(x: cos(phi), y: sin(phi))
+            let r = 0.5 * lineWidth
+            let phi_po_90 = phi + CGFloat.pi / 2.0
+            let phi_ne_90 = phi - CGFloat.pi / 2.0
+            let cos_po = cos(phi_po_90)
+            let sin_po = sin(phi_po_90)
+            let cos_ne = cos(phi_ne_90)
+            let sin_ne = sin(phi_ne_90)
+            if p0.length(from: p1) < length {
+                path.move(to: p2 + d * CGPoint(x: cos_ne, y: sin_ne))
+                path.addLine(to: p1 + r * CGPoint(x: -cos(phi), y: -sin(phi)))
+                path.addLine(to: p2 + d * CGPoint(x: cos_po, y: sin_po))
+                path.closeSubpath()
+            } else {
+                path.move(to: p0 + r * CGPoint(x: cos_ne, y: sin_ne))
+                path.addLine(to: p2 + r * CGPoint(x: -cos_po, y: -sin_po))
+                path.addLine(to: p2 + d * CGPoint(x: -cos_po, y: -sin_po))
+                path.addLine(to: p1 + r * CGPoint(x: -cos(phi), y: -sin(phi)))
+                path.addLine(to: p2 + d * CGPoint(x: -cos_ne, y: -sin_ne))
+                path.addLine(to: p2 + r * CGPoint(x: -cos_ne, y: -sin_ne))
+                path.addLine(to: p0 + r * CGPoint(x: cos_po, y: sin_po))
+                path.addArc(center: p0,
+                            radius: r,
+                            startAngle: Angle(radians: phi_po_90),
+                            endAngle: Angle(radians: phi_ne_90),
+                            clockwise: true)
+                path.closeSubpath()
+            }
+            return path
         case .fillRect, .lineRect:
             return Path(bounds)
         case .fillOval, .lineOval:
@@ -61,7 +98,7 @@ struct Object: Identifiable {
 
     var strokeStyle: StrokeStyle? {
         switch type {
-        case .select, .text, .fillRect, .fillOval:
+        case .select, .text, .arrow, .fillRect, .fillOval:
             return nil
         case .pen:
             if points.count < 2 {
@@ -135,7 +172,7 @@ struct Object: Identifiable {
         case .pen, .line, .lineRect, .lineOval:
             let radius: CGFloat = max(4.0, 0.5 * lineWidth)
             return path.intersects(with: point, radius: radius)
-        case .text, .fillRect, .fillOval:
+        case .text, .arrow, .fillRect, .fillOval:
             return path.contains(point)
         default:
             return false
