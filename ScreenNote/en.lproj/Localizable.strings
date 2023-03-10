@@ -59,6 +59,7 @@
 "text" = "Text Tool: T";
 "pen" = "Pen Tool: P";
 "line" = "Line Tool: L";
+"arrow" = "Arrow Tool: A";
 "fillRect" = "Fill Rectangle Tool: R";
 "lineRect" = "Line Rectangle Tool: ⇧R";
 "fillOval" = "Fill Oval Tool: O";
