@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kyome22/SpiceKey.git",
       "state" : {
-        "revision" : "297c37fbdb415bfed9bd8ac0e6a17029d6c304da",
-        "version" : "4.5.0"
+        "revision" : "0847c3300438ffb6deff4c4154f44d4cea4e7d12",
+        "version" : "5.1.0"
       }
     }
   ],
