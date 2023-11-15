@@ -355,6 +355,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1500;
+				ORGANIZATIONNAME = "Studio Kyome";
 				TargetAttributes = {
 					1C9A540B29879F4A008B5AAE = {
 						CreatedOnToolsVersion = 14.2;
