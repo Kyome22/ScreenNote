@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C6242DD2B050A790063C6AF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1C6242DC2B050A790063C6AF /* Localizable.xcstrings */; };
 		1C8BB4952993A88600EE5E66 /* ObjectFlipPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */; };
 		1C8BB4972993AAC800EE5E66 /* ObjectRotatePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */; };
 		1C8BB4992993C09B00EE5E66 /* ArrangeMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */; };
@@ -17,7 +18,6 @@
 		1C8BB4A32993E70300EE5E66 /* CanvasSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A22993E70300EE5E66 /* CanvasSettingsView.swift */; };
 		1C8BB4A52994ABDE00EE5E66 /* ColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A42994ABDE00EE5E66 /* ColorButtonStyle.swift */; };
 		1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */; };
-		1C8BB4A92995589700EE5E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AB2995589700EE5E66 /* Localizable.strings */; };
 		1C8BB4AE2995CEE900EE5E66 /* TextOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */; };
 		1C8BB4E62996EC2900EE5E66 /* SelectableColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4E52996EC2900EE5E66 /* SelectableColorButtonStyle.swift */; };
 		1C9A541029879F4A008B5AAE /* ScreenNoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A540F29879F4A008B5AAE /* ScreenNoteApp.swift */; };
@@ -69,6 +69,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C6242DC2B050A790063C6AF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFlipPopover.swift; sourceTree = "<group>"; };
 		1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRotatePopover.swift; sourceTree = "<group>"; };
 		1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangeMethod.swift; sourceTree = "<group>"; };
@@ -79,8 +80,6 @@
 		1C8BB4A22993E70300EE5E66 /* CanvasSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSettingsView.swift; sourceTree = "<group>"; };
 		1C8BB4A42994ABDE00EE5E66 /* ColorButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButtonStyle.swift; sourceTree = "<group>"; };
 		1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
-		1C8BB4AA2995589700EE5E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1C8BB4AC2995589A00EE5E66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOrientation.swift; sourceTree = "<group>"; };
 		1C8BB4E52996EC2900EE5E66 /* SelectableColorButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableColorButtonStyle.swift; sourceTree = "<group>"; };
 		1C9A540C29879F4A008B5AAE /* ScreenNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,7 +178,7 @@
 				1C9A541E29879FAE008B5AAE /* Info.plist */,
 				1C9A541829879F4B008B5AAE /* ScreenNote.entitlements */,
 				1C9A541329879F4B008B5AAE /* Assets.xcassets */,
-				1C8BB4AB2995589700EE5E66 /* Localizable.strings */,
+				1C6242DC2B050A790063C6AF /* Localizable.xcstrings */,
 				1C9A54222987A00D008B5AAE /* Data */,
 				1C9A54252987A027008B5AAE /* Domain */,
 				1C9A54282987A047008B5AAE /* Presentation */,
@@ -390,7 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9A541729879F4B008B5AAE /* Preview Assets.xcassets in Resources */,
-				1C8BB4A92995589700EE5E66 /* Localizable.strings in Resources */,
+				1C6242DD2B050A790063C6AF /* Localizable.xcstrings in Resources */,
 				1C9A541429879F4B008B5AAE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,18 +461,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		1C8BB4AB2995589700EE5E66 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1C8BB4AA2995589700EE5E66 /* en */,
-				1C8BB4AC2995589A00EE5E66 /* ja */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		1C9A541929879F4B008B5AAE /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -525,6 +512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -579,6 +567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
