@@ -1,51 +1,46 @@
 /*
-  WorkspaceView.swift
-  ScreenNote
+ WorkspaceView.swift
+ ScreenNote
 
-  Created by Takuto Nakamura on 2023/01/31.
-  
+ Created by Takuto Nakamura on 2023/01/31.
+ Copyright © 2023 Studio Kyome. All rights reserved.
 */
 
 import SwiftUI
 
-struct WorkspaceView<WVM: WorkspaceViewModel, OM: ObjectModel>: View {
-    @StateObject private var viewModel: WVM
-    @ObservedObject private var objectModel: OM
-
-    init(viewModel: WVM, objectModel: OM) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-        self.objectModel = objectModel
-    }
+struct WorkspaceView<WVM: WorkspaceViewModel>: View {
+    @StateObject var viewModel: WVM
 
     var body: some View {
         switch viewModel.toolBarPosition {
         case .top:
             VStack(spacing: 0) {
-                HorizontalToolBar(objectModel, arrowEdge: .bottom)
-                CanvasView(objectModel)
+                HorizontalToolBar(toolBarModel: WVM.TBM(objectModel: viewModel.objectModel,
+                                                        arrowEdge: .bottom))
+                CanvasView(viewMode: WVM.CVM(objectModel: viewModel.objectModel))
             }
         case .right:
             HStack(spacing: 0) {
-                CanvasView(objectModel)
-                VerticalToolBar(objectModel, arrowEdge: .leading)
+                CanvasView(viewMode: WVM.CVM(objectModel: viewModel.objectModel))
+                VerticalToolBar(toolBarModel: WVM.TBM(objectModel: viewModel.objectModel,
+                                                      arrowEdge: .leading))
             }
         case .bottom:
             VStack(spacing: 0) {
-                CanvasView(objectModel)
-                HorizontalToolBar(objectModel, arrowEdge: .top)
+                CanvasView(viewMode: WVM.CVM(objectModel: viewModel.objectModel))
+                HorizontalToolBar(toolBarModel: WVM.TBM(objectModel: viewModel.objectModel,
+                                                        arrowEdge: .top))
             }
         case .left:
             HStack(spacing: 0) {
-                VerticalToolBar(objectModel, arrowEdge: .trailing)
-                CanvasView(objectModel)
+                VerticalToolBar(toolBarModel: WVM.TBM(objectModel: viewModel.objectModel,
+                                                      arrowEdge: .trailing))
+                CanvasView(viewMode: WVM.CVM(objectModel: viewModel.objectModel))
             }
         }
     }
 }
 
-struct WorkspaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkspaceView(viewModel: PreviewMock.WorkspaceViewModelMock(),
-                      objectModel: PreviewMock.ObjectModelMock())
-    }
+#Preview {
+    WorkspaceView(viewModel: PreviewMock.WorkspaceViewModelMock())
 }

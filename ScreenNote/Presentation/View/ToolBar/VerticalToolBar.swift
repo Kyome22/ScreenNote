@@ -8,42 +8,30 @@
 
 import SwiftUI
 
-struct VerticalToolBar<OM: ObjectModel>: View {
-    @ObservedObject private var objectModel: OM
-    @State private var showColorPopover: Bool = false
-    @State private var showLineWidthPopover: Bool = false
-    @State private var showArrangePopover: Bool = false
-    @State private var showAlignPopover: Bool = false
-    @State private var showFlipPopover: Bool = false
-    @State private var showRotatePopover: Bool = false
-    private let arrowEdge: Edge
-
-    init(_ objectModel: OM, arrowEdge: Edge) {
-        self.objectModel = objectModel
-        self.arrowEdge = arrowEdge
-    }
+struct VerticalToolBar<TBM: ToolBarModel>: View {
+    @StateObject var toolBarModel: TBM
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack(spacing: 8) {
                 Button {
-                    objectModel.undo()
+                    toolBarModel.undo()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.backward.fill")
                 }
                 .buttonStyle(.toolBar(.vertical))
                 .help("goBack")
                 .keyboardShortcut("z", modifiers: .command)
-                .disabled(objectModel.objectForInputText != nil)
+                .disabled(toolBarModel.disabledWhileInputingText)
                 Button {
-                    objectModel.redo()
+                    toolBarModel.redo()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.forward.fill")
                 }
                 .buttonStyle(.toolBar(.vertical))
                 .help("goForward")
                 .keyboardShortcut("z", modifiers: [.shift, .command])
-                .disabled(objectModel.objectForInputText != nil)
+                .disabled(toolBarModel.disabledWhileInputingText)
             }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
@@ -76,153 +64,171 @@ struct VerticalToolBar<OM: ObjectModel>: View {
                     objectTypeButton(.select)
                         .keyboardShortcut("s", modifiers: [])
                     Button {
-                        showColorPopover = true
+                        toolBarModel.showColorPopover = true
                     } label: {
                         Image(systemName: "drop.fill")
-                            .foregroundColor(objectModel.color)
-                            .opacity(objectModel.opacity)
+                            .foregroundColor(toolBarModel.color)
+                            .opacity(toolBarModel.opacity)
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("colorPalette")
-                    .popover(isPresented: $showColorPopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showColorPopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         ColorPalettePopover(
-                            color: $objectModel.color,
-                            opacity: $objectModel.opacity,
-                            colors: objectModel.colors,
+                            color: $toolBarModel.color,
+                            opacity: $toolBarModel.opacity,
+                            colors: toolBarModel.colors,
                             startUpdatingOpacityHandler: {
-                                objectModel.startUpdatingOpacity()
+                                toolBarModel.startUpdatingOpacity()
                             }
                         )
                     }
                 }
                 HStack(spacing: 8) {
                     Button {
-                        showLineWidthPopover = true
+                        toolBarModel.showLineWidthPopover = true
                     } label: {
                         Image(systemName: "lineweight")
                     }
                     .buttonStyle(.toolBar(.vertical))
                     .help("lineWidth")
-                    .popover(isPresented: $showLineWidthPopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showLineWidthPopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         LineWidthPopover(
-                            lineWidth: $objectModel.lineWidth,
-                            color: $objectModel.color,
-                            opacity: $objectModel.opacity,
+                            lineWidth: $toolBarModel.lineWidth,
+                            color: $toolBarModel.color,
+                            opacity: $toolBarModel.opacity,
                             startUpdatingLineWidthHandler: {
-                                objectModel.startUpdatingLineWidth()
+                                toolBarModel.startUpdatingLineWidth()
                             }
                         )
                     }
                     Button {
-                        showArrangePopover = true
+                        toolBarModel.showArrangePopover = true
                     } label: {
                         Image(systemName: "square.3.stack.3d.middle.filled")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("arrange")
-                    .popover(isPresented: $showArrangePopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showArrangePopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         ObjectArrangePopover(
                             toolBarDirection: .vertical,
                             arrangeHandler: { arrangeMethod in
-                                objectModel.arrange(arrangeMethod)
+                                toolBarModel.arrange(arrangeMethod)
                             }
                         )
                     }
                 }
                 HStack(spacing: 8) {
                     Button {
-                        showAlignPopover = true
+                        toolBarModel.showAlignPopover = true
                     } label: {
                         Image(systemName: "align.horizontal.left.fill")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("align")
-                    .popover(isPresented: $showAlignPopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showAlignPopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         ObjectAlignPopover(
                             toolBarDirection: .vertical,
                             alignHandler: { alignMethod in
-                                objectModel.align(alignMethod)
+                                toolBarModel.align(alignMethod)
                             }
                         )
                     }
                     Button {
-                        showFlipPopover = true
+                        toolBarModel.showFlipPopover = true
                     } label: {
                         Image(systemName: FlipMethod.flipHorizontal.symbolName)
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("flip")
-                    .popover(isPresented: $showFlipPopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showFlipPopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         ObjectFlipPopover(
                             toolBarDirection: .vertical,
                             flipHandler: { flipMethod in
-                                objectModel.flip(flipMethod)
+                                toolBarModel.flip(flipMethod)
                             }
                         )
                     }
                 }
                 HStack(spacing: 8) {
                     Button {
-                        showRotatePopover = true
+                        toolBarModel.showRotatePopover = true
                     } label: {
                         Image(systemName: RotateMethod.rotateRight.symbolName)
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("rotate")
-                    .popover(isPresented: $showRotatePopover, arrowEdge: arrowEdge) {
+                    .popover(
+                        isPresented: $toolBarModel.showRotatePopover,
+                        arrowEdge: toolBarModel.arrowEdge
+                    ) {
                         ObjectRotatePopover(
                             toolBarDirection: .vertical,
                             rotateHandler: { rotateMethod in
-                                objectModel.rotate(rotateMethod)
+                                toolBarModel.rotate(rotateMethod)
                             }
                         )
                     }
                     Button {
-                        objectModel.duplicateSelectedObjects()
+                        toolBarModel.duplicateSelectedObjects()
                     } label: {
                         Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("duplicate")
                 }
                 HStack(spacing: 8) {
                     Button {
-                        objectModel.delete()
+                        toolBarModel.delete()
                     } label: {
                         Image(systemName: "trash.fill")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(!objectModel.isSelecting)
+                    .disabled(toolBarModel.disabledEditObject)
                     .help("delete")
                     Button {
-                        objectModel.clear()
+                        toolBarModel.clear()
                     } label: {
                         Image(systemName: "rays")
                     }
                     .buttonStyle(.toolBar(.vertical))
-                    .disabled(objectModel.objectForInputText != nil)
+                    .disabled(toolBarModel.disabledWhileInputingText)
                     .help("clear")
                 }
             }
             // Dummy Buttons for Keyboard Shortcut
             VStack(alignment: .leading, spacing: 8) {
                 dummyButton {
-                    objectModel.selectAll()
+                    toolBarModel.selectAll()
                 }
                 .keyboardShortcut("a", modifiers: .command)
-                .disabled(objectModel.objectType != .select)
+                .disabled(toolBarModel.disabledSelectAll)
                 dummyButton {
-                    objectModel.delete()
+                    toolBarModel.delete()
                 }
                 .keyboardShortcut(.delete, modifiers: [])
-                .disabled(!objectModel.isSelecting)
+                .disabled(toolBarModel.disabledEditObject)
                 dummyButton {
-                    objectModel.clear()
+                    toolBarModel.clear()
                 }
                 .keyboardShortcut(.delete, modifiers: .command)
             }
@@ -238,13 +244,13 @@ struct VerticalToolBar<OM: ObjectModel>: View {
     private func objectTypeButton(_ objectType: ObjectType) -> some View {
         Button {
             withAnimation(.none) {
-                objectModel.objectType = objectType
+                toolBarModel.objectType = objectType
             }
         } label: {
             Image(systemName: objectType.symbolName)
         }
         .buttonStyle(.toolBarRadio(.vertical, Binding(
-            get: { objectModel.objectType == objectType },
+            get: { toolBarModel.objectType == objectType },
             set: { _, _ in }
         )))
         .help(objectType.help)
@@ -261,8 +267,6 @@ struct VerticalToolBar<OM: ObjectModel>: View {
     }
 }
 
-struct VerticalToolBar_Previews: PreviewProvider {
-    static var previews: some View {
-        VerticalToolBar(PreviewMock.ObjectModelMock(), arrowEdge: .trailing)
-    }
+#Preview {
+    VerticalToolBar(toolBarModel: PreviewMock.ToolBarModelMock())
 }

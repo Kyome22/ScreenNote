@@ -36,9 +36,7 @@ struct ObjectFlipPopover: View {
     }
 }
 
-struct ObjectFlipPopover_Previews: PreviewProvider {
-    static var previews: some View {
-        ObjectFlipPopover(toolBarDirection: .horizontal,
-                          flipHandler: { _ in })
-    }
+#Preview {
+    ObjectFlipPopover(toolBarDirection: .horizontal,
+                      flipHandler: { _ in })
 }

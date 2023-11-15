@@ -10,13 +10,12 @@ import SwiftUI
 
 @main
 struct ScreenNoteApp: App {
-    typealias GVMConcrete = GeneralSettingsViewModelImpl<UserDefaultsRepositoryImpl, LaunchAtLoginRepositoryImpl>
-    typealias CVMConcrete = CanvasSettingsViewModelImpl<UserDefaultsRepositoryImpl>
-    @StateObject private var appModel = ScreenNoteAppModelImpl()
+    typealias SAM = ScreenNoteAppModelImpl
+    @StateObject private var appModel = SAM()
 
     var body: some Scene {
         Settings {
-            SettingsView<ScreenNoteAppModelImpl, GVMConcrete, CVMConcrete>()
+            SettingsView<SAM>()
                 .environmentObject(appModel)
         }
     }

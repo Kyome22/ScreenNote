@@ -13,20 +13,22 @@ import SpiceKey
 protocol ShortcutModel: AnyObject {
     var showOrHideCanvasPublisher: AnyPublisher<Void, Never> { get }
 
+    init(_ userDefaultsRepository: UserDefaultsRepository)
+
     func setShortcut()
 }
 
-final class ShortcutModelImpl<UR: UserDefaultsRepository>: ShortcutModel {
+final class ShortcutModelImpl: ShortcutModel {
     private let showOrHideCanvasSubject = PassthroughSubject<Void, Never>()
     var showOrHideCanvasPublisher: AnyPublisher<Void, Never> {
         return showOrHideCanvasSubject.eraseToAnyPublisher()
     }
 
-    private let userDefaultsRepository: UR
+    private let userDefaultsRepository: UserDefaultsRepository
     private var spiceKey: SpiceKey?
     private var cancellables = Set<AnyCancellable>()
 
-    init(_ userDefaultsRepository: UR) {
+    init(_ userDefaultsRepository: UserDefaultsRepository) {
         self.userDefaultsRepository = userDefaultsRepository
         self.userDefaultsRepository.updateShortcutPublisher
             .sink { [weak self] in
@@ -60,6 +62,9 @@ extension PreviewMock {
         var showOrHideCanvasPublisher: AnyPublisher<Void, Never> {
             Just(()).eraseToAnyPublisher()
         }
+
+        init(_ userDefaultsRepository: UserDefaultsRepository) {}
+        init() {}
 
         func setShortcut() {}
     }

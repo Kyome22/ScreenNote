@@ -8,20 +8,17 @@
 
 import SwiftUI
 
-struct SettingsView<SAM: ScreenNoteAppModel,
-                    GVM: GeneralSettingsViewModel,
-                    CVM: CanvasSettingsViewModel>: View {
+struct SettingsView<SAM: ScreenNoteAppModel>: View {
     @EnvironmentObject private var appModel: SAM
 
     var body: some View {
         TabView(selection: $appModel.settingsTab) {
-            GeneralSettingsView(viewModel: GVM(appModel.userDefaultsRepository,
-                                               appModel.launchAtLoginRepository))
-            .tabItem {
-                Label("general", systemImage: "gear")
-            }
-            .tag(SettingsTabType.general)
-            CanvasSettingsView(viewModel: CVM(appModel.userDefaultsRepository))
+            GeneralSettingsView(viewModel: SAM.GVM(appModel.userDefaultsRepository))
+                .tabItem {
+                    Label("general", systemImage: "gear")
+                }
+                .tag(SettingsTabType.general)
+            CanvasSettingsView(viewModel: SAM.CsVM(appModel.userDefaultsRepository))
                 .tabItem {
                     Label("canvas", systemImage: "square.and.pencil")
                 }
@@ -29,15 +26,11 @@ struct SettingsView<SAM: ScreenNoteAppModel,
         }
         .padding(.horizontal, 40)
         .padding(.vertical, 20)
-        .accessibilityIdentifier("Preferences")
+        .accessibilityIdentifier("Settings")
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView<PreviewMock.ScreenNoteAppModelMock,
-                     PreviewMock.GeneralSettingsViewModelMock,
-                     PreviewMock.CanvasSettingsViewModelMock>()
-            .environmentObject(PreviewMock.ScreenNoteAppModelMock())
-    }
+#Preview {
+    SettingsView<PreviewMock.ScreenNoteAppModelMock>()
+        .environmentObject(PreviewMock.ScreenNoteAppModelMock())
 }

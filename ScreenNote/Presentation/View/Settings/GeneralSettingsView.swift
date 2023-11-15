@@ -10,11 +10,7 @@ import SpiceKey
 import SwiftUI
 
 struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
-    @StateObject private var viewModel: GVM
-
-    init(viewModel: GVM) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @StateObject var viewModel: GVM
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -58,13 +54,11 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
                 .fixedSize(horizontal: true, vertical: false)
                 Spacer()
             }
-            if macOS13OrLater {
-                Divider()
-                HStack(alignment: .center, spacing: 8) {
-                    wrapText(maxKey: "wrapTextGeneralTab", key: "launch:")
-                    Toggle(isOn: $viewModel.launchAtLogin) {
-                        Text("launchAtLogin")
-                    }
+            Divider()
+            HStack(alignment: .center, spacing: 8) {
+                wrapText(maxKey: "wrapTextGeneralTab", key: "launch:")
+                Toggle(isOn: $viewModel.launchAtLogin) {
+                    Text("launchAtLogin")
                 }
             }
         }
@@ -72,11 +66,9 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
     }
 }
 
-struct GeneralSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(["en_US", "ja_JP"], id: \.self) { id in
-            GeneralSettingsView(viewModel: PreviewMock.GeneralSettingsViewModelMock())
-                .environment(\.locale, .init(identifier: id))
-        }
+#Preview {
+    ForEach(["en_US", "ja_JP"], id: \.self) { id in
+        GeneralSettingsView(viewModel: PreviewMock.GeneralSettingsViewModelMock())
+            .environment(\.locale, .init(identifier: id))
     }
 }

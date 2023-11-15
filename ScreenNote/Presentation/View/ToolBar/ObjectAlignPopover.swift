@@ -49,9 +49,7 @@ struct ObjectAlignPopover: View {
     }
 }
 
-struct ObjectAlignPopover_Previews: PreviewProvider {
-    static var previews: some View {
-        ObjectAlignPopover(toolBarDirection: .horizontal,
-                           alignHandler: { _ in })
-    }
+#Preview {
+    ObjectAlignPopover(toolBarDirection: .horizontal,
+                       alignHandler: { _ in })
 }

@@ -63,8 +63,6 @@ struct ShortcutView: View {
     }
 }
 
-struct ShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShortcutView(.longPressKey, .control)
-    }
+#Preview {
+    ShortcutView(.longPressKey, .control)
 }

@@ -77,13 +77,13 @@ extension String {
 
 extension NSColor {
     static let primaries: [NSColor] = [
-        NSColor(named: "UniqueWhite")!,
-        NSColor(named: "UniqueRed")!,
-        NSColor(named: "UniqueOrange")!,
-        NSColor(named: "UniqueYello")!,
-        NSColor(named: "UniqueGreen")!,
-        NSColor(named: "UniqueBlue")!,
-        NSColor(named: "UniqueViolet")!,
-        NSColor(named: "UniquePurple")!
+        NSColor(resource: .uniqueWhite),
+        NSColor(resource: .uniqueRed),
+        NSColor(resource: .uniqueOrange),
+        NSColor(resource: .uniqueYello),
+        NSColor(resource: .uniqueGreen),
+        NSColor(resource: .uniqueBlue),
+        NSColor(resource: .uniqueViolet),
+        NSColor(resource: .uniquePurple)
     ]
 }

@@ -36,9 +36,7 @@ struct ObjectRotatePopover: View {
     }
 }
 
-struct ObjectRotatePopover_Previews: PreviewProvider {
-    static var previews: some View {
-        ObjectRotatePopover(toolBarDirection: .horizontal,
-                            rotateHandler: { _ in })
-    }
+#Preview {
+    ObjectRotatePopover(toolBarDirection: .horizontal,
+                        rotateHandler: { _ in })
 }

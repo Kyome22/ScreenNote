@@ -9,15 +9,28 @@
 import Foundation
 
 protocol WorkspaceViewModel: ObservableObject {
-    var toolBarPosition: ToolBarPosition { get set }
+    associatedtype TBM: ToolBarModel
+    associatedtype CVM: CanvasViewModel
 
-    init(_ toolBarPosition: ToolBarPosition)
+    var objectModel: ObjectModel { get }
+    var toolBarPosition: ToolBarPosition { get }
+
+    init(_ objectModel: ObjectModel,
+         _ toolBarPosition: ToolBarPosition)
 }
 
 final class WorkspaceViewModelImpl: WorkspaceViewModel {
-    @Published var toolBarPosition: ToolBarPosition
+    typealias TBM = ToolBarModelImpl
+    typealias CVM = CanvasViewModelImpl
 
-    init(_ toolBarPosition: ToolBarPosition) {
+    let objectModel: ObjectModel
+    let toolBarPosition: ToolBarPosition
+
+    init(
+        _ objectModel: ObjectModel,
+        _ toolBarPosition: ToolBarPosition
+    ) {
+        self.objectModel = objectModel
         self.toolBarPosition = toolBarPosition
     }
 }
@@ -25,9 +38,14 @@ final class WorkspaceViewModelImpl: WorkspaceViewModel {
 // MARK: - Preview Mock
 extension PreviewMock {
     final class WorkspaceViewModelMock: WorkspaceViewModel {
-        @Published var toolBarPosition: ToolBarPosition = .top
+        typealias TBM = ToolBarModelMock
+        typealias CVM = CanvasViewModelMock
 
-        init(_ toolBarPosition: ToolBarPosition) {}
+        let objectModel: ObjectModel = ObjectModelMock()
+        let toolBarPosition: ToolBarPosition = .top
+
+        init(_ objectModel: ObjectModel,
+             _ toolBarPosition: ToolBarPosition) {}
         init() {}
     }
 }

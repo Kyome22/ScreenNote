@@ -64,11 +64,9 @@ struct ColorPalettePopover: View {
     }
 }
 
-struct ColorPalettePopover_Previews: PreviewProvider {
-    static var previews: some View {
-        ColorPalettePopover(color: .constant(.white),
-                            opacity: .constant(0.8),
-                            colors: [[]],
-                            startUpdatingOpacityHandler: {})
-    }
+#Preview {
+    ColorPalettePopover(color: .constant(.white),
+                        opacity: .constant(0.8),
+                        colors: [[]],
+                        startUpdatingOpacityHandler: {})
 }

@@ -16,12 +16,15 @@ final class WorkspaceHostingView<T: View>: NSHostingView<T> {
     }
 }
 
-final class WorkspacePanel<UR: UserDefaultsRepository, OM: ObjectModel>: NSPanel {
+final class WorkspacePanel<WVM: WorkspaceViewModel>: NSPanel {
     override var canBecomeKey: Bool {
         return true
     }
 
-    init(_ userDefaultsRepository: UR, _ objectModel: OM) {
+    init(
+        _ userDefaultsRepository: UserDefaultsRepository,
+        _ objectModel: ObjectModel
+    ) {
         super.init(contentRect: NSRect(x: 0, y: 0, width: 20, height: 20),
                    styleMask: [.borderless, .nonactivatingPanel],
                    backing: .buffered,
@@ -37,8 +40,8 @@ final class WorkspacePanel<UR: UserDefaultsRepository, OM: ObjectModel>: NSPanel
         if userDefaultsRepository.clearAllObjects {
             objectModel.resetHistory()
         }
-        let viewModel = WorkspaceViewModelImpl(userDefaultsRepository.toolBarPosition)
-        let workspaceView = WorkspaceView(viewModel: viewModel, objectModel: objectModel)
+        let viewModel = WVM(objectModel, userDefaultsRepository.toolBarPosition)
+        let workspaceView = WorkspaceView(viewModel: viewModel)
         self.contentView = WorkspaceHostingView(rootView: workspaceView)
     }
 

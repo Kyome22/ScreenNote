@@ -12,40 +12,43 @@ import SpiceKey
 
 protocol ScreenNoteAppModel: ObservableObject {
     associatedtype UR: UserDefaultsRepository
-    associatedtype LR: LaunchAtLoginRepository
     associatedtype SM: ShortcutModel
+    associatedtype OM: ObjectModel
+    associatedtype WM: WindowModel
+    associatedtype MBM: MenuBarModel
+    associatedtype GVM: GeneralSettingsViewModel
+    associatedtype CsVM: CanvasSettingsViewModel
 
     var settingsTab: SettingsTabType { get set }
     var userDefaultsRepository: UR { get }
-    var launchAtLoginRepository: LR { get }
     var shortcutModel: SM { get }
 }
 
 final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     typealias UR = UserDefaultsRepositoryImpl
-    typealias LR = LaunchAtLoginRepositoryImpl
     typealias SM = ShortcutModelImpl
-    typealias WMConcrete = WindowModelImpl<UR, SM<UR>, ObjectModelImpl<UR>>
-    typealias MMConcrete = MenuBarModelImpl<IssueReporterImpl, WMConcrete>
+    typealias OM = ObjectModelImpl
+    typealias WM = WindowModelImpl<WorkspaceViewModelImpl>
+    typealias MBM = MenuBarModelImpl<IssueReporterImpl>
+    typealias GVM = GeneralSettingsViewModelImpl<LaunchAtLoginRepositoryImpl>
+    typealias CsVM = CanvasSettingsViewModelImpl
 
     @Published var settingsTab: SettingsTabType = .general
 
     let userDefaultsRepository: UR
-    let launchAtLoginRepository: LR
-    let shortcutModel: SM<UR>
-    private let objectModel: ObjectModelImpl<UR>
-    private let windowModel: WMConcrete
-    private let menuBarModel: MMConcrete
-    private var menuBar: MenuBar<MMConcrete>?
+    let shortcutModel: SM
+    private let objectModel: OM
+    private let windowModel: WM
+    private let menuBarModel: MBM
+    private var menuBar: MenuBar?
     private var cancellables = Set<AnyCancellable>()
 
     override init() {
         userDefaultsRepository = UR()
-        launchAtLoginRepository = LR()
         shortcutModel = SM(userDefaultsRepository)
-        objectModel = ObjectModelImpl(userDefaultsRepository)
-        windowModel = WMConcrete(userDefaultsRepository, shortcutModel, objectModel)
-        menuBarModel = MMConcrete(windowModel)
+        objectModel = OM(userDefaultsRepository)
+        windowModel = WM(userDefaultsRepository, shortcutModel, objectModel)
+        menuBarModel = MBM(windowModel)
         super.init()
 
         NotificationCenter.default
@@ -79,12 +82,15 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
 extension PreviewMock {
     final class ScreenNoteAppModelMock: ScreenNoteAppModel {
         typealias UR = UserDefaultsRepositoryMock
-        typealias LR = LaunchAtLoginRepositoryMock
         typealias SM = ShortcutModelMock
+        typealias OM = ObjectModelMock
+        typealias WM = WindowModelMock
+        typealias MBM = MenuBarModelMock
+        typealias GVM = GeneralSettingsViewModelMock
+        typealias CsVM = CanvasSettingsViewModelMock
 
         @Published var settingsTab: SettingsTabType = .general
         var userDefaultsRepository = UR()
-        var launchAtLoginRepository = LR()
         var shortcutModel = SM()
     }
 }

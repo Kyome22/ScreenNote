@@ -1,9 +1,9 @@
 /*
-  CanvasSettingsViewModel.swift
-  ScreenNote
+ CanvasSettingsViewModel.swift
+ ScreenNote
 
-  Created by Takuto Nakamura on 2023/02/08.
-  
+ Created by Takuto Nakamura on 2023/02/08.
+ Copyright © 2023 Studio Kyome. All rights reserved.
 */
 
 import SwiftUI
@@ -26,7 +26,7 @@ protocol CanvasSettingsViewModel: ObservableObject {
     func endUpdatingBackgroundOpacity()
 }
 
-final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSettingsViewModel {
+final class CanvasSettingsViewModelImpl: CanvasSettingsViewModel {
     @Published var clearAllObjects: Bool {
         didSet { userDefaultsRepository.clearAllObjects = clearAllObjects }
     }
@@ -42,10 +42,10 @@ final class CanvasSettingsViewModelImpl<UR: UserDefaultsRepository>: CanvasSetti
     @Published var backgroundOpacity: CGFloat
     let colors: [[Color]]
     let backgrounds: [Color] = [.white, .black]
-    private let userDefaultsRepository: UR
+    private let userDefaultsRepository: UserDefaultsRepository
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
-        self.userDefaultsRepository = userDefaultsRepository as! UR
+        self.userDefaultsRepository = userDefaultsRepository
         clearAllObjects = userDefaultsRepository.clearAllObjects
         colors = Color.palette
         let index = userDefaultsRepository.defaultColorIndex

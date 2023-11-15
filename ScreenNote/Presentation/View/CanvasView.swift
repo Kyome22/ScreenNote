@@ -8,20 +8,14 @@
 
 import SwiftUI
 
-struct CanvasView<OM: ObjectModel>: View {
-    @ObservedObject private var objectModel: OM
-
-    @State private var dragging: Bool = false
+struct CanvasView<CVM: CanvasViewModel>: View {
+    @StateObject var viewMode: CVM
     @FocusState private var isFocused: Bool
-
-    init(_ objectModel: OM) {
-        self.objectModel = objectModel
-    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             Canvas { context, size in
-                objectModel.objects.forEach { object in
+                viewMode.objects.forEach { object in
                     switch object.type {
                     case .select:
                         break
@@ -58,13 +52,13 @@ struct CanvasView<OM: ObjectModel>: View {
                         context.fill(object.path, with: .color(object.color))
                     }
                 }
-                if let bounds = objectModel.selectedObjectsBounds {
+                if let bounds = viewMode.selectedObjectsBounds {
                     context.stroke(Path(bounds), with: .color(.gray), lineWidth: 1)
                     Path.anchorPaths(bounds: bounds).forEach { path in
                         context.fill(path, with: .color(.gray))
                     }
                 }
-                if let object = objectModel.rectangleForSelection {
+                if let object = viewMode.rectangleForSelection {
                     context.stroke(object.path,
                                    with: .color(Color(.dashWhite)),
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0]))
@@ -73,11 +67,11 @@ struct CanvasView<OM: ObjectModel>: View {
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0))
                 }
             }
-            if let textObject = objectModel.objectForInputText {
-                TextField(" ", text: $objectModel.inputText)
+            if let textObject = viewMode.objectForInputText {
+                TextField(" ", text: $viewMode.inputText)
                     .textFieldStyle(.plain)
-                    .foregroundColor(objectModel.color.opacity(objectModel.opacity))
-                    .font(.system(size: objectModel.fontSize))
+                    .foregroundColor(viewMode.color.opacity(viewMode.opacity))
+                    .font(.system(size: viewMode.fontSize))
                     .lineLimit(1)
                     .fixedSize()
                     .overlay(
@@ -92,7 +86,7 @@ struct CanvasView<OM: ObjectModel>: View {
                         isFocused = true
                     }
                     .onSubmit {
-                        objectModel.endEditing(textObject)
+                        viewMode.endEditing(textObject)
                     }
             }
         }
@@ -101,25 +95,23 @@ struct CanvasView<OM: ObjectModel>: View {
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged({ value in
-                    if !dragging {
-                        dragging = true
-                        objectModel.dragBegan(location: value.startLocation)
+                    if viewMode.dragging {
+                        viewMode.dragMoved(startLocation: value.startLocation,
+                                           location: value.location)
                     } else {
-                        objectModel.dragMoved(startLocation: value.startLocation,
-                                              location: value.location)
+                        viewMode.dragging = true
+                        viewMode.dragBegan(location: value.startLocation)
                     }
                 })
                 .onEnded({ value in
-                    objectModel.dragEnded(startLocation: value.startLocation,
-                                          location: value.location)
-                    dragging = false
+                    viewMode.dragEnded(startLocation: value.startLocation,
+                                       location: value.location)
+                    viewMode.dragging = false
                 })
         )
     }
 }
 
-struct CanvasView_Previews: PreviewProvider {
-    static var previews: some View {
-        CanvasView(PreviewMock.ObjectModelMock())
-    }
+#Preview {
+    CanvasView(viewMode: PreviewMock.CanvasViewModelMock())
 }

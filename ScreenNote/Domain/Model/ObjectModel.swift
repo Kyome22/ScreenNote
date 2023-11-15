@@ -8,19 +8,21 @@
 
 import SwiftUI
 
-protocol ObjectModel: ObservableObject {
-    var objectType: ObjectType { get set }
-    var rectangleForSelection: Object? { get set }
-    var selectedObjectsBounds: CGRect? { get set }
-    var objects: [Object] { get set }
-    var color: Color { get set }
-    var opacity: CGFloat { get set }
-    var lineWidth: CGFloat { get set }
-    var objectForInputText: Object? { get set }
-    var inputText: String { get set }
-    var fontSize: CGFloat { get set }
-    var isSelecting: Bool { get set }
+protocol ObjectModel: AnyObject {
+    var objectType: ObjectType { get }
+    var rectangleForSelection: Object? { get }
+    var selectedObjectsBounds: CGRect? { get }
+    var objects: [Object] { get }
+    var color: Color { get }
+    var opacity: CGFloat { get }
+    var lineWidth: CGFloat { get }
+    var objectForInputText: Object? { get }
+    var inputText: String { get }
+    var fontSize: CGFloat { get }
+    var isSelecting: Bool { get }
     var colors: [[Color]] { get }
+
+    init(_ userDefaultsRepository: UserDefaultsRepository)
 
     func endEditing(_ textObject: Object)
     func dragBegan(location: CGPoint)
@@ -30,8 +32,12 @@ protocol ObjectModel: ObservableObject {
     func undo()
     func redo()
     func resetHistory()
+    func updateObjectType(_ objectType: ObjectType)
+    func updateColor(_ color: Color)
     func startUpdatingOpacity()
+    func updateOpacity(_ opacity: CGFloat)
     func startUpdatingLineWidth()
+    func updateLineWidth(_ lineWidth: CGFloat)
     func arrange(_ arrangeMethod: ArrangeMethod)
     func align(_ alignMethod: AlignMethod)
     func flip(_ flipMethod: FlipMethod)
@@ -42,7 +48,7 @@ protocol ObjectModel: ObservableObject {
     func clear()
 }
 
-final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
+final class ObjectModelImpl: ObjectModel {
     enum Action {
         case none
         case move
@@ -55,31 +61,20 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         case keep
     }
 
-    @Published var objectType: ObjectType = .pen {
-        didSet { updatedObjectType(oldValue) }
-    }
-    @Published var rectangleForSelection: Object?
-    @Published var selectedObjectsBounds: CGRect?
-    @Published var objects = [Object]() {
-        didSet { updatedObjects() }
-    }
-    @Published var color: Color {
-        didSet { updatedColor(oldValue) }
-    }
-    @Published var opacity: CGFloat {
-        didSet { updatedOpacity() }
-    }
-    @Published var lineWidth: CGFloat {
-        didSet { updatedLineWidth() }
-    }
-    @Published var objectForInputText: Object?
-    @Published var inputText: String = ""
-    @Published var fontSize: CGFloat = 40.0
-    @Published var isSelecting: Bool = false
-
+    var objectType: ObjectType = .pen
+    var rectangleForSelection: Object?
+    var selectedObjectsBounds: CGRect?
+    var objects = [Object]()
+    var color: Color
+    var opacity: CGFloat
+    var lineWidth: CGFloat
+    var objectForInputText: Object?
+    var inputText: String = ""
+    var fontSize: CGFloat = 40.0
+    var isSelecting: Bool = false
     let colors: [[Color]]
 
-    private let userDefaultsRepository: UR
+    private let userDefaultsRepository: UserDefaultsRepository
     private let undoManager = UndoManager()
     private var lastObjects = [Object]()
     private var currentAction: Action = .none
@@ -90,7 +85,7 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         return objects.filter { $0.isSelected }
     }
 
-    init(_ userDefaultsRepository: UR) {
+    init(_ userDefaultsRepository: UserDefaultsRepository) {
         self.userDefaultsRepository = userDefaultsRepository
         colors = Color.palette
         let index = userDefaultsRepository.defaultColorIndex
@@ -352,21 +347,23 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
     }
 
     // MARK: Operation to Selected Objects
-    private func updatedObjectType(_ oldValue: ObjectType) {
-        if objectType == oldValue { return }
-        if oldValue == .text, let textObject = objectForInputText {
+    func updateObjectType(_ objectType: ObjectType) {
+        if self.objectType == objectType { return }
+        if self.objectType == .text, let textObject = objectForInputText {
             endEditing(textObject)
         }
-        if objectType != .select {
-            isSelecting = false
-            if !selectedObjects.isEmpty {
-                unselectAllObjects()
-            }
+        self.objectType = objectType
+        if objectType == .select { return }
+        isSelecting = false
+        if !selectedObjects.isEmpty {
+            unselectAllObjects()
         }
     }
 
-    private func updatedColor(_ oldValue: Color) {
-        if color == oldValue || selectedObjects.isEmpty { return }
+    // TODO: 変更を通知したいかどうかで実装が変わりそう
+    func updateColor(_ color: Color) {
+        self.color = color
+        if selectedObjects.isEmpty { return }
         pushHistory()
         for i in (0 ..< objects.count) where objects[i].isSelected {
             objects[i].color_ = color
@@ -378,7 +375,8 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         pushHistory()
     }
 
-    private func updatedOpacity() {
+    func updateOpacity(_ opacity: CGFloat) {
+        self.opacity = opacity
         if selectedObjects.isEmpty { return }
         for i in (0 ..< objects.count) where objects[i].isSelected {
             objects[i].opacity = opacity
@@ -390,7 +388,8 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
         pushHistory()
     }
 
-    private func updatedLineWidth() {
+    func updateLineWidth(_ lineWidth: CGFloat) {
+        self.lineWidth = lineWidth
         if selectedObjects.isEmpty { return }
         for i in (0 ..< objects.count) where objects[i].isSelected {
             objects[i].lineWidth = lineWidth
@@ -513,20 +512,23 @@ final class ObjectModelImpl<UR: UserDefaultsRepository>: ObjectModel {
 // MARK: - Preview Mock
 extension PreviewMock {
     final class ObjectModelMock: ObjectModel {
-        @Published var objectType: ObjectType = .select
-        @Published var rectangleForSelection: Object?
-        @Published var selectedObjectsBounds: CGRect?
-        @Published var objects: [Object] = []
-        @Published var color: Color
-        @Published var opacity: CGFloat = 0.8
-        @Published var lineWidth: CGFloat = 4.0
-        @Published var objectForInputText: Object?
-        @Published var inputText: String = ""
-        @Published var fontSize: CGFloat = 40.0
-        @Published var isSelecting: Bool = false
+        var objectType: ObjectType = .select
+        var rectangleForSelection: Object?
+        var selectedObjectsBounds: CGRect?
+        var objects: [Object] = []
+        var color: Color
+        var opacity: CGFloat = 0.8
+        var lineWidth: CGFloat = 4.0
+        var objectForInputText: Object?
+        var inputText: String = ""
+        var fontSize: CGFloat = 40.0
+        var isSelecting: Bool = false
+        let colors: [[Color]]
 
-        var colors: [[Color]]
-
+        init(_ userDefaultsRepository: UserDefaultsRepository) {
+            colors = Color.palette
+            color = colors[0][0]
+        }
         init() {
             colors = Color.palette
             color = colors[0][0]
@@ -540,8 +542,12 @@ extension PreviewMock {
         func undo() {}
         func redo() {}
         func resetHistory() {}
+        func updateObjectType(_ objectType: ObjectType) {}
+        func updateColor(_ color: Color) {}
         func startUpdatingOpacity() {}
+        func updateOpacity(_ opacity: CGFloat) {}
         func startUpdatingLineWidth() {}
+        func updateLineWidth(_ lineWidth: CGFloat) {}
         func arrange(_ arrangeMethod: ArrangeMethod) {}
         func align(_ alignMethod: AlignMethod) {}
         func flip(_ flipMethod: FlipMethod) {}

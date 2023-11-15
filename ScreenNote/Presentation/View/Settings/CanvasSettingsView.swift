@@ -9,11 +9,7 @@
 import SwiftUI
 
 struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
-    @StateObject private var viewModel: CVM
-
-    init(viewModel: CVM) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @StateObject var viewModel: CVM
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -129,11 +125,9 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
     }
 }
 
-struct CanvasSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(["en_US", "ja_JP"], id: \.self) { id in
-            CanvasSettingsView(viewModel: PreviewMock.CanvasSettingsViewModelMock())
-                .environment(\.locale, .init(identifier: id))
-        }
+#Preview {
+    ForEach(["en_US", "ja_JP"], id: \.self) { id in
+        CanvasSettingsView(viewModel: PreviewMock.CanvasSettingsViewModelMock())
+            .environment(\.locale, .init(identifier: id))
     }
 }

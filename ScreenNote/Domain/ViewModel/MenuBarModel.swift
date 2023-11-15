@@ -12,20 +12,21 @@ import Combine
 protocol MenuBarModel: AnyObject {
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> { get }
 
+    init(_ windowModel: WindowModel)
+
     func toggleCanvasVisible(_ flag: Bool)
-    func openPreferences()
+    func openSettings()
     func openAbout()
     func sendIssueReport()
     func terminateApp()
 }
 
-final class MenuBarModelImpl<IR: IssueReportModel,
-                             WM: WindowModel>: MenuBarModel {
+final class MenuBarModelImpl<IR: IssueReportModel>: MenuBarModel {
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never>
 
-    private let windowModel: WM
+    private let windowModel: WindowModel
 
-    init(_ windowModel: WM) {
+    init(_ windowModel: WindowModel) {
         self.windowModel = windowModel
         self.showOrHideCanvasPublisher = windowModel.showOrHideCanvasPublisher
     }
@@ -38,8 +39,8 @@ final class MenuBarModelImpl<IR: IssueReportModel,
         }
     }
 
-    func openPreferences() {
-        windowModel.openPreferences()
+    func openSettings() {
+        windowModel.openSettings()
     }
 
     func openAbout() {
@@ -62,8 +63,10 @@ extension PreviewMock {
             Just(true).eraseToAnyPublisher()
         }
 
+        init(_ windowModel: WindowModel) {}
+
         func toggleCanvasVisible(_ flag: Bool) {}
-        func openPreferences() {}
+        func openSettings() {}
         func openAbout() {}
         func sendIssueReport() {}
         func terminateApp() {}

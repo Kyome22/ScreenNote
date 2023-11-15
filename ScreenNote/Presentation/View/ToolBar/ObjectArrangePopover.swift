@@ -36,9 +36,7 @@ struct ObjectArrangePopover: View {
     }
 }
 
-struct ObjectArrangePopover_Previews: PreviewProvider {
-    static var previews: some View {
-        ObjectArrangePopover(toolBarDirection: .horizontal,
-                             arrangeHandler: { _ in })
-    }
+#Preview {
+    ObjectArrangePopover(toolBarDirection: .horizontal,
+                         arrangeHandler: { _ in })
 }

@@ -9,15 +9,15 @@
 import AppKit
 import Combine
 
-final class MenuBar<MM: MenuBarModel>: NSObject {
+final class MenuBar: NSObject {
     private let statusItem = NSStatusItem.default
     private let menu = NSMenu()
     private let showCanvasMenuItem = NSMenuItem()
     private let hideCanvasMenuItem = NSMenuItem()
-    private let menuBarModel: MM
+    private let menuBarModel: MenuBarModel
     private var cancellables = Set<AnyCancellable>()
 
-    init(menuBarModel: MM) {
+    init(menuBarModel: MenuBarModel) {
         self.menuBarModel = menuBarModel
         super.init()
 
@@ -69,7 +69,7 @@ final class MenuBar<MM: MenuBarModel>: NSObject {
     }
 
     @objc func openPreferences(_ sender: Any?) {
-        menuBarModel.openPreferences()
+        menuBarModel.openSettings()
     }
 
     @objc func openAbout(_ sender: Any?) {

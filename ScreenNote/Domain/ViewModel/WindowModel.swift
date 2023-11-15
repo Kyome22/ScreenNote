@@ -13,7 +13,11 @@ import SpiceKey
 protocol WindowModel: AnyObject {
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> { get }
 
-    func openPreferences()
+    init(_ userDefaultsRepository: UserDefaultsRepository,
+         _ shortcutModel: ShortcutModel,
+         _ objectModel: ObjectModel)
+
+    func openSettings()
     func openAbout()
     func fadeInShortcutPanel(_ toggleMethod: ToggleMethod, _ modifierFlag: ModifierFlag)
     func fadeOutShortcutPanel()
@@ -21,19 +25,17 @@ protocol WindowModel: AnyObject {
     func hideCanvas()
 }
 
-final class WindowModelImpl<UR: UserDefaultsRepository,
-                            SM: ShortcutModel,
-                            OM: ObjectModel>: NSObject, WindowModel, NSWindowDelegate {
+final class WindowModelImpl<WVM: WorkspaceViewModel>: NSObject, WindowModel, NSWindowDelegate {
     private let showOrHideCanvasSubject = PassthroughSubject<Bool, Never>()
     var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> {
         return showOrHideCanvasSubject.eraseToAnyPublisher()
     }
 
-    private let userDefaultsRepository: UR
-    private let shortcutModel: SM
-    private let objectModel: OM
+    private let userDefaultsRepository: UserDefaultsRepository
+    private let shortcutModel: ShortcutModel
+    private let objectModel: ObjectModel
     private var shortcutPanel: ShortcutPanel?
-    private var workspacePanel: WorkspacePanel<UR, OM>?
+    private var workspacePanel: WorkspacePanel<WVM>?
     private var cancellables = Set<AnyCancellable>()
 
     private var settingsWindow: NSWindow? {
@@ -42,7 +44,11 @@ final class WindowModelImpl<UR: UserDefaultsRepository,
         })
     }
 
-    init(_ userDefaultsRepository: UR, _ shortcutModel: SM, _ objectModel: OM) {
+    init(
+        _ userDefaultsRepository: UserDefaultsRepository,
+        _ shortcutModel: ShortcutModel,
+        _ objectModel: ObjectModel
+    ) {
         self.userDefaultsRepository = userDefaultsRepository
         self.shortcutModel = shortcutModel
         self.objectModel = objectModel
@@ -54,12 +60,8 @@ final class WindowModelImpl<UR: UserDefaultsRepository,
             .store(in: &cancellables)
     }
 
-    func openPreferences() {
-        if #available(macOS 13, *) {
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-        }
+    func openSettings() {
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
         guard let window = settingsWindow else { return }
         if window.canBecomeMain {
             window.center()
@@ -128,7 +130,12 @@ extension PreviewMock {
             Just(true).eraseToAnyPublisher()
         }
 
-        func openPreferences() {}
+        init(_ userDefaultsRepository: UserDefaultsRepository,
+             _ shortcutModel: ShortcutModel,
+             _ objectModel: ObjectModel) {}
+        init() {}
+
+        func openSettings() {}
         func openAbout() {}
         func fadeInShortcutPanel(_ toggleMethod: ToggleMethod, _ modifierFlag: ModifierFlag) {}
         func fadeOutShortcutPanel() {}

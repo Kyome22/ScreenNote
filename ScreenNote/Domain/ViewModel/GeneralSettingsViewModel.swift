@@ -15,12 +15,10 @@ protocol GeneralSettingsViewModel: ObservableObject {
     var toolBarPosition: ToolBarPosition { get set }
     var launchAtLogin: Bool { get set }
 
-    init(_ userDefaultsRepository: UserDefaultsRepository,
-         _ launchAtLoginRepository: LaunchAtLoginRepository)
+    init(_ userDefaultsRepository: UserDefaultsRepository)
 }
 
-final class GeneralSettingsViewModelImpl<UR: UserDefaultsRepository,
-                                         LR: LaunchAtLoginRepository>: GeneralSettingsViewModel {
+final class GeneralSettingsViewModelImpl<LR: LaunchAtLoginRepository>: GeneralSettingsViewModel {
     @Published var toggleMethod: ToggleMethod {
         didSet { userDefaultsRepository.toggleMethod = toggleMethod }
     }
@@ -37,15 +35,12 @@ final class GeneralSettingsViewModelImpl<UR: UserDefaultsRepository,
             }
         }
     }
-    private let userDefaultsRepository: UR
+    private let userDefaultsRepository: UserDefaultsRepository
     private let launchAtLoginRepository: LR
 
-    init(
-        _ userDefaultsRepository: UserDefaultsRepository,
-        _ launchAtLoginRepository: LaunchAtLoginRepository
-    ) {
-        self.userDefaultsRepository = userDefaultsRepository as! UR
-        self.launchAtLoginRepository = launchAtLoginRepository as! LR
+    init(_ userDefaultsRepository: UserDefaultsRepository) {
+        self.userDefaultsRepository = userDefaultsRepository
+        self.launchAtLoginRepository = LR()
         toggleMethod = userDefaultsRepository.toggleMethod
         modifierFlag = userDefaultsRepository.modifierFlag
         toolBarPosition = userDefaultsRepository.toolBarPosition
@@ -61,8 +56,7 @@ extension PreviewMock {
         @Published var toolBarPosition: ToolBarPosition = .top
         @Published var launchAtLogin: Bool = false
 
-        init(_ userDefaultsRepository: UserDefaultsRepository,
-             _ launchAtLoginRepository: LaunchAtLoginRepository) {}
+        init(_ userDefaultsRepository: UserDefaultsRepository) {}
         init() {}
     }
 }

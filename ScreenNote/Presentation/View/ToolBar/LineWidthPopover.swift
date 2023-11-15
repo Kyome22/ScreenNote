@@ -52,11 +52,9 @@ struct LineWidthPopover: View {
     }
 }
 
-struct LineWidthPopover_Previews: PreviewProvider {
-    static var previews: some View {
-        LineWidthPopover(lineWidth: .constant(4.0),
-                         color: .constant(.white),
-                         opacity: .constant(0.8),
-                         startUpdatingLineWidthHandler: {})
-    }
+#Preview {
+    LineWidthPopover(lineWidth: .constant(4.0),
+                     color: .constant(.white),
+                     opacity: .constant(0.8),
+                     startUpdatingLineWidthHandler: {})
 }
