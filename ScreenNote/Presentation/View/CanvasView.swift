@@ -66,10 +66,10 @@ struct CanvasView<OM: ObjectModel>: View {
                 }
                 if let object = objectModel.rectangleForSelection {
                     context.stroke(object.path,
-                                   with: .color(Color("DashWhite")),
+                                   with: .color(Color(.dashWhite)),
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0]))
                     context.stroke(object.path,
-                                   with: .color(Color("DashBlack")),
+                                   with: .color(Color(.dashBlack)),
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0))
                 }
             }

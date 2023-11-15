@@ -37,7 +37,7 @@ struct ShortcutView: View {
                 .foregroundColor(Color.secondary)
         }
         .padding(20)
-        .background(Color("PanelBackground"))
+        .background(Color(.panelBackground))
         .cornerRadius(12)
         .fixedSize()
     }
@@ -57,7 +57,7 @@ struct ShortcutView: View {
             }
         }
         .padding(20)
-        .background(Color("PanelBackground"))
+        .background(Color(.panelBackground))
         .cornerRadius(12)
         .fixedSize()
     }
