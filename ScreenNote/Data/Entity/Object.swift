@@ -205,8 +205,4 @@ struct Object: Identifiable {
                       width: size.width,
                       height: size.height)
     }
-
-    func inputTextOffset(from bounds: CGRect) -> CGSize {
-        return CGSize(width: bounds.minX, height: bounds.minY)
-    }
 }

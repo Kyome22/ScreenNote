@@ -7,12 +7,16 @@
 */
 
 import SwiftUI
+import Combine
 
 protocol ToolBarModel: ObservableObject {
     var objectType: ObjectType { get set }
     var color: Color { get set }
     var opacity: CGFloat { get set }
     var lineWidth: CGFloat { get set }
+    var disabledWhileInputingText: Bool { get set }
+    var disabledSelectAll: Bool { get set }
+    var disabledEditObject: Bool { get set }
     var showColorPopover: Bool { get set }
     var showLineWidthPopover: Bool { get set }
     var showArrangePopover: Bool { get set }
@@ -21,9 +25,6 @@ protocol ToolBarModel: ObservableObject {
     var showRotatePopover: Bool { get set }
     var arrowEdge: Edge { get }
     var colors: [[Color]] { get }
-    var disabledWhileInputingText: Bool { get }
-    var disabledSelectAll: Bool { get }
-    var disabledEditObject: Bool { get }
 
     init(objectModel: ObjectModel, arrowEdge: Edge)
 
@@ -43,6 +44,7 @@ protocol ToolBarModel: ObservableObject {
 
 final class ToolBarModelImpl: ToolBarModel {
     private let objectModel: ObjectModel
+    private var cancellables = Set<AnyCancellable>()
 
     @Published var objectType: ObjectType {
         didSet { objectModel.updateObjectType(objectType) }
@@ -56,6 +58,9 @@ final class ToolBarModelImpl: ToolBarModel {
     @Published var lineWidth: CGFloat {
         didSet { objectModel.updateLineWidth(lineWidth) }
     }
+    @Published var disabledWhileInputingText: Bool = false
+    @Published var disabledSelectAll: Bool = false
+    @Published var disabledEditObject: Bool = false
     @Published var showColorPopover: Bool = false
     @Published var showLineWidthPopover: Bool = false
     @Published var showArrangePopover: Bool = false
@@ -64,17 +69,6 @@ final class ToolBarModelImpl: ToolBarModel {
     @Published var showRotatePopover: Bool = false
     let arrowEdge: Edge
     let colors: [[Color]]
-    // TODO: 更新されないかも
-    var disabledWhileInputingText: Bool {
-        return objectModel.objectForInputText != nil
-    }
-    var disabledSelectAll: Bool {
-        return objectType != .select
-    }
-    // TODO: 更新されないかも
-    var disabledEditObject: Bool {
-        return !objectModel.isSelecting
-    }
 
     init(objectModel: ObjectModel, arrowEdge: Edge) {
         self.objectModel = objectModel
@@ -84,6 +78,32 @@ final class ToolBarModelImpl: ToolBarModel {
         opacity = objectModel.opacity
         lineWidth = objectModel.lineWidth
         colors = objectModel.colors
+
+        objectModel.objectTypePublisher
+            .sink { [weak self] objectType in
+                self?.objectType = objectType
+            }
+            .store(in: &cancellables)
+
+        objectModel.isSelectingPublisher
+            .sink { [weak self] isSelecting in
+                self?.disabledEditObject = !isSelecting
+            }
+            .store(in: &cancellables)
+
+        objectModel.objectPropertiesPublisher
+            .sink { [weak self] properties in
+                self?.color = properties.color
+                self?.opacity = properties.opacity
+                self?.lineWidth = properties.lineWidth
+            }
+            .store(in: &cancellables)
+
+        objectModel.inputTextPropertiesPublisher
+            .sink { [weak self] properties in
+                self?.disabledWhileInputingText = (properties != nil)
+            }
+            .store(in: &cancellables)
     }
 
     func undo() {
@@ -142,6 +162,9 @@ extension PreviewMock {
         @Published var color: Color = .white
         @Published var opacity: CGFloat = 0.8
         @Published var lineWidth: CGFloat = 4.0
+        @Published var disabledWhileInputingText: Bool = false
+        @Published var disabledSelectAll: Bool = false
+        @Published var disabledEditObject: Bool = false
         @Published var showColorPopover: Bool = false
         @Published var showLineWidthPopover: Bool = false
         @Published var showArrangePopover: Bool = false
@@ -150,9 +173,6 @@ extension PreviewMock {
         @Published var showRotatePopover: Bool = false
         let arrowEdge: Edge = .bottom
         let colors: [[Color]] = []
-        let disabledWhileInputingText: Bool = false
-        let disabledSelectAll: Bool = false
-        let disabledEditObject: Bool = false
 
         init(objectModel: ObjectModel, arrowEdge: Edge) {}
         init() {}

@@ -7,27 +7,33 @@
 */
 
 import SwiftUI
+import Combine
 
 protocol ObjectModel: AnyObject {
+    var colors: [[Color]] { get }
+    var objectTypePublisher: AnyPublisher<ObjectType, Never> { get }
     var objectType: ObjectType { get }
-    var rectangleForSelection: Object? { get }
-    var selectedObjectsBounds: CGRect? { get }
-    var objects: [Object] { get }
+    var objectsPublisher: AnyPublisher<[Object], Never> { get }
+    var selectedObjectsBoundsPublisher: AnyPublisher<CGRect?, Never> { get }
+    var isSelectingPublisher: AnyPublisher<Bool, Never> { get }
+    var objectPropertiesPublisher: AnyPublisher<ObjectProperties, Never> { get }
     var color: Color { get }
     var opacity: CGFloat { get }
     var lineWidth: CGFloat { get }
-    var objectForInputText: Object? { get }
-    var inputText: String { get }
-    var fontSize: CGFloat { get }
-    var isSelecting: Bool { get }
-    var colors: [[Color]] { get }
+    var inputTextPropertiesPublisher: AnyPublisher<InputTextProperties?, Never> { get }
 
     init(_ userDefaultsRepository: UserDefaultsRepository)
 
-    func endEditing(_ textObject: Object)
-    func dragBegan(location: CGPoint)
-    func dragMoved(startLocation: CGPoint, location: CGPoint)
-    func dragEnded(startLocation: CGPoint, location: CGPoint)
+    func endEditing(_ inputTextProperties: InputTextProperties)
+    func dragBegan(location: CGPoint,
+                   selectBeganHandler: @escaping () -> Void)
+    func dragMoved(startLocation: CGPoint,
+                   location: CGPoint,
+                   selectMovedHandler: @escaping () -> Void)
+    func dragEnded(startLocation: CGPoint,
+                   location: CGPoint,
+                   selectionBounds: CGRect?,
+                   selectEndedHandler: @escaping () -> Void)
 
     func undo()
     func redo()
@@ -61,44 +67,93 @@ final class ObjectModelImpl: ObjectModel {
         case keep
     }
 
-    var objectType: ObjectType = .pen
-    var rectangleForSelection: Object?
-    var selectedObjectsBounds: CGRect?
-    var objects = [Object]()
-    var color: Color
-    var opacity: CGFloat
-    var lineWidth: CGFloat
-    var objectForInputText: Object?
-    var inputText: String = ""
-    var fontSize: CGFloat = 40.0
-    var isSelecting: Bool = false
-    let colors: [[Color]]
-
     private let userDefaultsRepository: UserDefaultsRepository
     private let undoManager = UndoManager()
     private var lastObjects = [Object]()
     private var currentAction: Action = .none
     private var currentAnchor: Anchor = .topLeft
     private var currentSelectType: SelectType = .rectangle
+    private var cancellables = Set<AnyCancellable>()
 
+    let colors: [[Color]]
+
+    private let objectTypeSubject = CurrentValueSubject<ObjectType, Never>(.pen)
+    var objectTypePublisher: AnyPublisher<ObjectType, Never> {
+        return objectTypeSubject.eraseToAnyPublisher()
+    }
+    var objectType: ObjectType {
+        return objectTypeSubject.value
+    }
+
+    private let objectsSubject = CurrentValueSubject<[Object], Never>([])
+    var objectsPublisher: AnyPublisher<[Object], Never> {
+        return objectsSubject.eraseToAnyPublisher()
+    }
+    private var objects: [Object] {
+        return objectsSubject.value
+    }
     private var selectedObjects: [Object] {
-        return objects.filter { $0.isSelected }
+        return objectsSubject.value.filter { $0.isSelected }
+    }
+
+    private var selectedObjectsBoundsSubject = CurrentValueSubject<CGRect?, Never>(nil)
+    var selectedObjectsBoundsPublisher: AnyPublisher<CGRect?, Never> {
+        return selectedObjectsBoundsSubject.eraseToAnyPublisher()
+    }
+    private var selectedObjectsBounds: CGRect? {
+        return selectedObjectsBoundsSubject.value
+    }
+
+    private let isSelectingSubject = CurrentValueSubject<Bool, Never>(false)
+    var isSelectingPublisher: AnyPublisher<Bool, Never> {
+        return isSelectingSubject.eraseToAnyPublisher()
+    }
+    private var isSelecting: Bool {
+        return isSelectingSubject.value
+    }
+
+    private let objectPropertiesSubject: CurrentValueSubject<ObjectProperties, Never>
+    var objectPropertiesPublisher: AnyPublisher<ObjectProperties, Never> {
+        return objectPropertiesSubject.eraseToAnyPublisher()
+    }
+    var color: Color {
+        return objectPropertiesSubject.value.color
+    }
+    var opacity: CGFloat {
+        return objectPropertiesSubject.value.opacity
+    }
+    var lineWidth: CGFloat {
+        return objectPropertiesSubject.value.lineWidth
+    }
+
+    private let inputTextPropertiesSubject = CurrentValueSubject<InputTextProperties?, Never>(nil)
+    var inputTextPropertiesPublisher: AnyPublisher<InputTextProperties?, Never> {
+        return inputTextPropertiesSubject.eraseToAnyPublisher()
     }
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
         self.userDefaultsRepository = userDefaultsRepository
         colors = Color.palette
         let index = userDefaultsRepository.defaultColorIndex
-        color = colors[index % 8][index / 8]
-        opacity = userDefaultsRepository.defaultOpacity
-        lineWidth = userDefaultsRepository.defaultLineWidth
+        objectPropertiesSubject = .init(ObjectProperties(
+            color: colors[index % 8][index / 8],
+            opacity: userDefaultsRepository.defaultOpacity,
+            lineWidth: userDefaultsRepository.defaultLineWidth
+        ))
         undoManager.levelsOfUndo = 15
+        objectsPublisher
+            .sink { [weak self] _ in
+                self?.updatedObjects()
+            }
+            .store(in: &cancellables)
     }
 
-    private func unselectAllObjects() {
-        for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].isSelected = false
+    private func unselectedObjects() -> [Object] {
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
+            objects_[i].isSelected = false
         }
+        return objects_
     }
 
     private func objectsBounds(_ objects: [Object]) -> CGRect? {
@@ -108,8 +163,10 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     private func updatedObjects() {
-        selectedObjectsBounds = objectsBounds(selectedObjects)
-        isSelecting = (objectType == .select && selectedObjectsBounds != nil)
+        let bounds = objectsBounds(selectedObjects)
+        selectedObjectsBoundsSubject.send(bounds)
+        let isSelecting = (objectType == .select && bounds != nil)
+        isSelectingSubject.send(isSelecting)
     }
 
     private func hitAnchor(_ point: CGPoint) -> Anchor? {
@@ -153,7 +210,10 @@ final class ObjectModelImpl: ObjectModel {
         }
     }
 
-    func dragBegan(location: CGPoint) {
+    func dragBegan(
+        location: CGPoint,
+        selectBeganHandler: @escaping () -> Void
+    ) {
         switch objectType {
         case .select:
             pushHistory()
@@ -174,69 +234,87 @@ final class ObjectModelImpl: ObjectModel {
             } else if let index = objects.lastIndex(where: { $0.isHit(point: location) }) {
                 currentSelectType = .selectOne(index)
                 currentAction = .move
-                unselectAllObjects()
-                objects[index].isSelected = true
+                var objects_ = unselectedObjects()
+                objects_[index].isSelected = true
+                objectsSubject.send(objects_)
             } else {
                 currentSelectType = .rectangle
                 currentAction = .none
-                unselectAllObjects()
-                rectangleForSelection = Object(.select, .black, 1.0, lineWidth, [location, location])
+                objectsSubject.send(unselectedObjects())
+                selectBeganHandler()
             }
             lastObjects = objects
         case .text:
-            if let textObject = objectForInputText {
-                endEditing(textObject)
+            if let inputTextProperties = inputTextPropertiesSubject.value {
+                endEditing(inputTextProperties)
             }
             if let index = objects.lastIndex(where: { object in
                 object.type == .text && object.isHit(point: location)
             }) {
-                objectForInputText = objects[index]
-                inputText = objects[index].text
-                fontSize = objects[index].fontSize
-                objects[index].isHidden = true
+                let properties = InputTextProperties(
+                    object: objects[index],
+                    inputText: objects[index].text,
+                    fontSize: objects[index].fontSize
+                )
+                inputTextPropertiesSubject.send(properties)
+                objectsSubject.value[index].isHidden = true
             } else {
-                objectForInputText = Object(color, opacity, [location], "", .up)
-                inputText = ""
-                fontSize = 40.0
+                let properties = InputTextProperties(
+                    object: Object(color, opacity, [location], "", .up),
+                    inputText: "",
+                    fontSize: 40.0
+                )
+                inputTextPropertiesSubject.send(properties)
             }
         case .pen:
             pushHistory()
-            objects.append(
-                Object(.pen, color, opacity, lineWidth, [location])
-            )
+            objectsSubject.value
+                .append(Object(.pen, color, opacity, lineWidth, [location]))
         default:
             pushHistory()
-            objects.append(
-                Object(objectType, color, opacity, lineWidth, [location, location])
-            )
+            objectsSubject.value
+                .append(Object(objectType, color, opacity, lineWidth, [location, location]))
         }
     }
 
-    func dragMoved(startLocation: CGPoint, location: CGPoint) {
+    func dragMoved(
+        startLocation: CGPoint,
+        location: CGPoint,
+        selectMovedHandler: @escaping () -> Void
+    ) {
         switch objectType {
         case .select:
-            rectangleForSelection?.points[1] = location
+            selectMovedHandler()
             let diff: CGPoint = location - startLocation
             switch currentAction {
             case .none:
                 break
             case .move:
-                objects = move(diff)
+                objectsSubject.send(move(diff))
             case .resize:
-                objects = resize(diff)
+                objectsSubject.send(resize(diff))
             }
         case .text:
             break
         case .pen:
-            if objects.isEmpty { break }
-            objects[objects.count - 1].points.append(location)
+            let count = objects.count
+            if 0 < count {
+                objectsSubject.value[count - 1].points.append(location)
+            }
         default:
-            if objects.isEmpty { break }
-            objects[objects.count - 1].points[1] = location
+            let count = objects.count
+            if 0 < count {
+                objectsSubject.value[count - 1].points[1] = location
+            }
         }
     }
 
-    func dragEnded(startLocation: CGPoint, location: CGPoint) {
+    func dragEnded(
+        startLocation: CGPoint,
+        location: CGPoint,
+        selectionBounds: CGRect?,
+        selectEndedHandler: @escaping () -> Void
+    ) {
         switch objectType {
         case .select:
             if startLocation == location {
@@ -248,17 +326,18 @@ final class ObjectModelImpl: ObjectModel {
             }
             // 選択状態の更新
             if case .selectOne(let index) = currentSelectType {
-                objects[index].isSelected = true
+                objectsSubject.value[index].isSelected = true
             } else if case .rectangle = currentSelectType {
-                if let rectangleForSelection {
-                    let bounds = rectangleForSelection.bounds
-                    for i in (0 ..< objects.count) {
-                        objects[i].isSelected = objects[i].isHit(rect: bounds)
+                if let selectionBounds {
+                    var objects_ = objects
+                    for i in objects_.indices {
+                        objects_[i].isSelected = objects_[i].isHit(rect: selectionBounds)
                     }
+                    objectsSubject.send(objects_)
                 }
             }
             currentAction = .none
-            rectangleForSelection = nil
+            selectEndedHandler()
             lastObjects.removeAll()
         case .text:
             break
@@ -271,22 +350,28 @@ final class ObjectModelImpl: ObjectModel {
         }
     }
 
-    func endEditing(_ textObject: Object) {
-        let position = textObject.points[0]
+    func endEditing(_ inputTextProperties: InputTextProperties) {
+        let position = inputTextProperties.object.points[0]
+        let inputText = inputTextProperties.inputText
+        let fontSize = inputTextProperties.fontSize
         let size = inputText.calculateSize(using: NSFont.systemFont(ofSize: fontSize))
         if let index = objects.firstIndex(where: { object in
             object.type == .text && object.isHidden
         }) {
             // 既存テキスト
-            objects[index].isHidden = false
+            objectsSubject.value[index].isHidden = false
             if inputText.isEmpty {
                 pushHistory()
-                objects.remove(at: index)
-            } else if inputText != objects[index].text {
-                let endPosition = objects[index].textOrientation.endPosition(with: position, size: size)
-                pushHistory()
-                objects[index].points = [position, endPosition]
-                objects[index].text = inputText
+                objectsSubject.value.remove(at: index)
+            } else {
+                var object = objectsSubject.value[index]
+                if inputText != object.text {
+                    let endPosition = object.textOrientation.endPosition(with: position, size: size)
+                    pushHistory()
+                    object.points = [position, endPosition]
+                    object.text = inputText
+                    objectsSubject.value[index] = object
+                }
             }
         } else {
             // 新規テキスト
@@ -294,21 +379,17 @@ final class ObjectModelImpl: ObjectModel {
                 let endPosition = CGPoint(x: position.x + size.width,
                                           y: position.y + size.height)
                 pushHistory()
-                objects.append(
-                    Object(color, opacity, [position, endPosition], inputText, .up)
-                )
+                objectsSubject.value
+                    .append(Object(color, opacity, [position, endPosition], inputText, .up))
             }
         }
-        objectForInputText = nil
-        inputText = ""
-        fontSize = 40.0
+        inputTextPropertiesSubject.send(nil)
     }
 
     // MARK: History Operation
     private func timeTravel(objects: [Object]) {
-        let currentObjects = self.objects
-        self.objects = objects
-        unselectAllObjects()
+        let currentObjects = unselectedObjects()
+        objectsSubject.send(objects)
         undoManager.registerUndo(withTarget: self) { target in
             target.timeTravel(objects: currentObjects)
         }
@@ -316,58 +397,62 @@ final class ObjectModelImpl: ObjectModel {
 
     // 変化が起きる前に叩く
     private func pushHistory() {
-        undoManager.registerUndo(withTarget: self) { [objects] target in
-            target.timeTravel(objects: objects)
+        let objects_ = unselectedObjects()
+        undoManager.registerUndo(withTarget: self) { target in
+            target.timeTravel(objects: objects_)
         }
     }
 
     func undo() {
-        if objectForInputText == nil, undoManager.canUndo {
+        if inputTextPropertiesSubject.value == nil, undoManager.canUndo {
             undoManager.undo()
         }
     }
 
     func redo() {
-        if objectForInputText == nil, undoManager.canRedo {
+        if inputTextPropertiesSubject.value == nil, undoManager.canRedo {
             undoManager.redo()
         }
     }
 
     func resetHistory() {
-        objectType = .pen
-        objects.removeAll()
+        objectTypeSubject.send(.pen)
+        objectsSubject.send([])
         let index = userDefaultsRepository.defaultColorIndex
-        color = colors[index % 8][index / 8]
-        opacity = userDefaultsRepository.defaultOpacity
-        lineWidth = userDefaultsRepository.defaultLineWidth
-        objectForInputText = nil
-        inputText = ""
-        fontSize = 40.0
+        let properties = ObjectProperties(
+            color: colors[index % 8][index / 8],
+            opacity: userDefaultsRepository.defaultOpacity,
+            lineWidth: userDefaultsRepository.defaultLineWidth
+        )
+        objectPropertiesSubject.send(properties)
+        inputTextPropertiesSubject.send(nil)
         undoManager.removeAllActions()
     }
 
     // MARK: Operation to Selected Objects
     func updateObjectType(_ objectType: ObjectType) {
         if self.objectType == objectType { return }
-        if self.objectType == .text, let textObject = objectForInputText {
-            endEditing(textObject)
+        if self.objectType == .text,
+           let inputTextProperties = inputTextPropertiesSubject.value {
+            endEditing(inputTextProperties)
         }
-        self.objectType = objectType
+        objectTypeSubject.send(objectType)
         if objectType == .select { return }
-        isSelecting = false
+        isSelectingSubject.send(false)
         if !selectedObjects.isEmpty {
-            unselectAllObjects()
+            objectsSubject.send(unselectedObjects())
         }
     }
 
-    // TODO: 変更を通知したいかどうかで実装が変わりそう
     func updateColor(_ color: Color) {
-        self.color = color
+        objectPropertiesSubject.value.color = color
         if selectedObjects.isEmpty { return }
         pushHistory()
-        for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].color_ = color
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
+            objects_[i].color_ = color
         }
+        objectsSubject.send(objects_)
     }
 
     func startUpdatingOpacity() {
@@ -376,11 +461,13 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     func updateOpacity(_ opacity: CGFloat) {
-        self.opacity = opacity
+        objectPropertiesSubject.value.opacity = opacity
         if selectedObjects.isEmpty { return }
-        for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].opacity = opacity
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
+            objects_[i].opacity = opacity
         }
+        objectsSubject.send(objects_)
     }
 
     func startUpdatingLineWidth() {
@@ -389,61 +476,68 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     func updateLineWidth(_ lineWidth: CGFloat) {
-        self.lineWidth = lineWidth
+        objectPropertiesSubject.value.lineWidth = lineWidth
         if selectedObjects.isEmpty { return }
-        for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].lineWidth = lineWidth
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
+            objects_[i].lineWidth = lineWidth
         }
+        objectsSubject.send(objects_)
     }
 
     func arrange(_ arrangeMethod: ArrangeMethod) {
         guard isSelecting else { return }
-        let targetObjects = selectedObjects
         pushHistory()
-        objects.removeAll { $0.isSelected }
+        let selectedObjects_ = selectedObjects
+        var objects_ = objects
+        objects_.removeAll { $0.isSelected }
         switch arrangeMethod {
         case .bringToFrontmost:
-            objects.append(contentsOf: targetObjects)
+            objects_.append(contentsOf: selectedObjects_)
         case .sendToBackmost:
-            objects.insert(contentsOf: targetObjects, at: 0)
+            objects_.insert(contentsOf: selectedObjects_, at: 0)
         }
+        objectsSubject.send(objects_)
     }
 
     func align(_ alignMethod: AlignMethod) {
         guard isSelecting, let bounds = selectedObjectsBounds else { return }
         pushHistory()
-        for i in (0 ..< objects.count) where objects[i].isSelected {
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
             let diff: CGFloat
             switch alignMethod {
             case .horizontalAlignLeft:
-                diff = bounds.minX - objects[i].bounds.minX
+                diff = bounds.minX - objects_[i].bounds.minX
             case .horizontalAlignCenter:
-                diff = bounds.midX - objects[i].bounds.midX
+                diff = bounds.midX - objects_[i].bounds.midX
             case .horizontalAlignRight:
-                diff = bounds.maxX - objects[i].bounds.maxX
+                diff = bounds.maxX - objects_[i].bounds.maxX
             case .verticalAlignTop:
-                diff = bounds.minY - objects[i].bounds.minY
+                diff = bounds.minY - objects_[i].bounds.minY
             case .verticalAlignCenter:
-                diff = bounds.midY - objects[i].bounds.midY
+                diff = bounds.midY - objects_[i].bounds.midY
             case .verticalAlignBottom:
-                diff = bounds.maxY - objects[i].bounds.maxY
+                diff = bounds.maxY - objects_[i].bounds.maxY
             }
-            for j in (0 ..< objects[i].points.count) {
+            for j in objects_[i].points.indices {
                 if AlignMethod.horizontals.contains(alignMethod) {
-                    objects[i].points[j].x += diff
+                    objects_[i].points[j].x += diff
                 } else {
-                    objects[i].points[j].y += diff
+                    objects_[i].points[j].y += diff
                 }
             }
         }
+        objectsSubject.send(objects_)
     }
 
     func flip(_ flipMethod: FlipMethod) {
         guard isSelecting, let bounds = selectedObjectsBounds else { return }
         pushHistory()
-        for i in (0 ..< objects.count) where objects[i].isSelected {
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
             let center = CGPoint(x: bounds.midX, y: bounds.midY)
-            objects[i].points = objects[i].points.map { point in
+            objects_[i].points = objects_[i].points.map { point in
                 switch flipMethod {
                 case .flipHorizontal:
                     return CGPoint(x: 2.0 * center.x - point.x, y: point.y)
@@ -451,10 +545,11 @@ final class ObjectModelImpl: ObjectModel {
                     return CGPoint(x: point.x, y: 2.0 * center.y - point.y)
                 }
             }
-            if objects[i].type == .text {
-                objects[i].textOrientation = objects[i].textOrientation.flip(flipMethod)
+            if objects_[i].type == .text {
+                objects_[i].textOrientation = objects_[i].textOrientation.flip(flipMethod)
             }
         }
+        objectsSubject.send(objects_)
     }
 
     func rotate(_ rotateMethod: RotateMethod) {
@@ -467,44 +562,48 @@ final class ObjectModelImpl: ObjectModel {
             .init(rotationAngle: rotateMethod.angle),
             .init(translationX: offset.x, y: offset.y)
         ]
-        for i in (0 ..< objects.count) where objects[i].isSelected {
-            objects[i].points = objects[i].points.map { point in
+        var objects_ = objects
+        for i in objects_.indices where objects_[i].isSelected {
+            objects_[i].points = objects_[i].points.map { point in
                 return transforms.reduce(point) { partialResult, transform in
                     partialResult.applying(transform)
                 }
             }
-            if objects[i].type == .text {
-                objects[i].textOrientation = objects[i].textOrientation.rotate(rotateMethod)
+            if objects_[i].type == .text {
+                objects_[i].textOrientation = objects_[i].textOrientation.rotate(rotateMethod)
             }
         }
+        objectsSubject.send(objects_)
     }
 
     func duplicateSelectedObjects() {
         guard isSelecting else { return }
-        var targetObjects = selectedObjects
         pushHistory()
-        unselectAllObjects()
-        targetObjects = targetObjects.map { $0.copy(needsOffset: true) }
-        objects.append(contentsOf: targetObjects)
+        let copyObjects = selectedObjects.map { $0.copy(needsOffset: true) }
+        var objects_ = unselectedObjects()
+        objects_.append(contentsOf: copyObjects)
+        objectsSubject.send(objects_)
     }
 
     func delete() {
         guard isSelecting else { return }
         pushHistory()
-        objects.removeAll { $0.isSelected }
+        objectsSubject.value.removeAll { $0.isSelected }
     }
 
     func selectAll() {
         guard objectType == .select else { return }
-        for i in (0 ..< objects.count) {
-            objects[i].isSelected = true
+        var objects_ = objects
+        objects_.indices.forEach { i in
+            objects_[i].isSelected = true
         }
+        objectsSubject.send(objects_)
     }
 
     func clear() {
-        if objectForInputText == nil, !objects.isEmpty {
+        if inputTextPropertiesSubject.value == nil, !objects.isEmpty {
             pushHistory()
-            objects.removeAll()
+            objectsSubject.send([])
         }
     }
 }
@@ -512,18 +611,29 @@ final class ObjectModelImpl: ObjectModel {
 // MARK: - Preview Mock
 extension PreviewMock {
     final class ObjectModelMock: ObjectModel {
-        var objectType: ObjectType = .select
-        var rectangleForSelection: Object?
-        var selectedObjectsBounds: CGRect?
-        var objects: [Object] = []
-        var color: Color
-        var opacity: CGFloat = 0.8
-        var lineWidth: CGFloat = 4.0
-        var objectForInputText: Object?
-        var inputText: String = ""
-        var fontSize: CGFloat = 40.0
-        var isSelecting: Bool = false
         let colors: [[Color]]
+        var objectTypePublisher: AnyPublisher<ObjectType, Never> {
+            Just(ObjectType.pen).eraseToAnyPublisher()
+        }
+        let objectType: ObjectType = .pen
+        var objectsPublisher: AnyPublisher<[Object], Never> {
+            Just([]).eraseToAnyPublisher()
+        }
+        var selectedObjectsBoundsPublisher: AnyPublisher<CGRect?, Never> {
+            Just(nil).eraseToAnyPublisher()
+        }
+        var isSelectingPublisher: AnyPublisher<Bool, Never> {
+            Just(false).eraseToAnyPublisher()
+        }
+        var objectPropertiesPublisher: AnyPublisher<ObjectProperties, Never> {
+            Just(ObjectProperties(color: color, opacity: opacity, lineWidth: lineWidth)).eraseToAnyPublisher()
+        }
+        let color: Color
+        let opacity: CGFloat = 0.8
+        let lineWidth: CGFloat = 4.0
+        var inputTextPropertiesPublisher: AnyPublisher<InputTextProperties?, Never> {
+            Just(nil).eraseToAnyPublisher()
+        }
 
         init(_ userDefaultsRepository: UserDefaultsRepository) {
             colors = Color.palette
@@ -534,10 +644,16 @@ extension PreviewMock {
             color = colors[0][0]
         }
 
-        func endEditing(_ textObject: Object) {}
-        func dragBegan(location: CGPoint) {}
-        func dragMoved(startLocation: CGPoint, location: CGPoint) {}
-        func dragEnded(startLocation: CGPoint, location: CGPoint) {}
+        func endEditing(_ inputTextProperties: InputTextProperties) {}
+        func dragBegan(location: CGPoint, 
+                       selectBeganHandler: @escaping () -> Void) {}
+        func dragMoved(startLocation: CGPoint, 
+                       location: CGPoint,
+                       selectMovedHandler: @escaping () -> Void) {}
+        func dragEnded(startLocation: CGPoint, 
+                       location: CGPoint,
+                       selectionBounds: CGRect?,
+                       selectEndedHandler: @escaping () -> Void) {}
 
         func undo() {}
         func redo() {}

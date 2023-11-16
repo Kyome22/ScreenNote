@@ -10,6 +10,8 @@
 		1C6242DD2B050A790063C6AF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1C6242DC2B050A790063C6AF /* Localizable.xcstrings */; };
 		1C6242E12B0512690063C6AF /* ToolBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E02B0512690063C6AF /* ToolBarModel.swift */; };
 		1C6242E32B052A240063C6AF /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E22B052A240063C6AF /* CanvasViewModel.swift */; };
+		1C6242E52B0657A80063C6AF /* InputTextProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E42B0657A80063C6AF /* InputTextProperties.swift */; };
+		1C6242E72B0659770063C6AF /* ObjectProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E62B0659770063C6AF /* ObjectProperties.swift */; };
 		1C8BB4952993A88600EE5E66 /* ObjectFlipPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */; };
 		1C8BB4972993AAC800EE5E66 /* ObjectRotatePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */; };
 		1C8BB4992993C09B00EE5E66 /* ArrangeMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */; };
@@ -74,6 +76,8 @@
 		1C6242DC2B050A790063C6AF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1C6242E02B0512690063C6AF /* ToolBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarModel.swift; sourceTree = "<group>"; };
 		1C6242E22B052A240063C6AF /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		1C6242E42B0657A80063C6AF /* InputTextProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextProperties.swift; sourceTree = "<group>"; };
+		1C6242E62B0659770063C6AF /* ObjectProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectProperties.swift; sourceTree = "<group>"; };
 		1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFlipPopover.swift; sourceTree = "<group>"; };
 		1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRotatePopover.swift; sourceTree = "<group>"; };
 		1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangeMethod.swift; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 				1C8BB49C2993C4E700EE5E66 /* RotateMethod.swift */,
 				1C8BB4AD2995CEE900EE5E66 /* TextOrientation.swift */,
 				1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */,
+				1C6242E62B0659770063C6AF /* ObjectProperties.swift */,
+				1C6242E42B0657A80063C6AF /* InputTextProperties.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				1C9A54412987ABAC008B5AAE /* GeneralSettingsViewModel.swift in Sources */,
 				1C9A54672987FBE4008B5AAE /* ShortcutView.swift in Sources */,
 				1C9A54592987F95A008B5AAE /* Object.swift in Sources */,
+				1C6242E72B0659770063C6AF /* ObjectProperties.swift in Sources */,
 				1C9A546D29889F54008B5AAE /* WorkspaceView.swift in Sources */,
 				1C9A544D2987F221008B5AAE /* IssueReportModel.swift in Sources */,
 				1C9A545B2987F98E008B5AAE /* ObjectType.swift in Sources */,
@@ -465,6 +472,7 @@
 				1C8BB4A52994ABDE00EE5E66 /* ColorButtonStyle.swift in Sources */,
 				1C9A54332987A0C7008B5AAE /* Utils.swift in Sources */,
 				1C9A5488298D8243008B5AAE /* LineWidthPopover.swift in Sources */,
+				1C6242E52B0657A80063C6AF /* InputTextProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

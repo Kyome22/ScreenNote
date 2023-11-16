@@ -1,9 +1,9 @@
 /*
-  CanvasView.swift
-  ScreenNote
+ CanvasView.swift
+ ScreenNote
 
-  Created by Takuto Nakamura on 2023/01/31.
-  
+ Created by Takuto Nakamura on 2023/01/31.
+ Copyright © 2023 Studio Kyome. All rights reserved.
 */
 
 import SwiftUI
@@ -67,11 +67,11 @@ struct CanvasView<CVM: CanvasViewModel>: View {
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0))
                 }
             }
-            if let textObject = viewMode.objectForInputText {
+            if let properties = viewMode.inputTextProperties {
                 TextField(" ", text: $viewMode.inputText)
                     .textFieldStyle(.plain)
-                    .foregroundColor(viewMode.color.opacity(viewMode.opacity))
-                    .font(.system(size: viewMode.fontSize))
+                    .foregroundColor(viewMode.textColor)
+                    .font(.system(size: properties.fontSize))
                     .lineLimit(1)
                     .fixedSize()
                     .overlay(
@@ -80,13 +80,14 @@ struct CanvasView<CVM: CanvasViewModel>: View {
                             .opacity(0.5)
                             .padding(-4.0)
                     )
-                    .offset(textObject.inputTextOffset(from: textObject.bounds))
+                    .offset(properties.inputTextOffset)
                     .focused($isFocused)
                     .onAppear {
                         isFocused = true
                     }
                     .onSubmit {
-                        viewMode.endEditing(textObject)
+                        viewMode.endEditing(inputTextObject: properties.object,
+                                            fontSize: properties.fontSize)
                     }
             }
         }
