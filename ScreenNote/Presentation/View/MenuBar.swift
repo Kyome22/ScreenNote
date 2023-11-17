@@ -31,8 +31,8 @@ final class MenuBar: NSObject {
         hideCanvasMenuItem.isHidden = true
         menu.addItem(hideCanvasMenuItem)
         menu.addSeparator()
-        menu.addItem(title: "preferences".localized,
-                     action: #selector(openPreferences(_:)),
+        menu.addItem(title: "settings".localized,
+                     action: #selector(openSettings(_:)),
                      target: self)
         menu.addSeparator()
         menu.addItem(title: "aboutApp".localized,
@@ -68,7 +68,7 @@ final class MenuBar: NSObject {
         showCanvasMenuItem.isHidden = false
     }
 
-    @objc func openPreferences(_ sender: Any?) {
+    @objc func openSettings(_ sender: Any?) {
         menuBarModel.openSettings()
     }
 

@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     " " : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "aboutApp" : {
       "extractionState" : "manual",
@@ -832,23 +839,6 @@
         }
       }
     },
-    "preferences" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preferences…"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "環境設定…"
-          }
-        }
-      }
-    },
     "pressBothSide" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1008,6 +998,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最背面へ配置"
+          }
+        }
+      }
+    },
+    "settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定…"
           }
         }
       }
