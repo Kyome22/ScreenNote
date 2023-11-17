@@ -27,8 +27,8 @@ struct SelectableColorButtonStyle: ButtonStyle {
 
 extension ButtonStyle where Self == SelectableColorButtonStyle {
     static func selectableColor(
-        _ color: Color,
-        _ selection: Binding<Bool>
+        color: Color,
+        selection: Binding<Bool>
     ) -> SelectableColorButtonStyle {
         return SelectableColorButtonStyle(color: color, selection: selection)
     }

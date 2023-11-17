@@ -40,24 +40,20 @@ protocol ToolBarModel: ObservableObject {
     func delete()
     func clear()
     func selectAll()
+    func updateObjectType(_ objectType: ObjectType)
+    func updateColor(_ color: Color)
+    func updateOpacity(_ opacity: CGFloat)
+    func updateLineWidth(_ lineWidth: CGFloat)
 }
 
 final class ToolBarModelImpl: ToolBarModel {
     private let objectModel: ObjectModel
     private var cancellables = Set<AnyCancellable>()
 
-    @Published var objectType: ObjectType {
-        didSet { objectModel.updateObjectType(objectType) }
-    }
-    @Published var color: Color {
-        didSet { objectModel.updateColor(color) }
-    }
-    @Published var opacity: CGFloat {
-        didSet { objectModel.updateOpacity(opacity) }
-    }
-    @Published var lineWidth: CGFloat {
-        didSet { objectModel.updateLineWidth(lineWidth) }
-    }
+    @Published var objectType: ObjectType
+    @Published var color: Color
+    @Published var opacity: CGFloat
+    @Published var lineWidth: CGFloat
     @Published var disabledWhileInputingText: Bool = false
     @Published var disabledSelectAll: Bool = false
     @Published var disabledEditObject: Bool = false
@@ -153,6 +149,22 @@ final class ToolBarModelImpl: ToolBarModel {
     func selectAll() {
         objectModel.selectAll()
     }
+
+    func updateObjectType(_ objectType: ObjectType) {
+        objectModel.updateObjectType(objectType)
+    }
+
+    func updateColor(_ color: Color) {
+        objectModel.updateColor(color)
+    }
+
+    func updateOpacity(_ opacity: CGFloat) {
+        objectModel.updateOpacity(opacity)
+    }
+
+    func updateLineWidth(_ lineWidth: CGFloat) {
+        objectModel.updateLineWidth(lineWidth)
+    }
 }
 
 // MARK: - Preview Mock
@@ -189,5 +201,9 @@ extension PreviewMock {
         func delete() {}
         func clear() {}
         func selectAll() {}
+        func updateObjectType(_ objectType: ObjectType) {}
+        func updateColor(_ color: Color) {}
+        func updateOpacity(_ opacity: CGFloat) {}
+        func updateLineWidth(_ lineWidth: CGFloat) {}
     }
 }

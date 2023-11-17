@@ -77,8 +77,14 @@ struct VerticalToolBar<TBM: ToolBarModel>: View {
                         arrowEdge: toolBarModel.arrowEdge
                     ) {
                         ColorPalettePopover(
-                            color: $toolBarModel.color,
-                            opacity: $toolBarModel.opacity,
+                            color: Binding<Color>(
+                                get: { toolBarModel.color },
+                                set: { toolBarModel.updateColor($0) }
+                            ),
+                            opacity: Binding<CGFloat>(
+                                get: { toolBarModel.opacity },
+                                set: { toolBarModel.updateOpacity($0) }
+                            ),
                             colors: toolBarModel.colors,
                             startUpdatingOpacityHandler: {
                                 toolBarModel.startUpdatingOpacity()
@@ -99,9 +105,12 @@ struct VerticalToolBar<TBM: ToolBarModel>: View {
                         arrowEdge: toolBarModel.arrowEdge
                     ) {
                         LineWidthPopover(
-                            lineWidth: $toolBarModel.lineWidth,
-                            color: $toolBarModel.color,
-                            opacity: $toolBarModel.opacity,
+                            lineWidth: Binding<CGFloat>(
+                                get: { toolBarModel.lineWidth },
+                                set: { toolBarModel.updateLineWidth($0) }
+                            ),
+                            color: toolBarModel.color,
+                            opacity: toolBarModel.opacity,
                             startUpdatingLineWidthHandler: {
                                 toolBarModel.startUpdatingLineWidth()
                             }
@@ -243,9 +252,7 @@ struct VerticalToolBar<TBM: ToolBarModel>: View {
 
     private func objectTypeButton(_ objectType: ObjectType) -> some View {
         Button {
-            withAnimation(.none) {
-                toolBarModel.objectType = objectType
-            }
+            toolBarModel.updateObjectType(objectType)
         } label: {
             Image(systemName: objectType.symbolName)
         }
@@ -258,9 +265,7 @@ struct VerticalToolBar<TBM: ToolBarModel>: View {
 
     private func dummyButton(actionHandler: @escaping () -> Void) -> some View {
         Button(action: {
-            withAnimation(.none) {
-                actionHandler()
-            }
+            actionHandler()
         }, label: {
             EmptyView()
         })

@@ -29,7 +29,7 @@ struct ColorPalettePopover: View {
     var body: some View {
         VStack {
             HStack(spacing: 4) {
-                ForEach(0 ..< colors.count, id: \.self) { i in
+                ForEach(colors.indices, id: \.self) { i in
                     VStack(spacing: 4) {
                         ForEach(colors[i], id: \.hashValue) { color in
                             Button {
@@ -37,10 +37,13 @@ struct ColorPalettePopover: View {
                             } label: {
                                 EmptyView()
                             }
-                            .buttonStyle(.colorPalette(color, Binding(
-                                get: { self.color == color },
-                                set: { _, _ in }
-                            )))
+                            .buttonStyle(.colorPalette(
+                                color: color,
+                                selection: Binding(
+                                    get: { self.color == color },
+                                    set: { _, _ in }
+                                )
+                            ))
                         }
                     }
                 }

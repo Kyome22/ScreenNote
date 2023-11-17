@@ -71,16 +71,19 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
             Divider()
             HStack(alignment: .center, spacing: 8) {
                 wrapText(maxKey: "wrapTextCanvasTab", key: "backgroundColor:")
-                ForEach(viewModel.backgrounds, id: \.hashValue) { color in
+                ForEach(viewModel.backgrounds.indices, id: \.self) { index in
                     Button {
-                        viewModel.backgroundColor = color
+                        viewModel.updateBackgroundColor(index)
                     } label: {
                         EmptyView()
                     }
-                    .buttonStyle(.selectableColor(color, Binding<Bool>(
-                        get: { viewModel.backgroundColor == color },
-                        set: { _, _ in }
-                    )))
+                    .buttonStyle(.selectableColor(
+                        color: viewModel.backgrounds[index],
+                        selection: Binding<Bool>(
+                            get: { viewModel.backgroundColorIndex == index },
+                            set: { _, _ in }
+                        )
+                    ))
                 }
             }
             .frame(height: 20)
@@ -105,18 +108,22 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
 
     var colorPopover: some View {
         HStack(spacing: 4) {
-            ForEach(0 ..< viewModel.colors.count, id: \.self) { i in
+            ForEach(viewModel.colors.indices, id: \.self) { i in
                 VStack(spacing: 4) {
-                    ForEach(viewModel.colors[i], id: \.hashValue) { color in
+                    ForEach(viewModel.colors[i].indices, id: \.self) { j in
+                        let index = i + 8 * j
                         Button {
-                            viewModel.defaultColor = color
+                            viewModel.updateDefaultColor(index)
                         } label: {
                             EmptyView()
                         }
-                        .buttonStyle(.colorPalette(color, Binding<Bool>(
-                            get: { viewModel.defaultColor == color },
-                            set: { _ in }
-                        )))
+                        .buttonStyle(.colorPalette(
+                            color: viewModel.colors[i][j],
+                            selection: Binding<Bool>(
+                                get: { viewModel.defaultColorIndex == index },
+                                set: { _ in }
+                            )
+                        ))
                     }
                 }
             }

@@ -10,19 +10,19 @@ import SwiftUI
 
 struct LineWidthPopover: View {
     @Binding private var lineWidth: CGFloat
-    @Binding private var color: Color
-    @Binding private var opacity: CGFloat
+    private let color: Color
+    private let opacity: CGFloat
     private let startUpdatingLineWidthHandler: () -> Void
 
     init(
         lineWidth: Binding<CGFloat>,
-        color: Binding<Color>,
-        opacity: Binding<CGFloat>,
+        color: Color,
+        opacity: CGFloat,
         startUpdatingLineWidthHandler: @escaping () -> Void
     ) {
         _lineWidth = lineWidth
-        _color = color
-        _opacity = opacity
+        self.color = color
+        self.opacity = opacity
         self.startUpdatingLineWidthHandler = startUpdatingLineWidthHandler
     }
 
@@ -54,7 +54,7 @@ struct LineWidthPopover: View {
 
 #Preview {
     LineWidthPopover(lineWidth: .constant(4.0),
-                     color: .constant(.white),
-                     opacity: .constant(0.8),
+                     color: .white,
+                     opacity: 0.8,
                      startUpdatingLineWidthHandler: {})
 }
