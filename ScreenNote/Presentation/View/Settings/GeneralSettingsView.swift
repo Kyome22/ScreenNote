@@ -13,55 +13,47 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
     @StateObject var viewModel: GVM
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("toggleMethod:")
+        Form {
             Picker(selection: $viewModel.toggleMethod) {
                 ForEach(ToggleMethod.allCases, id: \.rawValue) { toggleMethod in
                     Text(toggleMethod.localizedKey)
                         .tag(toggleMethod)
                 }
             } label: {
+                Text("toggleMethod:")
                 EmptyView()
             }
             .pickerStyle(.radioGroup)
-            .padding(.bottom, 8)
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextGeneralTab", key: "modifierKey:")
-                Picker(selection: $viewModel.modifierFlag) {
-                    ForEach(ModifierFlag.allCases, id: \.rawValue) { modifierFlag in
-                        Text(LocalizedStringKey(stringLiteral: "\(modifierFlag.title)Key"))
-                            .tag(modifierFlag)
-                    }
-                } label: {
-                    EmptyView()
+            Picker(selection: $viewModel.modifierFlag) {
+                ForEach(ModifierFlag.allCases, id: \.rawValue) { modifierFlag in
+                    Text(LocalizedStringKey(stringLiteral: "\(modifierFlag.title)Key"))
+                        .tag(modifierFlag)
                 }
-                .pickerStyle(.menu)
-                .fixedSize(horizontal: true, vertical: false)
-                Spacer()
+            } label: {
+                Text("modifierKey:")
+                EmptyView()
             }
+            .pickerStyle(.menu)
+            .fixedSize(horizontal: true, vertical: false)
             Divider()
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextGeneralTab", key: "toolBarPosition:")
-                Picker(selection: $viewModel.toolBarPosition) {
-                    ForEach(ToolBarPosition.allCases, id: \.rawValue) { position in
-                        Text(position.localizedKey)
-                            .tag(position)
-                    }
-                } label: {
-                    EmptyView()
+            Picker(selection: $viewModel.toolBarPosition) {
+                ForEach(ToolBarPosition.allCases, id: \.rawValue) { position in
+                    Text(position.localizedKey)
+                        .tag(position)
                 }
-                .pickerStyle(.menu)
-                .fixedSize(horizontal: true, vertical: false)
-                Spacer()
+            } label: {
+                Text("toolBarPosition:")
+                EmptyView()
             }
-            Divider()
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextGeneralTab", key: "launch:")
+            .pickerStyle(.menu)
+            .fixedSize(horizontal: true, vertical: false)
+            LabeledContent("launch:") {
                 Toggle(isOn: $viewModel.launchAtLogin) {
                     Text("launchAtLogin")
                 }
             }
         }
+        .formStyle(.columns)
         .fixedSize()
     }
 }

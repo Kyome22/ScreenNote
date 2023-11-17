@@ -336,6 +336,22 @@
         }
       }
     },
+    "dummy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dummy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダミー"
+          }
+        }
+      }
+    },
     "duplicate" : {
       "localizations" : {
         "en" : {
@@ -1125,13 +1141,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "How to Toggle Canvas Show/Hide:"
+            "value" : "Toggle Method:"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "キャンバス表示／非表示のトグル方法:"
+            "value" : "トグル方法:"
           }
         }
       }
@@ -1229,38 +1245,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "# 試したこと\n- アプリの再起動: はい/いいえ\n"
-          }
-        }
-      }
-    },
-    "wrapTextCanvasTab" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Background Opacity:"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "デフォルトの不透明度:"
-          }
-        }
-      }
-    },
-    "wrapTextGeneralTab" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tool Bar Position:"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ツールバーの位置:"
           }
         }
       }

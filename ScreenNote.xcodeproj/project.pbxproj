@@ -34,7 +34,6 @@
 		1C9A54332987A0C7008B5AAE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54322987A0C7008B5AAE /* Utils.swift */; };
 		1C9A54352987A1DD008B5AAE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54342987A1DD008B5AAE /* String+Extensions.swift */; };
 		1C9A54372987A532008B5AAE /* AppKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54362987A532008B5AAE /* AppKit+Extensions.swift */; };
-		1C9A54392987A580008B5AAE /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54382987A580008B5AAE /* View+Extensions.swift */; };
 		1C9A543B2987A760008B5AAE /* MenuBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543A2987A760008B5AAE /* MenuBarModel.swift */; };
 		1C9A543D2987A76B008B5AAE /* WindowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543C2987A76B008B5AAE /* WindowModel.swift */; };
 		1C9A543F2987A778008B5AAE /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543E2987A778008B5AAE /* MenuBar.swift */; };
@@ -102,7 +101,6 @@
 		1C9A54322987A0C7008B5AAE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1C9A54342987A1DD008B5AAE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1C9A54362987A532008B5AAE /* AppKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppKit+Extensions.swift"; sourceTree = "<group>"; };
-		1C9A54382987A580008B5AAE /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		1C9A543A2987A760008B5AAE /* MenuBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarModel.swift; sourceTree = "<group>"; };
 		1C9A543C2987A76B008B5AAE /* WindowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowModel.swift; sourceTree = "<group>"; };
 		1C9A543E2987A778008B5AAE /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				1C9A54342987A1DD008B5AAE /* String+Extensions.swift */,
 				1C9A54362987A532008B5AAE /* AppKit+Extensions.swift */,
 				1C9A54522987F7DD008B5AAE /* CoreGraphics+Extensions.swift */,
-				1C9A54382987A580008B5AAE /* View+Extensions.swift */,
 				1C9A547D298B86CA008B5AAE /* Path+Extensions.swift */,
 				1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */,
 			);
@@ -430,7 +427,6 @@
 				1C9A5482298C2BD5008B5AAE /* ToolBarRadioButtonStyle.swift in Sources */,
 				1C9A5484298C2CC5008B5AAE /* ColorPalettePopover.swift in Sources */,
 				1C9A5477298AA456008B5AAE /* ToolBarDirection.swift in Sources */,
-				1C9A54392987A580008B5AAE /* View+Extensions.swift in Sources */,
 				1C9A543F2987A778008B5AAE /* MenuBar.swift in Sources */,
 				1C9A5479298AAACB008B5AAE /* ToolBarButtonStyle.swift in Sources */,
 				1C9A543B2987A760008B5AAE /* MenuBarModel.swift in Sources */,

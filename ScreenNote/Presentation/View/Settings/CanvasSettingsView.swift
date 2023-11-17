@@ -12,53 +12,49 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
     @StateObject var viewModel: CVM
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "objects:")
+        Form {
+            LabeledContent("objects:") {
                 Toggle(isOn: $viewModel.clearAllObjects) {
                     Text("clearAllObjects")
                 }
             }
-            .frame(height: 20)
             Divider()
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "defaultColor:")
-                Button {
+            LabeledContent("defaultColor:") {
+                Button("dummy") {
                     viewModel.showColorPopover = true
-                } label: {
-                    EmptyView()
                 }
                 .buttonStyle(.color(viewModel.defaultColor))
                 .popover(isPresented: $viewModel.showColorPopover, arrowEdge: .bottom) {
                     colorPopover
                 }
             }
-            .frame(height: 20)
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "defaultOpacity:")
+            Slider(value: $viewModel.defaultOpacity, in: (0.2 ... 1.0)) {
+                Text("defaultOpacity:")
+            } minimumValueLabel: {
                 Text(String(format: "%4.1f", viewModel.defaultOpacity))
                     .font(.system(.body, design: .monospaced))
-                Slider(value: $viewModel.defaultOpacity, in: (0.2 ... 1.0)) { flag in
-                    if !flag {
-                        viewModel.endUpdatingDefaultOpacity()
-                    }
+            } maximumValueLabel: {
+                Text(Image(systemName: "checkerboard.rectangle"))
+                    .foregroundColor(Color.primary.opacity(viewModel.defaultOpacity))
+            } onEditingChanged: { flag in
+                if !flag {
+                    viewModel.endUpdatingDefaultOpacity()
                 }
-                .frame(height: 20)
-                Image(systemName: "checkerboard.rectangle")
-                    .frame(height: 20)
-                    .opacity(viewModel.defaultOpacity)
             }
-            .frame(height: 20)
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "defaultLineWidth:")
-                Text(String(format: "%4.1f", viewModel.defaultLineWidth))
-                    .font(.system(.body, design: .monospaced))
-                Slider(value: $viewModel.defaultLineWidth, in: (1 ... 20)) { flag in
+            HStack(spacing: 0) {
+                Slider(value: $viewModel.defaultLineWidth, in: (1 ... 20)) {
+                    Text("defaultLineWidth:")
+                } minimumValueLabel: {
+                    Text(String(format: "%4.1f", viewModel.defaultLineWidth))
+                        .font(.system(.body, design: .monospaced))
+                } maximumValueLabel: {
+                    Text(verbatim: "")
+                        .foregroundColor(.clear)
+                } onEditingChanged: { flag in
                     if !flag {
                         viewModel.endUpdatingDefaultLineWidth()
                     }
                 }
-                .frame(height: 20)
                 Rectangle()
                     .foregroundColor(Color.clear)
                     .overlay(
@@ -69,40 +65,38 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                     .frame(width: 18, height: 20)
             }
             Divider()
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "backgroundColor:")
-                ForEach(viewModel.backgrounds.indices, id: \.self) { index in
-                    Button {
-                        viewModel.updateBackgroundColor(index)
-                    } label: {
-                        EmptyView()
+            LabeledContent("backgroundColor:") {
+                HStack(alignment: .center, spacing: 8) {
+                    ForEach(viewModel.backgrounds.indices, id: \.self) { index in
+                        Button("dummy") {
+                            viewModel.updateBackgroundColor(index)
+                        }
+                        .buttonStyle(.selectableColor(
+                            color: viewModel.backgrounds[index],
+                            selection: Binding<Bool>(
+                                get: { viewModel.backgroundColorIndex == index },
+                                set: { _, _ in }
+                            )
+                        ))
                     }
-                    .buttonStyle(.selectableColor(
-                        color: viewModel.backgrounds[index],
-                        selection: Binding<Bool>(
-                            get: { viewModel.backgroundColorIndex == index },
-                            set: { _, _ in }
-                        )
-                    ))
                 }
+                .fixedSize()
             }
-            .frame(height: 20)
-            HStack(alignment: .center, spacing: 8) {
-                wrapText(maxKey: "wrapTextCanvasTab", key: "backgroundOpacity:")
+            Slider(value: $viewModel.backgroundOpacity, in: (0.02 ... 1.0)) {
+                Text("backgroundOpacity:")
+            } minimumValueLabel: {
                 Text(String(format: "%4.2f", viewModel.backgroundOpacity))
                     .font(.system(.body, design: .monospaced))
-                Slider(value: $viewModel.backgroundOpacity, in: (0.02 ... 1.0)) { flag in
-                    if !flag {
-                        viewModel.endUpdatingBackgroundOpacity()
-                    }
+            } maximumValueLabel: {
+                Text(Image(systemName: "checkerboard.rectangle"))
+                    .foregroundColor(Color.primary.opacity(viewModel.backgroundOpacity))
+            } onEditingChanged: { flag in
+                if !flag {
+                    viewModel.endUpdatingBackgroundOpacity()
                 }
-                .frame(height: 20)
-                Image(systemName: "checkerboard.rectangle")
-                    .frame(height: 20)
-                    .opacity(viewModel.backgroundOpacity)
             }
-            .frame(height: 20)
         }
+        .formStyle(.columns)
         .fixedSize()
     }
 

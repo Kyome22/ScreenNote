@@ -13,9 +13,10 @@ struct SelectableColorButtonStyle: ButtonStyle {
     @Binding var selection: Bool
 
     func makeBody(configuration: Configuration) -> some View {
-        Rectangle()
+        configuration.label
             .frame(width: 32, height: 16)
-            .foregroundColor(color)
+            .foregroundStyle(Color.clear)
+            .background(color)
             .cornerRadius(4)
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
