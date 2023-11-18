@@ -11,8 +11,23 @@
         }
       }
     },
+    "%@%@key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ key"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %1$@キー"
+          }
+        }
+      }
+    },
     "aboutApp" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -221,23 +236,6 @@
         }
       }
     },
-    "commandKey" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘ Command Key"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌘ コマンドキー"
-          }
-        }
-      }
-    },
     "control" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -251,23 +249,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コントロール"
-          }
-        }
-      }
-    },
-    "controlKey" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌃ Control Key"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌃ コントロールキー"
           }
         }
       }
@@ -368,8 +349,7 @@
         }
       }
     },
-    "environment" : {
-      "extractionState" : "manual",
+    "environment%@%@%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -386,7 +366,6 @@
       }
     },
     "expectedResult" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -531,7 +510,6 @@
       }
     },
     "hideCanvas" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -596,7 +574,6 @@
       }
     },
     "issueReport" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -724,8 +701,7 @@
         }
       }
     },
-    "longPress" : {
-      "extractionState" : "manual",
+    "longPress%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -822,23 +798,6 @@
         }
       }
     },
-    "optionKey" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌥ Option Key"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⌥ オプションキー"
-          }
-        }
-      }
-    },
     "pen" : {
       "localizations" : {
         "en" : {
@@ -855,8 +814,7 @@
         }
       }
     },
-    "pressBothSide" : {
-      "extractionState" : "manual",
+    "pressBothSide%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -889,7 +847,6 @@
       }
     },
     "reportAnIssue" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -906,7 +863,6 @@
       }
     },
     "reproduceIssue" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1019,7 +975,6 @@
       }
     },
     "settings" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1052,25 +1007,7 @@
         }
       }
     },
-    "shiftKey" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⇧ Shift Key"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⇧ シフトキー"
-          }
-        }
-      }
-    },
     "shortDescription" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1087,7 +1024,6 @@
       }
     },
     "showCanvas" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1104,7 +1040,6 @@
       }
     },
     "terminateApp" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1233,7 +1168,6 @@
       }
     },
     "whatYouTried" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {

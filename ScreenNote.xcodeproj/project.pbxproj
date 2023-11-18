@@ -12,6 +12,10 @@
 		1C6242E32B052A240063C6AF /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E22B052A240063C6AF /* CanvasViewModel.swift */; };
 		1C6242E52B0657A80063C6AF /* InputTextProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E42B0657A80063C6AF /* InputTextProperties.swift */; };
 		1C6242E72B0659770063C6AF /* ObjectProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E62B0659770063C6AF /* ObjectProperties.swift */; };
+		1C6242E92B087E0B0063C6AF /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E82B087E0B0063C6AF /* MenuViewModel.swift */; };
+		1C6242EB2B087ED40063C6AF /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242EA2B087ED40063C6AF /* MenuView.swift */; };
+		1C6242ED2B08818E0063C6AF /* CanvasVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242EC2B08818E0063C6AF /* CanvasVisible.swift */; };
+		1C6242EF2B0886590063C6AF /* ModifierFlag+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242EE2B0886590063C6AF /* ModifierFlag+Extensions.swift */; };
 		1C8BB4952993A88600EE5E66 /* ObjectFlipPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */; };
 		1C8BB4972993AAC800EE5E66 /* ObjectRotatePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */; };
 		1C8BB4992993C09B00EE5E66 /* ArrangeMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */; };
@@ -34,9 +38,7 @@
 		1C9A54332987A0C7008B5AAE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54322987A0C7008B5AAE /* Utils.swift */; };
 		1C9A54352987A1DD008B5AAE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54342987A1DD008B5AAE /* String+Extensions.swift */; };
 		1C9A54372987A532008B5AAE /* AppKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54362987A532008B5AAE /* AppKit+Extensions.swift */; };
-		1C9A543B2987A760008B5AAE /* MenuBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543A2987A760008B5AAE /* MenuBarModel.swift */; };
 		1C9A543D2987A76B008B5AAE /* WindowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543C2987A76B008B5AAE /* WindowModel.swift */; };
-		1C9A543F2987A778008B5AAE /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A543E2987A778008B5AAE /* MenuBar.swift */; };
 		1C9A54412987ABAC008B5AAE /* GeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54402987ABAC008B5AAE /* GeneralSettingsViewModel.swift */; };
 		1C9A54432987EC22008B5AAE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54422987EC22008B5AAE /* SettingsView.swift */; };
 		1C9A54492987F04B008B5AAE /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9A54482987F04B008B5AAE /* GeneralSettingsView.swift */; };
@@ -77,6 +79,10 @@
 		1C6242E22B052A240063C6AF /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		1C6242E42B0657A80063C6AF /* InputTextProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextProperties.swift; sourceTree = "<group>"; };
 		1C6242E62B0659770063C6AF /* ObjectProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectProperties.swift; sourceTree = "<group>"; };
+		1C6242E82B087E0B0063C6AF /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		1C6242EA2B087ED40063C6AF /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		1C6242EC2B08818E0063C6AF /* CanvasVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasVisible.swift; sourceTree = "<group>"; };
+		1C6242EE2B0886590063C6AF /* ModifierFlag+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModifierFlag+Extensions.swift"; sourceTree = "<group>"; };
 		1C8BB4942993A88600EE5E66 /* ObjectFlipPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectFlipPopover.swift; sourceTree = "<group>"; };
 		1C8BB4962993AAC800EE5E66 /* ObjectRotatePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRotatePopover.swift; sourceTree = "<group>"; };
 		1C8BB4982993C09B00EE5E66 /* ArrangeMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangeMethod.swift; sourceTree = "<group>"; };
@@ -101,9 +107,7 @@
 		1C9A54322987A0C7008B5AAE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1C9A54342987A1DD008B5AAE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1C9A54362987A532008B5AAE /* AppKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppKit+Extensions.swift"; sourceTree = "<group>"; };
-		1C9A543A2987A760008B5AAE /* MenuBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarModel.swift; sourceTree = "<group>"; };
 		1C9A543C2987A76B008B5AAE /* WindowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowModel.swift; sourceTree = "<group>"; };
-		1C9A543E2987A778008B5AAE /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		1C9A54402987ABAC008B5AAE /* GeneralSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewModel.swift; sourceTree = "<group>"; };
 		1C9A54422987EC22008B5AAE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1C9A54482987F04B008B5AAE /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				1C8BB4A02993E64300EE5E66 /* SettingsTabType.swift */,
 				1C6242E62B0659770063C6AF /* ObjectProperties.swift */,
 				1C6242E42B0657A80063C6AF /* InputTextProperties.swift */,
+				1C6242EC2B08818E0063C6AF /* CanvasVisible.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -267,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				1C9A543C2987A76B008B5AAE /* WindowModel.swift */,
-				1C9A543A2987A760008B5AAE /* MenuBarModel.swift */,
+				1C6242E82B087E0B0063C6AF /* MenuViewModel.swift */,
 				1C9A5474298A9F6D008B5AAE /* WorkspaceViewModel.swift */,
 				1C6242E02B0512690063C6AF /* ToolBarModel.swift */,
 				1C6242E22B052A240063C6AF /* CanvasViewModel.swift */,
@@ -289,7 +294,7 @@
 		1C9A54292987A04F008B5AAE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1C9A543E2987A778008B5AAE /* MenuBar.swift */,
+				1C6242EA2B087ED40063C6AF /* MenuView.swift */,
 				1C9A54642987FB0E008B5AAE /* ShortcutPanel.swift */,
 				1C9A54662987FBE4008B5AAE /* ShortcutView.swift */,
 				1C9A546829889DAF008B5AAE /* WorkspacePanel.swift */,
@@ -310,6 +315,7 @@
 				1C9A54522987F7DD008B5AAE /* CoreGraphics+Extensions.swift */,
 				1C9A547D298B86CA008B5AAE /* Path+Extensions.swift */,
 				1C8BB4A72995470F00EE5E66 /* Color+Extensions.swift */,
+				1C6242EE2B0886590063C6AF /* ModifierFlag+Extensions.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -419,6 +425,8 @@
 				1C9A542C2987A08D008B5AAE /* UserDefaultsRepository.swift in Sources */,
 				1C9A548D298D88C0008B5AAE /* ObjectAlignPopover.swift in Sources */,
 				1C8BB4AE2995CEE900EE5E66 /* TextOrientation.swift in Sources */,
+				1C6242EF2B0886590063C6AF /* ModifierFlag+Extensions.swift in Sources */,
+				1C6242ED2B08818E0063C6AF /* CanvasVisible.swift in Sources */,
 				1C9A5486298C94C2008B5AAE /* ColorPaletteButtonStyle.swift in Sources */,
 				1C9A546B29889EF3008B5AAE /* CanvasView.swift in Sources */,
 				1C9A54632987FA59008B5AAE /* ObjectModel.swift in Sources */,
@@ -427,15 +435,14 @@
 				1C9A5482298C2BD5008B5AAE /* ToolBarRadioButtonStyle.swift in Sources */,
 				1C9A5484298C2CC5008B5AAE /* ColorPalettePopover.swift in Sources */,
 				1C9A5477298AA456008B5AAE /* ToolBarDirection.swift in Sources */,
-				1C9A543F2987A778008B5AAE /* MenuBar.swift in Sources */,
 				1C9A5479298AAACB008B5AAE /* ToolBarButtonStyle.swift in Sources */,
-				1C9A543B2987A760008B5AAE /* MenuBarModel.swift in Sources */,
 				1C9A547E298B86CA008B5AAE /* Path+Extensions.swift in Sources */,
 				1C8BB49D2993C4E700EE5E66 /* RotateMethod.swift in Sources */,
 				1C9A545D2987F9CA008B5AAE /* Line.swift in Sources */,
 				1C8BB4A82995470F00EE5E66 /* Color+Extensions.swift in Sources */,
 				1C8BB4E62996EC2900EE5E66 /* SelectableColorButtonStyle.swift in Sources */,
 				1C9A54352987A1DD008B5AAE /* String+Extensions.swift in Sources */,
+				1C6242EB2B087ED40063C6AF /* MenuView.swift in Sources */,
 				1C6242E12B0512690063C6AF /* ToolBarModel.swift in Sources */,
 				1C9A542E2987A099008B5AAE /* LaunchAtLoginRepository.swift in Sources */,
 				1C9A54552987F91A008B5AAE /* Anchor.swift in Sources */,
@@ -447,6 +454,7 @@
 				1C9A546D29889F54008B5AAE /* WorkspaceView.swift in Sources */,
 				1C9A544D2987F221008B5AAE /* IssueReportModel.swift in Sources */,
 				1C9A545B2987F98E008B5AAE /* ObjectType.swift in Sources */,
+				1C6242E92B087E0B0063C6AF /* MenuViewModel.swift in Sources */,
 				1C9A54432987EC22008B5AAE /* SettingsView.swift in Sources */,
 				1C9A54512987F43B008B5AAE /* ToolBarPosition.swift in Sources */,
 				1C9A54652987FB0E008B5AAE /* ShortcutPanel.swift in Sources */,

@@ -1,38 +1,44 @@
 /*
-  MenuBarModel.swift
-  ScreenNote
+ MenuViewModel.swift
+ ScreenNote
 
-  Created by Takuto Nakamura on 2023/01/30.
-  
+ Created by Takuto Nakamura on 2023/11/18.
+ Copyright © 2023 Studio Kyome. All rights reserved.
 */
 
 import AppKit
+import SwiftUI
 import Combine
 
-protocol MenuBarModel: AnyObject {
-    var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> { get }
+protocol MenuViewModel: ObservableObject {
+    var canvasVisible: CanvasVisible { get set }
 
     init(_ windowModel: WindowModel)
 
-    func toggleCanvasVisible(_ flag: Bool)
+    func showOrHide()
     func openSettings()
     func openAbout()
     func sendIssueReport()
     func terminateApp()
 }
 
-final class MenuBarModelImpl<IR: IssueReportModel>: MenuBarModel {
-    var showOrHideCanvasPublisher: AnyPublisher<Bool, Never>
-
+final class MenuViewModelImpl<IR: IssueReportModel>: MenuViewModel {
     private let windowModel: WindowModel
+    private var cancellables = Set<AnyCancellable>()
+
+    @Published var canvasVisible: CanvasVisible = .hide
 
     init(_ windowModel: WindowModel) {
         self.windowModel = windowModel
-        self.showOrHideCanvasPublisher = windowModel.showOrHideCanvasPublisher
+        windowModel.canvasVisiblePublisher
+            .sink { [weak self] canvasVisible in
+                self?.canvasVisible = canvasVisible
+            }
+            .store(in: &cancellables)
     }
 
-    func toggleCanvasVisible(_ flag: Bool) {
-        if flag {
+    func showOrHide() {
+        if canvasVisible == .hide {
             windowModel.showCanvas()
         } else {
             windowModel.hideCanvas()
@@ -58,14 +64,13 @@ final class MenuBarModelImpl<IR: IssueReportModel>: MenuBarModel {
 
 // MARK: - Preview Mock
 extension PreviewMock {
-    final class MenuBarModelMock: MenuBarModel {
-        var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> {
-            Just(true).eraseToAnyPublisher()
-        }
+    final class MenuViewModelMock: MenuViewModel {
+        @Published var canvasVisible: CanvasVisible = .hide
 
         init(_ windowModel: WindowModel) {}
+        init() {}
 
-        func toggleCanvasVisible(_ flag: Bool) {}
+        func showOrHide() {}
         func openSettings() {}
         func openAbout() {}
         func sendIssueReport() {}

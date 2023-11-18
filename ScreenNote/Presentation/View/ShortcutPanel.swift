@@ -46,6 +46,7 @@ final class ShortcutPanel: NSPanel {
     }
 
     func fadeOut() {
+        self.resignKey()
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.2
             context.allowsImplicitAnimation = true

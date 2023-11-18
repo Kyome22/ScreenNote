@@ -18,5 +18,11 @@ struct ScreenNoteApp: App {
             SettingsView<SAM>()
                 .environmentObject(appModel)
         }
+        MenuBarExtra {
+            MenuView(viewModel: SAM.MVM(appModel.windowModel))
+        } label: {
+            Image(.statusIcon)
+                .environment(\.displayScale, 2.0)
+        }
     }
 }

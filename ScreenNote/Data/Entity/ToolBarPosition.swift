@@ -14,7 +14,7 @@ enum ToolBarPosition: Int, CaseIterable {
     case bottom
     case left
 
-    var localizedKey: LocalizedStringKey {
+    var label: LocalizedStringKey {
         switch self {
         case .top:    return "top"
         case .right:  return "right"

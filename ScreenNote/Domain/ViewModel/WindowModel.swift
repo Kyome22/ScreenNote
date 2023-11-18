@@ -11,7 +11,7 @@ import Combine
 import SpiceKey
 
 protocol WindowModel: AnyObject {
-    var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> { get }
+    var canvasVisiblePublisher: AnyPublisher<CanvasVisible, Never> { get }
 
     init(_ userDefaultsRepository: UserDefaultsRepository,
          _ shortcutModel: ShortcutModel,
@@ -26,17 +26,17 @@ protocol WindowModel: AnyObject {
 }
 
 final class WindowModelImpl<WVM: WorkspaceViewModel>: NSObject, WindowModel, NSWindowDelegate {
-    private let showOrHideCanvasSubject = PassthroughSubject<Bool, Never>()
-    var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> {
-        return showOrHideCanvasSubject.eraseToAnyPublisher()
-    }
-
     private let userDefaultsRepository: UserDefaultsRepository
     private let shortcutModel: ShortcutModel
     private let objectModel: ObjectModel
     private var shortcutPanel: ShortcutPanel?
     private var workspacePanel: WorkspacePanel<WVM>?
     private var cancellables = Set<AnyCancellable>()
+
+    private let canvasVisibleSubject = PassthroughSubject<CanvasVisible, Never>()
+    var canvasVisiblePublisher: AnyPublisher<CanvasVisible, Never> {
+        return canvasVisibleSubject.eraseToAnyPublisher()
+    }
 
     private var settingsWindow: NSWindow? {
         return NSApp.windows.first(where: { window in
@@ -87,29 +87,26 @@ final class WindowModelImpl<WVM: WorkspaceViewModel>: NSObject, WindowModel, NSW
     }
 
     private func showOrHideCanvas() {
-        if let workspacePanel {
-            workspacePanel.fadeOut()
-            showOrHideCanvasSubject.send(false)
+        if workspacePanel == nil {
+            showCanvas()
         } else {
-            fadeOutShortcutPanel()
-            workspacePanel = WorkspacePanel(userDefaultsRepository, objectModel)
-            workspacePanel?.delegate = self
-            workspacePanel?.fadeIn()
-            showOrHideCanvasSubject.send(true)
-            NSApp.activate(ignoringOtherApps: true)
+            hideCanvas()
         }
     }
 
     func showCanvas() {
-        guard workspacePanel == nil else { return }
+        fadeOutShortcutPanel()
+        assert(workspacePanel == nil, "Cannot show canvas when workspacePanel is not nil.")
         workspacePanel = WorkspacePanel(userDefaultsRepository, objectModel)
         workspacePanel?.delegate = self
         workspacePanel?.fadeIn()
+        canvasVisibleSubject.send(.show)
         NSApp.activate(ignoringOtherApps: true)
     }
 
     func hideCanvas() {
         workspacePanel?.fadeOut()
+        canvasVisibleSubject.send(.hide)
     }
 
     // MARK: NSWindowDelegate
@@ -126,8 +123,8 @@ final class WindowModelImpl<WVM: WorkspaceViewModel>: NSObject, WindowModel, NSW
 // MARK: - Preview Mock
 extension PreviewMock {
     final class WindowModelMock: WindowModel {
-        var showOrHideCanvasPublisher: AnyPublisher<Bool, Never> {
-            Just(true).eraseToAnyPublisher()
+        var canvasVisiblePublisher: AnyPublisher<CanvasVisible, Never> {
+            Just(.show).eraseToAnyPublisher()
         }
 
         init(_ userDefaultsRepository: UserDefaultsRepository,

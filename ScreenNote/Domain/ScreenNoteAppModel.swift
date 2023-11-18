@@ -15,13 +15,14 @@ protocol ScreenNoteAppModel: ObservableObject {
     associatedtype SM: ShortcutModel
     associatedtype OM: ObjectModel
     associatedtype WM: WindowModel
-    associatedtype MBM: MenuBarModel
+    associatedtype MVM: MenuViewModel
     associatedtype GVM: GeneralSettingsViewModel
     associatedtype CsVM: CanvasSettingsViewModel
 
     var settingsTab: SettingsTabType { get set }
     var userDefaultsRepository: UR { get }
     var shortcutModel: SM { get }
+    var windowModel: WM { get }
 }
 
 final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
@@ -29,7 +30,7 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     typealias SM = ShortcutModelImpl
     typealias OM = ObjectModelImpl
     typealias WM = WindowModelImpl<WorkspaceViewModelImpl>
-    typealias MBM = MenuBarModelImpl<IssueReporterImpl>
+    typealias MVM = MenuViewModelImpl<IssueReporterImpl>
     typealias GVM = GeneralSettingsViewModelImpl<LaunchAtLoginRepositoryImpl>
     typealias CsVM = CanvasSettingsViewModelImpl
 
@@ -38,9 +39,7 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     let userDefaultsRepository: UR
     let shortcutModel: SM
     private let objectModel: OM
-    private let windowModel: WM
-    private let menuBarModel: MBM
-    private var menuBar: MenuBar?
+    let windowModel: WM
     private var cancellables = Set<AnyCancellable>()
 
     override init() {
@@ -48,7 +47,6 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
         shortcutModel = SM(userDefaultsRepository)
         objectModel = OM(userDefaultsRepository)
         windowModel = WM(userDefaultsRepository, shortcutModel, objectModel)
-        menuBarModel = MBM(windowModel)
         super.init()
 
         NotificationCenter.default
@@ -66,7 +64,6 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     }
 
     private func applicationDidFinishLaunching() {
-        menuBar = MenuBar(menuBarModel: menuBarModel)
         shortcutModel.setShortcut()
         let toggleMethod = userDefaultsRepository.toggleMethod
         let modifierFlag = userDefaultsRepository.modifierFlag
@@ -85,12 +82,13 @@ extension PreviewMock {
         typealias SM = ShortcutModelMock
         typealias OM = ObjectModelMock
         typealias WM = WindowModelMock
-        typealias MBM = MenuBarModelMock
+        typealias MVM = MenuViewModelMock
         typealias GVM = GeneralSettingsViewModelMock
         typealias CsVM = CanvasSettingsViewModelMock
 
         @Published var settingsTab: SettingsTabType = .general
         var userDefaultsRepository = UR()
         var shortcutModel = SM()
+        var windowModel = WM()
     }
 }

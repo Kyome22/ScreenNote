@@ -29,7 +29,7 @@ struct ShortcutView: View {
 
     var longPressNote: some View {
         VStack(spacing: 20) {
-            Text("longPress".localized(with: modifierFlag.title.localized))
+            Text("longPress\(modifierFlag.localizedTitle)")
                 .font(.body)
                 .foregroundColor(Color.secondary)
             Text(modifierFlag.string)
@@ -44,7 +44,7 @@ struct ShortcutView: View {
 
     var pressBothSideNote: some View {
         VStack(spacing: 20) {
-            Text("pressBothSide".localized(with: modifierFlag.title.localized))
+            Text("pressBothSide\(modifierFlag.localizedTitle)")
                 .font(.body)
                 .foregroundColor(Color.secondary)
             HStack(spacing: 40) {

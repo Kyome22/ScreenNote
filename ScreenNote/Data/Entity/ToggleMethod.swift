@@ -12,7 +12,7 @@ enum ToggleMethod: Int, CaseIterable {
     case longPressKey
     case pressBothSideKeys
 
-    var localizedKey: LocalizedStringKey {
+    var label: LocalizedStringKey {
         switch self {
         case .longPressKey:
             return "longPressModifierKey"

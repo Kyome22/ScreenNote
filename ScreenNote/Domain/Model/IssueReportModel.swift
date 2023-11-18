@@ -21,13 +21,13 @@ struct IssueReporterImpl: IssueReportModel {
 
         let service = NSSharingService(named: NSSharingService.Name.composeEmail)!
         service.recipients = ["kyomesuke@icloud.com"]
-        service.subject = "\(appName) \("issueReport".localized)"
+        service.subject = "\(appName) \(String(localized: "issueReport"))"
         service.perform(withItems: [
-            String(format: "environment".localized, appName, appVersion, systemVersion),
-            "whatYouTried".localized,
-            "shortDescription".localized,
-            "reproduceIssue".localized,
-            "expectedResult".localized
+            String(localized: "environment\(appName)\(appVersion)\(systemVersion)"),
+            String(localized: "whatYouTried"),
+            String(localized: "shortDescription"),
+            String(localized: "reproduceIssue"),
+            String(localized: "expectedResult")
         ])
     }
 }
