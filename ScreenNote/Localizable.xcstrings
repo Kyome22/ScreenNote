@@ -22,7 +22,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ %1$@キー"
+            "value" : "%1$@ %2$@キー"
           }
         }
       }

@@ -15,6 +15,6 @@ extension ModifierFlag {
     }
 
     var label: LocalizedStringKey {
-        return LocalizedStringKey("\(string)\(title)key")
+        return LocalizedStringKey("\(string)\(localizedTitle)key")
     }
 }
