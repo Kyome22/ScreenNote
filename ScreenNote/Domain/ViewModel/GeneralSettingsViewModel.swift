@@ -13,6 +13,7 @@ protocol GeneralSettingsViewModel: ObservableObject {
     var toggleMethod: ToggleMethod { get set }
     var modifierFlag: ModifierFlag { get set }
     var toolBarPosition: ToolBarPosition { get set }
+    var showToggleMethod: Bool { get set }
     var launchAtLogin: Bool { get set }
 
     init(_ userDefaultsRepository: UserDefaultsRepository)
@@ -27,6 +28,9 @@ final class GeneralSettingsViewModelImpl<LR: LaunchAtLoginRepository>: GeneralSe
     }
     @Published var toolBarPosition: ToolBarPosition {
         didSet { userDefaultsRepository.toolBarPosition = toolBarPosition }
+    }
+    @Published var showToggleMethod: Bool {
+        didSet { userDefaultsRepository.showToggleMethod = showToggleMethod }
     }
     @Published var launchAtLogin: Bool {
         didSet {
@@ -44,6 +48,7 @@ final class GeneralSettingsViewModelImpl<LR: LaunchAtLoginRepository>: GeneralSe
         toggleMethod = userDefaultsRepository.toggleMethod
         modifierFlag = userDefaultsRepository.modifierFlag
         toolBarPosition = userDefaultsRepository.toolBarPosition
+        showToggleMethod = userDefaultsRepository.showToggleMethod
         launchAtLogin = launchAtLoginRepository.current
     }
 }
@@ -54,6 +59,7 @@ extension PreviewMock {
         @Published var toggleMethod: ToggleMethod = .longPressKey
         @Published var modifierFlag: ModifierFlag = .control
         @Published var toolBarPosition: ToolBarPosition = .top
+        @Published var showToggleMethod: Bool = true
         @Published var launchAtLogin: Bool = false
 
         init(_ userDefaultsRepository: UserDefaultsRepository) {}

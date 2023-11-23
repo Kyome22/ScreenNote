@@ -47,6 +47,11 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
             }
             .pickerStyle(.menu)
             .fixedSize(horizontal: true, vertical: false)
+            LabeledContent("introduction:") {
+                Toggle(isOn: $viewModel.showToggleMethod) {
+                    Text("showToggleMethod")
+                }
+            }
             LabeledContent("launch:") {
                 Toggle(isOn: $viewModel.launchAtLogin) {
                     Text("launchAtLogin")

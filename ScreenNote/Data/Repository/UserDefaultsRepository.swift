@@ -18,6 +18,7 @@ protocol UserDefaultsRepository: AnyObject {
     var toggleMethod: ToggleMethod { get set }
     var modifierFlag: ModifierFlag { get set }
     var toolBarPosition: ToolBarPosition { get set }
+    var showToggleMethod: Bool { get set }
     var clearAllObjects: Bool { get set }
     var defaultColorIndex: Int { get set }
     var defaultOpacity: CGFloat { get set }
@@ -51,6 +52,11 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     var toolBarPosition: ToolBarPosition {
         get { ToolBarPosition(rawValue: userDefaults.integer(forKey: "toolBarPosition"))! }
         set { userDefaults.set(newValue.rawValue, forKey: "toolBarPosition") }
+    }
+
+    var showToggleMethod: Bool {
+        get { userDefaults.bool(forKey: "showToggleMethod") }
+        set { userDefaults.set(newValue, forKey: "showToggleMethod") }
     }
 
     var clearAllObjects: Bool {
@@ -94,6 +100,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             "toggleMethod": ToggleMethod.longPressKey.rawValue,
             "modifierFlag": ModifierFlag.control.rawValue,
             "toolBarPosition": ToolBarPosition.top.rawValue,
+            "showToggleMethod": true,
             "clearAllObjects": false,
             "defaultColorIndex": Int(0),
             "defaultOpacity": Double(0.8),
@@ -125,6 +132,7 @@ extension PreviewMock {
         var toggleMethod: ToggleMethod = .longPressKey
         var modifierFlag: ModifierFlag = .control
         var toolBarPosition: ToolBarPosition = .top
+        var showToggleMethod: Bool = true
         var clearAllObjects: Bool = false
         var defaultColorIndex: Int = 0
         var defaultOpacity: CGFloat = 0.8

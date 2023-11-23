@@ -573,6 +573,22 @@
         }
       }
     },
+    "introduction:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduction:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "導入:"
+          }
+        }
+      }
+    },
     "issueReport" : {
       "localizations" : {
         "en" : {
@@ -1035,6 +1051,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンバスを表示"
+          }
+        }
+      }
+    },
+    "showToggleMethod" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show toggle method at launch."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリ起動時にトグル方法を表示する"
           }
         }
       }

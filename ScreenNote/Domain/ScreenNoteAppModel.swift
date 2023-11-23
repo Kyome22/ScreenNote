@@ -65,9 +65,12 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
 
     private func applicationDidFinishLaunching() {
         shortcutModel.setShortcut()
-        let toggleMethod = userDefaultsRepository.toggleMethod
-        let modifierFlag = userDefaultsRepository.modifierFlag
-        windowModel.fadeInShortcutPanel(toggleMethod, modifierFlag)
+
+        if userDefaultsRepository.showToggleMethod {
+            let toggleMethod = userDefaultsRepository.toggleMethod
+            let modifierFlag = userDefaultsRepository.modifierFlag
+            windowModel.fadeInShortcutPanel(toggleMethod, modifierFlag)
+        }
     }
 
     private func applicationWillTerminate() {
