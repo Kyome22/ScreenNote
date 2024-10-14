@@ -27,6 +27,6 @@ struct ColorButtonStyle: ButtonStyle {
 
 extension ButtonStyle where Self == ColorButtonStyle {
     static func color(_ color: Color) -> ColorButtonStyle {
-        return ColorButtonStyle(color: color)
+        ColorButtonStyle(color: color)
     }
 }

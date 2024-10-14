@@ -79,56 +79,56 @@ final class ObjectModelImpl: ObjectModel {
 
     private let objectTypeSubject = CurrentValueSubject<ObjectType, Never>(.pen)
     var objectTypePublisher: AnyPublisher<ObjectType, Never> {
-        return objectTypeSubject.eraseToAnyPublisher()
+        objectTypeSubject.eraseToAnyPublisher()
     }
     var objectType: ObjectType {
-        return objectTypeSubject.value
+        objectTypeSubject.value
     }
 
     private let objectsSubject = CurrentValueSubject<[Object], Never>([])
     var objectsPublisher: AnyPublisher<[Object], Never> {
-        return objectsSubject.eraseToAnyPublisher()
+        objectsSubject.eraseToAnyPublisher()
     }
     private var objects: [Object] {
-        return objectsSubject.value
+        objectsSubject.value
     }
     private var selectedObjects: [Object] {
-        return objectsSubject.value.filter { $0.isSelected }
+        objectsSubject.value.filter { $0.isSelected }
     }
 
     private var selectedObjectsBoundsSubject = CurrentValueSubject<CGRect?, Never>(nil)
     var selectedObjectsBoundsPublisher: AnyPublisher<CGRect?, Never> {
-        return selectedObjectsBoundsSubject.eraseToAnyPublisher()
+        selectedObjectsBoundsSubject.eraseToAnyPublisher()
     }
     private var selectedObjectsBounds: CGRect? {
-        return selectedObjectsBoundsSubject.value
+        selectedObjectsBoundsSubject.value
     }
 
     private let isSelectingSubject = CurrentValueSubject<Bool, Never>(false)
     var isSelectingPublisher: AnyPublisher<Bool, Never> {
-        return isSelectingSubject.eraseToAnyPublisher()
+        isSelectingSubject.eraseToAnyPublisher()
     }
     private var isSelecting: Bool {
-        return isSelectingSubject.value
+        isSelectingSubject.value
     }
 
     private let objectPropertiesSubject: CurrentValueSubject<ObjectProperties, Never>
     var objectPropertiesPublisher: AnyPublisher<ObjectProperties, Never> {
-        return objectPropertiesSubject.eraseToAnyPublisher()
+        objectPropertiesSubject.eraseToAnyPublisher()
     }
     var color: Color {
-        return objectPropertiesSubject.value.color
+        objectPropertiesSubject.value.color
     }
     var opacity: CGFloat {
-        return objectPropertiesSubject.value.opacity
+        objectPropertiesSubject.value.opacity
     }
     var lineWidth: CGFloat {
-        return objectPropertiesSubject.value.lineWidth
+        objectPropertiesSubject.value.lineWidth
     }
 
     private let inputTextPropertiesSubject = CurrentValueSubject<InputTextProperties?, Never>(nil)
     var inputTextPropertiesPublisher: AnyPublisher<InputTextProperties?, Never> {
-        return inputTextPropertiesSubject.eraseToAnyPublisher()
+        inputTextPropertiesSubject.eraseToAnyPublisher()
     }
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
@@ -157,7 +157,7 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     private func objectsBounds(_ objects: [Object]) -> CGRect? {
-        return objects.reduce(CGRect?.none) { partialResult, object in
+        objects.reduce(CGRect?.none) { partialResult, object in
             return partialResult?.union(object.bounds) ?? object.bounds
         }
     }
@@ -177,7 +177,7 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     private func move(_ diff: CGPoint) -> [Object] {
-        return lastObjects.map { object in
+        lastObjects.map { object in
             guard object.isSelected else { return object }
             var copyObject = object.copy()
             copyObject.points = copyObject.points.map { $0 + diff }
@@ -202,7 +202,7 @@ final class ObjectModelImpl: ObjectModel {
             guard object.isSelected else { return object }
             var copyObject = object.copy()
             copyObject.points = copyObject.points.map { point in
-                return transforms.reduce(point) { partialResult, transform in
+                transforms.reduce(point) { partialResult, transform in
                     partialResult.applying(transform)
                 }
             }
@@ -431,13 +431,13 @@ final class ObjectModelImpl: ObjectModel {
 
     // MARK: Operation to Selected Objects
     func updateObjectType(_ objectType: ObjectType) {
-        if self.objectType == objectType { return }
+        guard self.objectType != objectType else { return }
         if self.objectType == .text,
            let inputTextProperties = inputTextPropertiesSubject.value {
             endEditing(inputTextProperties)
         }
         objectTypeSubject.send(objectType)
-        if objectType == .select { return }
+        guard objectType != .select else { return }
         isSelectingSubject.send(false)
         if !selectedObjects.isEmpty {
             objectsSubject.send(unselectedObjects())
@@ -446,7 +446,7 @@ final class ObjectModelImpl: ObjectModel {
 
     func updateColor(_ color: Color) {
         objectPropertiesSubject.value.color = color
-        if selectedObjects.isEmpty { return }
+        guard !selectedObjects.isEmpty else { return }
         pushHistory()
         var objects_ = objects
         for i in objects_.indices where objects_[i].isSelected {
@@ -456,13 +456,13 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     func startUpdatingOpacity() {
-        if selectedObjects.isEmpty { return }
+        guard !selectedObjects.isEmpty else { return }
         pushHistory()
     }
 
     func updateOpacity(_ opacity: CGFloat) {
         objectPropertiesSubject.value.opacity = opacity
-        if selectedObjects.isEmpty { return }
+        guard !selectedObjects.isEmpty else { return }
         var objects_ = objects
         for i in objects_.indices where objects_[i].isSelected {
             objects_[i].opacity = opacity
@@ -471,13 +471,13 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     func startUpdatingLineWidth() {
-        if selectedObjects.isEmpty { return }
+        guard !selectedObjects.isEmpty else { return }
         pushHistory()
     }
 
     func updateLineWidth(_ lineWidth: CGFloat) {
         objectPropertiesSubject.value.lineWidth = lineWidth
-        if selectedObjects.isEmpty { return }
+        guard !selectedObjects.isEmpty else { return }
         var objects_ = objects
         for i in objects_.indices where objects_[i].isSelected {
             objects_[i].lineWidth = lineWidth
@@ -540,9 +540,9 @@ final class ObjectModelImpl: ObjectModel {
             objects_[i].points = objects_[i].points.map { point in
                 switch flipMethod {
                 case .flipHorizontal:
-                    return CGPoint(x: 2.0 * center.x - point.x, y: point.y)
+                    CGPoint(x: 2.0 * center.x - point.x, y: point.y)
                 case .flipVertical:
-                    return CGPoint(x: point.x, y: 2.0 * center.y - point.y)
+                    CGPoint(x: point.x, y: 2.0 * center.y - point.y)
                 }
             }
             if objects_[i].type == .text {
@@ -565,7 +565,7 @@ final class ObjectModelImpl: ObjectModel {
         var objects_ = objects
         for i in objects_.indices where objects_[i].isSelected {
             objects_[i].points = objects_[i].points.map { point in
-                return transforms.reduce(point) { partialResult, transform in
+                transforms.reduce(point) { partialResult, transform in
                     partialResult.applying(transform)
                 }
             }
@@ -601,10 +601,11 @@ final class ObjectModelImpl: ObjectModel {
     }
 
     func clear() {
-        if inputTextPropertiesSubject.value == nil, !objects.isEmpty {
-            pushHistory()
-            objectsSubject.send([])
+        guard inputTextPropertiesSubject.value == nil, !objects.isEmpty else {
+            return
         }
+        pushHistory()
+        objectsSubject.send([])
     }
 }
 

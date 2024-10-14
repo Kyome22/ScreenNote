@@ -32,7 +32,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
 
     private let updateShortcutSubject = PassthroughSubject<Void, Never>()
     var updateShortcutPublisher: AnyPublisher<Void, Never> {
-        return updateShortcutSubject.eraseToAnyPublisher()
+        updateShortcutSubject.eraseToAnyPublisher()
     }
 
     var toggleMethod: ToggleMethod {
@@ -126,7 +126,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
 extension PreviewMock {
     final class UserDefaultsRepositoryMock: UserDefaultsRepository {
         var updateShortcutPublisher: AnyPublisher<Void, Never> {
-            return Just(()).eraseToAnyPublisher()
+            Just(()).eraseToAnyPublisher()
         }
 
         var toggleMethod: ToggleMethod = .longPressKey

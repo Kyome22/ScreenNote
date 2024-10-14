@@ -21,7 +21,7 @@ protocol ShortcutModel: AnyObject {
 final class ShortcutModelImpl: ShortcutModel {
     private let showOrHideCanvasSubject = PassthroughSubject<Void, Never>()
     var showOrHideCanvasPublisher: AnyPublisher<Void, Never> {
-        return showOrHideCanvasSubject.eraseToAnyPublisher()
+        showOrHideCanvasSubject.eraseToAnyPublisher()
     }
 
     private let userDefaultsRepository: UserDefaultsRepository

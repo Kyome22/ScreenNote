@@ -13,24 +13,20 @@ enum RotateMethod: Int, CaseIterable {
     case rotateLeft
 
     var angle: CGFloat {
-        return (self == .rotateRight ? 0.5 : -0.5) * CGFloat.pi
+        (self == .rotateRight ? 0.5 : -0.5) * CGFloat.pi
     }
 
     var symbolName: String {
         switch self {
-        case .rotateRight:
-            return "rotate.right.fill"
-        case .rotateLeft:
-            return "rotate.left.fill"
+        case .rotateRight: "rotate.right.fill"
+        case .rotateLeft:  "rotate.left.fill"
         }
     }
 
     var help: LocalizedStringKey {
         switch self {
-        case .rotateRight:
-            return "rotateRight"
-        case .rotateLeft:
-            return "rotateLeft"
+        case .rotateRight: "rotateRight"
+        case .rotateLeft:  "rotateLeft"
         }
     }
 }

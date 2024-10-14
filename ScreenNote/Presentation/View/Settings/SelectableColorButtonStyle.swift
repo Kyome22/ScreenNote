@@ -31,6 +31,6 @@ extension ButtonStyle where Self == SelectableColorButtonStyle {
         color: Color,
         selection: Binding<Bool>
     ) -> SelectableColorButtonStyle {
-        return SelectableColorButtonStyle(color: color, selection: selection)
+        SelectableColorButtonStyle(color: color, selection: selection)
     }
 }

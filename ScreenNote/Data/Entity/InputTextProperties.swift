@@ -14,7 +14,6 @@ struct InputTextProperties {
     var fontSize: CGFloat
 
     var inputTextOffset: CGSize {
-        return CGSize(width: object.bounds.minX,
-                      height: object.bounds.minY)
+        CGSize(width: object.bounds.minX, height: object.bounds.minY)
     }
 }

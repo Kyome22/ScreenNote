@@ -44,7 +44,7 @@ final class CanvasSettingsViewModelImpl: CanvasSettingsViewModel {
     private let userDefaultsRepository: UserDefaultsRepository
 
     var defaultColor: Color {
-        return colors[defaultColorIndex % 8][defaultColorIndex / 8]
+        colors[defaultColorIndex % 8][defaultColorIndex / 8]
     }
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {

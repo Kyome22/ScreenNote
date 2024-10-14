@@ -11,15 +11,11 @@ import SpiceKey
 import SwiftUI
 
 final class WorkspaceHostingView<T: View>: NSHostingView<T> {
-    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
-        return true
-    }
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 }
 
 final class WorkspacePanel<WVM: WorkspaceViewModel>: NSPanel {
-    override var canBecomeKey: Bool {
-        return true
-    }
+    override var canBecomeKey: Bool { true }
 
     init(
         _ userDefaultsRepository: UserDefaultsRepository,

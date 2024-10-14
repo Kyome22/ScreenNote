@@ -14,10 +14,8 @@ enum CanvasVisible {
 
     var label: LocalizedStringKey {
         switch self {
-        case .show:
-            return "hideCanvas"
-        case .hide:
-            return "showCanvas"
+        case .show: "hideCanvas"
+        case .hide: "showCanvas"
         }
     }
 }

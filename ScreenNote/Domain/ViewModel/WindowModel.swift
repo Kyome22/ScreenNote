@@ -35,11 +35,11 @@ final class WindowModelImpl<WVM: WorkspaceViewModel>: NSObject, WindowModel, NSW
 
     private let canvasVisibleSubject = PassthroughSubject<CanvasVisible, Never>()
     var canvasVisiblePublisher: AnyPublisher<CanvasVisible, Never> {
-        return canvasVisibleSubject.eraseToAnyPublisher()
+        canvasVisibleSubject.eraseToAnyPublisher()
     }
 
     private var settingsWindow: NSWindow? {
-        return NSApp.windows.first(where: { window in
+        NSApp.windows.first(where: { window in
             window.frameAutosaveName == "com_apple_SwiftUI_Settings_window"
         })
     }

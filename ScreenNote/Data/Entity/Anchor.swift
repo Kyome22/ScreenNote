@@ -20,14 +20,14 @@ enum Anchor: Int, CaseIterable {
 
     func center(with bounds: CGRect) -> CGPoint {
         switch self {
-        case .topLeft:     return CGPoint(x: bounds.minX, y: bounds.minY)
-        case .top:         return CGPoint(x: bounds.midX, y: bounds.minY)
-        case .topRight:    return CGPoint(x: bounds.maxX, y: bounds.minY)
-        case .left:        return CGPoint(x: bounds.minX, y: bounds.midY)
-        case .right:       return CGPoint(x: bounds.maxX, y: bounds.midY)
-        case .bottomLeft:  return CGPoint(x: bounds.minX, y: bounds.maxY)
-        case .bottom:      return CGPoint(x: bounds.midX, y: bounds.maxY)
-        case .bottomRight: return CGPoint(x: bounds.maxX, y: bounds.maxY)
+        case .topLeft:     CGPoint(x: bounds.minX, y: bounds.minY)
+        case .top:         CGPoint(x: bounds.midX, y: bounds.minY)
+        case .topRight:    CGPoint(x: bounds.maxX, y: bounds.minY)
+        case .left:        CGPoint(x: bounds.minX, y: bounds.midY)
+        case .right:       CGPoint(x: bounds.maxX, y: bounds.midY)
+        case .bottomLeft:  CGPoint(x: bounds.minX, y: bounds.maxY)
+        case .bottom:      CGPoint(x: bounds.midX, y: bounds.maxY)
+        case .bottomRight: CGPoint(x: bounds.maxX, y: bounds.maxY)
         }
     }
 

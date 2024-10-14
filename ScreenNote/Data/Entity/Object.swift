@@ -99,21 +99,20 @@ struct Object: Identifiable {
     var strokeStyle: StrokeStyle? {
         switch type {
         case .select, .text, .arrow, .fillRect, .fillOval:
-            return nil
+            nil
+        case .pen where points.count < 2:
+            nil
         case .pen:
-            if points.count < 2 {
-                return nil
-            }
-            return StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round)
+            StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round)
         case .line:
-            return StrokeStyle(lineWidth: lineWidth, lineCap: .round)
+            StrokeStyle(lineWidth: lineWidth, lineCap: .round)
         case .lineRect, .lineOval:
-            return StrokeStyle(lineWidth: lineWidth)
+            StrokeStyle(lineWidth: lineWidth)
         }
     }
 
     var color: Color {
-        return color_.opacity(opacity)
+        color_.opacity(opacity)
     }
 
     var fontSize: CGFloat {
@@ -170,39 +169,44 @@ struct Object: Identifiable {
     func isHit(point: CGPoint) -> Bool {
         switch type {
         case .pen, .line, .lineRect, .lineOval:
-            let radius: CGFloat = max(4.0, 0.5 * lineWidth)
-            return path.intersects(with: point, radius: radius)
+            path.intersects(with: point, radius: max(4.0, 0.5 * lineWidth))
         case .text, .arrow, .fillRect, .fillOval:
-            return path.contains(point)
+            path.contains(point)
         default:
-            return false
+            false
         }
     }
 
     func isHit(rect: CGRect) -> Bool {
-        if rect.isEmpty { return false }
-        if rect.contains(bounds) { return true }
-        return path.intersects(Path(rect))
+        if rect.isEmpty {
+            false
+        } else if rect.contains(bounds) {
+            true
+        } else {
+            path.intersects(Path(rect))
+        }
     }
 
     func copy(needsOffset: Bool = false) -> Object {
         let newPoints = needsOffset ? points.map { $0 + CGPoint(20) } : points
-        if type == .text {
-            return Object(color_, opacity, newPoints, text, textOrientation, isSelected: true)
+        return if type == .text {
+            Object(color_, opacity, newPoints, text, textOrientation, isSelected: true)
         } else {
-            return Object(type, color_, opacity, lineWidth, newPoints, isSelected: true)
+            Object(type, color_, opacity, lineWidth, newPoints, isSelected: true)
         }
     }
 
     func textOffset(from bounds: CGRect) -> CGPoint {
-        return CGPoint(x: bounds.midX, y: bounds.midY)
+        CGPoint(x: bounds.midX, y: bounds.midY)
     }
 
     func textRect(from bounds: CGRect) -> CGRect {
         let size = textOrientation.size(of: bounds)
-        return CGRect(x: -0.5 * size.width,
-                      y: -0.5 * size.height,
-                      width: size.width,
-                      height: size.height)
+        return CGRect(
+            x: -0.5 * size.width,
+            y: -0.5 * size.height,
+            width: size.width,
+            height: size.height
+        )
     }
 }

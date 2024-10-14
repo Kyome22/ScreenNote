@@ -31,6 +31,6 @@ struct Curve {
     }
 
     var points: [CGPoint] {
-        return (0 ..< 10).map { compute(CGFloat($0 + 1) / 10.0) }
+        (0 ..< 10).map { compute(CGFloat($0 + 1) / 10.0) }
     }
 }

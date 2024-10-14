@@ -26,7 +26,7 @@ let NOT_IMPLEMENTED = "not implemented"
 struct PreviewMock {}
 
 func + (l: CGPoint, r: CGPoint) -> CGPoint {
-    return CGPoint(x: l.x + r.x, y: l.y + r.y)
+    CGPoint(x: l.x + r.x, y: l.y + r.y)
 }
 
 func += (left: inout CGPoint, right: CGPoint) {
@@ -34,7 +34,7 @@ func += (left: inout CGPoint, right: CGPoint) {
 }
 
 func - (l: CGPoint, r: CGPoint) -> CGPoint {
-    return CGPoint(x: l.x - r.x, y: l.y - r.y)
+    CGPoint(x: l.x - r.x, y: l.y - r.y)
 }
 
 func -= (left: inout CGPoint, right: CGPoint) {
@@ -42,7 +42,7 @@ func -= (left: inout CGPoint, right: CGPoint) {
 }
 
 func + (left: CGSize, right: CGSize) -> CGSize {
-    return CGSize(width: left.width + right.width, height: left.height + right.height)
+    CGSize(width: left.width + right.width, height: left.height + right.height)
 }
 
 func += (left: inout CGSize, right: CGSize) {
@@ -50,7 +50,7 @@ func += (left: inout CGSize, right: CGSize) {
 }
 
 func - (left: CGSize, right: CGSize) -> CGSize {
-    return CGSize(width: left.width - right.width, height: left.height - right.height)
+    CGSize(width: left.width - right.width, height: left.height - right.height)
 }
 
 func -= (left: inout CGSize, right: CGSize) {
@@ -58,9 +58,9 @@ func -= (left: inout CGSize, right: CGSize) {
 }
 
 func * (left: CGFloat, right: CGPoint) -> CGPoint {
-    return CGPoint(x: left * right.x, y: left * right.y)
+    CGPoint(x: left * right.x, y: left * right.y)
 }
 
 func * (left: CGFloat, right: CGSize) -> CGSize {
-    return CGSize(width: left * right.width, height: left * right.height)
+    CGSize(width: left * right.width, height: left * right.height)
 }

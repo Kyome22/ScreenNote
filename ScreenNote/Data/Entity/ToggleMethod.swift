@@ -14,19 +14,15 @@ enum ToggleMethod: Int, CaseIterable {
 
     var label: LocalizedStringKey {
         switch self {
-        case .longPressKey:
-            return "longPressModifierKey"
-        case .pressBothSideKeys:
-            return "pressBothSideModifierKeys"
+        case .longPressKey:      "longPressModifierKey"
+        case .pressBothSideKeys: "pressBothSideModifierKeys"
         }
     }
 
     var panelWidth: CGFloat {
         switch self {
-        case .longPressKey:
-            return 280
-        case .pressBothSideKeys:
-            return 380
+        case .longPressKey:      280
+        case .pressBothSideKeys: 380
         }
     }
 }

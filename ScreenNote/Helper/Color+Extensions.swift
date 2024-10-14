@@ -10,8 +10,8 @@ import SwiftUI
 
 extension Color {
     static var palette: [[Color]] {
-        return NSColor.primaries.map { primary in
-            return (0 ..< 5).map { i in
+        NSColor.primaries.map { primary in
+            (0 ..< 5).map { i in
                 Color(primary.blended(withFraction: 0.2 * CGFloat(i), of: .black)!)
             }
         }

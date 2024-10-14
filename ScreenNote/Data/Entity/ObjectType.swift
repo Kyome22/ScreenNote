@@ -21,29 +21,29 @@ enum ObjectType: Int, CaseIterable {
 
     var symbolName: String {
         switch self {
-        case .select:   return "hand.point.up.left.fill"
-        case .text:     return "textbox"
-        case .pen:      return "scribble"
-        case .line:     return "line.diagonal"
-        case .arrow:    return "line.diagonal.arrow"
-        case .fillRect: return "square.fill"
-        case .lineRect: return "square"
-        case .fillOval: return "oval.fill"
-        case .lineOval: return "oval"
+        case .select:   "hand.point.up.left.fill"
+        case .text:     "textbox"
+        case .pen:      "scribble"
+        case .line:     "line.diagonal"
+        case .arrow:    "line.diagonal.arrow"
+        case .fillRect: "square.fill"
+        case .lineRect: "square"
+        case .fillOval: "oval.fill"
+        case .lineOval: "oval"
         }
     }
 
-    var help: LocalizedStringKey {
+    var help: String {
         switch self {
-        case .select:   return "select"
-        case .text:     return "text"
-        case .pen:      return "pen"
-        case .line:     return "line"
-        case .arrow:    return "arrow"
-        case .fillRect: return "fillRect"
-        case .lineRect: return "lineRect"
-        case .fillOval: return "fillOval"
-        case .lineOval: return "lineOval"
+        case .select:   "select"
+        case .text:     "text"
+        case .pen:      "pen"
+        case .line:     "line"
+        case .arrow:    "arrow"
+        case .fillRect: "fillRect"
+        case .lineRect: "lineRect"
+        case .fillOval: "fillOval"
+        case .lineOval: "lineOval"
         }
     }
 }

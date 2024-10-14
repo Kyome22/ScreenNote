@@ -10,7 +10,7 @@ import AppKit
 
 extension NSStatusItem {
     static var `default`: NSStatusItem {
-        return NSStatusBar.system.statusItem(withLength: Self.variableLength)
+        NSStatusBar.system.statusItem(withLength: Self.variableLength)
     }
 }
 
