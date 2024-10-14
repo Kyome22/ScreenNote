@@ -8,11 +8,13 @@
 
 import SwiftUI
 
-enum ToolBarPosition: Int, CaseIterable {
+enum ToolBarPosition: Int, CaseIterable, Identifiable {
     case top
     case right
     case bottom
     case left
+
+    var id: Int { rawValue }
 
     var label: LocalizedStringKey {
         switch self {

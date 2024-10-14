@@ -22,7 +22,7 @@ struct ObjectArrangePopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(ArrangeMethod.allCases, id: \.rawValue) { arrangeMethod in
+            ForEach(ArrangeMethod.allCases) { arrangeMethod in
                 Button {
                     arrangeHandler(arrangeMethod)
                 } label: {

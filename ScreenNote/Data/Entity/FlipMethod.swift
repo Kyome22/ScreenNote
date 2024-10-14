@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-enum FlipMethod: Int, CaseIterable {
+enum FlipMethod: Int, CaseIterable, Identifiable {
     case flipHorizontal
     case flipVertical
+
+    var id: Int { rawValue }
 
     var symbolName: String {
         switch self {

@@ -9,7 +9,9 @@
 import SwiftUI
 import SpiceKey
 
-extension ModifierFlag {
+extension ModifierFlag: Identifiable {
+    public var id: Int { rawValue }
+
     var label: String {
         String(localized: "\(string)\(title)key")
     }

@@ -22,7 +22,7 @@ struct ObjectRotatePopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(RotateMethod.allCases, id: \.rawValue) { rotateMethod in
+            ForEach(RotateMethod.allCases) { rotateMethod in
                 Button {
                     rotateHandler(rotateMethod)
                 } label: {

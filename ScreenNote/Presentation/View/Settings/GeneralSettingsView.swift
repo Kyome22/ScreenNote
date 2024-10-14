@@ -15,7 +15,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
     var body: some View {
         Form {
             Picker(selection: $viewModel.toggleMethod) {
-                ForEach(ToggleMethod.allCases, id: \.rawValue) { toggleMethod in
+                ForEach(ToggleMethod.allCases) { toggleMethod in
                     Text(toggleMethod.label)
                         .tag(toggleMethod)
                 }
@@ -25,7 +25,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
             }
             .pickerStyle(.radioGroup)
             Picker(selection: $viewModel.modifierFlag) {
-                ForEach(ModifierFlag.allCases, id: \.rawValue) { modifierFlag in
+                ForEach(ModifierFlag.allCases) { modifierFlag in
                     Text(modifierFlag.label)
                         .tag(modifierFlag)
                 }
@@ -37,7 +37,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
             .fixedSize(horizontal: true, vertical: false)
             Divider()
             Picker(selection: $viewModel.toolBarPosition) {
-                ForEach(ToolBarPosition.allCases, id: \.rawValue) { position in
+                ForEach(ToolBarPosition.allCases) { position in
                     Text(position.label)
                         .tag(position)
                 }

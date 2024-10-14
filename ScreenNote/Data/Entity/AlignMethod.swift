@@ -8,13 +8,15 @@
 
 import SwiftUI
 
-enum AlignMethod: Int, CaseIterable {
+enum AlignMethod: Int, CaseIterable, Identifiable {
     case horizontalAlignLeft
     case horizontalAlignCenter
     case horizontalAlignRight
     case verticalAlignTop
     case verticalAlignCenter
     case verticalAlignBottom
+
+    var id: Int { rawValue }
 
     var symbolName: String {
         switch self {

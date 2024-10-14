@@ -22,7 +22,7 @@ struct ObjectFlipPopover: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(FlipMethod.allCases, id: \.rawValue) { flipMethod in
+            ForEach(FlipMethod.allCases) { flipMethod in
                 Button {
                     flipHandler(flipMethod)
                 } label: {

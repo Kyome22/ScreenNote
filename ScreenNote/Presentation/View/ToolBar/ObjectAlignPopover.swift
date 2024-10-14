@@ -23,7 +23,7 @@ struct ObjectAlignPopover: View {
     var body: some View {
         VStack {
             HStack(spacing: 8) {
-                ForEach(AlignMethod.horizontals, id: \.rawValue) { alignMethod in
+                ForEach(AlignMethod.horizontals) { alignMethod in
                     Button {
                         alignHandler(alignMethod)
                     } label: {
@@ -34,7 +34,7 @@ struct ObjectAlignPopover: View {
                 }
             }
             HStack(spacing: 8) {
-                ForEach(AlignMethod.verticals, id: \.rawValue) { alignMethod in
+                ForEach(AlignMethod.verticals) { alignMethod in
                     Button {
                         alignHandler(alignMethod)
                     } label: {

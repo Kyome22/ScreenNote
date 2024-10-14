@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-enum ToggleMethod: Int, CaseIterable {
+enum ToggleMethod: Int, CaseIterable, Identifiable {
     case longPressKey
     case pressBothSideKeys
+
+    var id: Int { rawValue }
 
     var label: LocalizedStringKey {
         switch self {

@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-enum ArrangeMethod: Int, CaseIterable {
+enum ArrangeMethod: Int, CaseIterable, Identifiable {
     case bringToFrontmost
     case sendToBackmost
+
+    var id: Int { rawValue }
 
     var symbolName: String {
         switch self {

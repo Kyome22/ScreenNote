@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-enum RotateMethod: Int, CaseIterable {
+enum RotateMethod: Int, CaseIterable, Identifiable {
     case rotateRight
     case rotateLeft
+
+    var id: Int { rawValue }
 
     var angle: CGFloat {
         (self == .rotateRight ? 0.5 : -0.5) * CGFloat.pi
