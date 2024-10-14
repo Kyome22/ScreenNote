@@ -625,7 +625,7 @@
 				INFOPLIST_FILE = ScreenNote/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2023 Takuto Nakamura";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2024 Takuto Nakamura";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -655,7 +655,7 @@
 				INFOPLIST_FILE = ScreenNote/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2023 Takuto Nakamura";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2024 Takuto Nakamura";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

@@ -30,7 +30,7 @@ final class ScreenNoteAppModelImpl: NSObject, ScreenNoteAppModel {
     typealias SM = ShortcutModelImpl
     typealias OM = ObjectModelImpl
     typealias WM = WindowModelImpl<WorkspaceViewModelImpl>
-    typealias MVM = MenuViewModelImpl<IssueReporterImpl>
+    typealias MVM = MenuViewModelImpl<IssueReporterModelImpl>
     typealias GVM = GeneralSettingsViewModelImpl<LaunchAtLoginRepositoryImpl>
     typealias CsVM = CanvasSettingsViewModelImpl
 

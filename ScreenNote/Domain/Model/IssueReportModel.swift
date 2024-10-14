@@ -12,7 +12,7 @@ protocol IssueReportModel {
     static func send()
 }
 
-struct IssueReporterImpl: IssueReportModel {
+struct IssueReporterModelImpl: IssueReportModel {
     static func send() {
         let appName = "CFBundleName".infoString
         let appVersion = "CFBundleShortVersionString".infoString
