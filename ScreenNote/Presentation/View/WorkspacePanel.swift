@@ -36,6 +36,7 @@ final class WorkspacePanel<WVM: WorkspaceViewModel>: NSPanel {
         if userDefaultsRepository.clearAllObjects {
             objectModel.resetHistory()
         }
+        objectModel.resetDefaultSettings()
         let viewModel = WVM(objectModel, userDefaultsRepository.toolBarPosition)
         let workspaceView = WorkspaceView(viewModel: viewModel)
         self.contentView = WorkspaceHostingView(rootView: workspaceView)

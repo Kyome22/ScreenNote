@@ -12,4 +12,6 @@ struct ObjectProperties {
     var color: Color
     var opacity: CGFloat
     var lineWidth: CGFloat
+
+    static let `default` = Self(color: Color(.uniqueWhite), opacity: 0.8, lineWidth: 4.0)
 }

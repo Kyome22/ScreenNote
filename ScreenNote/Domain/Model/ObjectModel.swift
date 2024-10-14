@@ -35,6 +35,7 @@ protocol ObjectModel: AnyObject {
                    selectionBounds: CGRect?,
                    selectEndedHandler: @escaping () -> Void)
 
+    func resetDefaultSettings()
     func undo()
     func redo()
     func resetHistory()
@@ -77,7 +78,7 @@ final class ObjectModelImpl: ObjectModel {
 
     let colors: [[Color]]
 
-    private let objectTypeSubject: CurrentValueSubject<ObjectType, Never>
+    private let objectTypeSubject = CurrentValueSubject<ObjectType, Never>(.pen)
     var objectTypePublisher: AnyPublisher<ObjectType, Never> {
         objectTypeSubject.eraseToAnyPublisher()
     }
@@ -112,7 +113,7 @@ final class ObjectModelImpl: ObjectModel {
         isSelectingSubject.value
     }
 
-    private let objectPropertiesSubject: CurrentValueSubject<ObjectProperties, Never>
+    private let objectPropertiesSubject = CurrentValueSubject<ObjectProperties, Never>(.default)
     var objectPropertiesPublisher: AnyPublisher<ObjectProperties, Never> {
         objectPropertiesSubject.eraseToAnyPublisher()
     }
@@ -133,14 +134,7 @@ final class ObjectModelImpl: ObjectModel {
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
         self.userDefaultsRepository = userDefaultsRepository
-        objectTypeSubject = .init(userDefaultsRepository.defaultObjectType)
         colors = Color.palette
-        let index = userDefaultsRepository.defaultColorIndex
-        objectPropertiesSubject = .init(ObjectProperties(
-            color: colors[index % 8][index / 8],
-            opacity: userDefaultsRepository.defaultOpacity,
-            lineWidth: userDefaultsRepository.defaultLineWidth
-        ))
         undoManager.levelsOfUndo = 15
         objectsPublisher
             .sink { [weak self] _ in
@@ -385,6 +379,17 @@ final class ObjectModelImpl: ObjectModel {
             }
         }
         inputTextPropertiesSubject.send(nil)
+    }
+
+    func resetDefaultSettings() {
+        objectTypeSubject.send(userDefaultsRepository.defaultObjectType)
+
+        let index = userDefaultsRepository.defaultColorIndex
+        objectPropertiesSubject.send(.init(
+            color: colors[index % 8][index / 8],
+            opacity: userDefaultsRepository.defaultOpacity,
+            lineWidth: userDefaultsRepository.defaultLineWidth
+        ))
     }
 
     // MARK: History Operation
@@ -657,6 +662,7 @@ extension PreviewMock {
                        selectionBounds: CGRect?,
                        selectEndedHandler: @escaping () -> Void) {}
 
+        func resetDefaultSettings() {}
         func undo() {}
         func redo() {}
         func resetHistory() {}
