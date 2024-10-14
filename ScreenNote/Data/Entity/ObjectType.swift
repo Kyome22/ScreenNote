@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum ObjectType: Int, CaseIterable {
+enum ObjectType: Int, CaseIterable, Identifiable {
     case select
     case text
     case pen
@@ -18,6 +18,8 @@ enum ObjectType: Int, CaseIterable {
     case lineRect
     case fillOval
     case lineOval
+
+    var id: Int { rawValue }
 
     var symbolName: String {
         switch self {
@@ -33,17 +35,35 @@ enum ObjectType: Int, CaseIterable {
         }
     }
 
-    var help: String {
+    var label: LocalizedStringKey {
         switch self {
-        case .select:   "select"
-        case .text:     "text"
-        case .pen:      "pen"
-        case .line:     "line"
-        case .arrow:    "arrow"
-        case .fillRect: "fillRect"
-        case .lineRect: "lineRect"
-        case .fillOval: "fillOval"
-        case .lineOval: "lineOval"
+        case .select:   "toolSelect"
+        case .text:     "toolText"
+        case .pen:      "toolPen"
+        case .line:     "toolLine"
+        case .arrow:    "toolArrow"
+        case .fillRect: "toolFillRect"
+        case .lineRect: "toolLineRect"
+        case .fillOval: "toolFillOval"
+        case .lineOval: "toolLineOval"
         }
     }
+
+    var help: LocalizedStringKey {
+        switch self {
+        case .select:   "helpSelect"
+        case .text:     "helpText"
+        case .pen:      "helpPen"
+        case .line:     "helpLine"
+        case .arrow:    "helpArrow"
+        case .fillRect: "helpFillRect"
+        case .lineRect: "helpLineRect"
+        case .fillOval: "helpFillOval"
+        case .lineOval: "helpLineOval"
+        }
+    }
+
+    static let defaultObjects: [ObjectType] = [
+        .text, .pen, .line, .arrow, .fillRect, .lineRect, .fillOval, .lineOval
+    ]
 }

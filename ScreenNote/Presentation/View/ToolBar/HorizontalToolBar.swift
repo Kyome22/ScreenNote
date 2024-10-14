@@ -243,7 +243,7 @@ struct HorizontalToolBar<TBM: ToolBarModel>: View {
             get: { toolBarModel.objectType == objectType },
             set: { _, _ in }
         )))
-        .help(objectType.help)
+        .help(objectType.label)
     }
 
     private func dummyButton(actionHandler: @escaping () -> Void) -> some View {

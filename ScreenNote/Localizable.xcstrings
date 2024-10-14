@@ -75,23 +75,6 @@
         }
       }
     },
-    "arrow" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arrow Tool: A"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "矢印ツール: A"
-          }
-        }
-      }
-    },
     "backgroundColor:" : {
       "localizations" : {
         "en" : {
@@ -252,6 +235,22 @@
         }
       }
     },
+    "defaultObjectType:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Object Type:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトのツール:"
+          }
+        }
+      }
+    },
     "defaultOpacity:" : {
       "localizations" : {
         "en" : {
@@ -348,40 +347,6 @@
         }
       }
     },
-    "fillOval" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fill Oval Tool: O"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "楕円ツール（塗りつぶし）: O"
-          }
-        }
-      }
-    },
-    "fillRect" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fill Rectangle Tool: R"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "長方形ツール（塗りつぶし）: R"
-          }
-        }
-      }
-    },
     "flip" : {
       "localizations" : {
         "en" : {
@@ -474,6 +439,150 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "やり直す: ⇧⌘Z"
+          }
+        }
+      }
+    },
+    "helpArrow" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrow Tool: A"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "矢印ツール: A"
+          }
+        }
+      }
+    },
+    "helpFillOval" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill Oval Tool: O"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "楕円ツール（塗りつぶし）: O"
+          }
+        }
+      }
+    },
+    "helpFillRect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill Rectangle Tool: R"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長方形ツール（塗りつぶし）: R"
+          }
+        }
+      }
+    },
+    "helpLine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Tool: L"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直線ツール: L"
+          }
+        }
+      }
+    },
+    "helpLineOval" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Oval Tool: ⇧O"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "楕円ツール（輪郭線）: ⇧O"
+          }
+        }
+      }
+    },
+    "helpLineRect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Rectangle Tool: ⇧R"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長方形ツール（輪郭線）: ⇧R"
+          }
+        }
+      }
+    },
+    "helpPen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pen Tool: P"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ペンツール: P"
+          }
+        }
+      }
+    },
+    "helpSelect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Tool: S"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択ツール: S"
+          }
+        }
+      }
+    },
+    "helpText" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Tool: T"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストツール: T"
           }
         }
       }
@@ -622,57 +731,6 @@
         }
       }
     },
-    "line" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Line Tool: L"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "直線ツール: L"
-          }
-        }
-      }
-    },
-    "lineOval" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Line Oval Tool: ⇧O"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "楕円ツール（輪郭線）: ⇧O"
-          }
-        }
-      }
-    },
-    "lineRect" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Line Rectangle Tool: ⇧R"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "長方形ツール（輪郭線）: ⇧R"
-          }
-        }
-      }
-    },
     "lineWidth" : {
       "localizations" : {
         "en" : {
@@ -765,23 +823,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不透明度の変更"
-          }
-        }
-      }
-    },
-    "pen" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pen Tool: P"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ペンツール: P"
           }
         }
       }
@@ -914,23 +955,6 @@
         }
       }
     },
-    "select" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Tool: S"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "選択ツール: S"
-          }
-        }
-      }
-    },
     "sendBack" : {
       "localizations" : {
         "en" : {
@@ -1027,23 +1051,6 @@
         }
       }
     },
-    "text" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text Tool: T"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "テキストツール: T"
-          }
-        }
-      }
-    },
     "toggleMethod:" : {
       "localizations" : {
         "en" : {
@@ -1060,6 +1067,22 @@
         }
       }
     },
+    "toolArrow" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrow Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "矢印ツール"
+          }
+        }
+      }
+    },
     "toolBarPosition:" : {
       "localizations" : {
         "en" : {
@@ -1072,6 +1095,134 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ツールバーの位置:"
+          }
+        }
+      }
+    },
+    "toolFillOval" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill Oval Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "楕円ツール（塗りつぶし）"
+          }
+        }
+      }
+    },
+    "toolFillRect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill Rectangle Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長方形ツール（塗りつぶし）"
+          }
+        }
+      }
+    },
+    "toolLine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直線ツール"
+          }
+        }
+      }
+    },
+    "toolLineOval" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Oval Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "楕円ツール（輪郭線）"
+          }
+        }
+      }
+    },
+    "toolLineRect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Rectangle Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長方形ツール（輪郭線）"
+          }
+        }
+      }
+    },
+    "toolPen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pen Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ペンツール"
+          }
+        }
+      }
+    },
+    "toolSelect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択ツール"
+          }
+        }
+      }
+    },
+    "toolText" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text Tool"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストツール"
           }
         }
       }

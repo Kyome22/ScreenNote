@@ -18,6 +18,18 @@ struct CanvasSettingsView<CVM: CanvasSettingsViewModel>: View {
                     Text("clearAllObjects")
                 }
             }
+            Picker(selection: $viewModel.defaultObjectType) {
+                ForEach(ObjectType.defaultObjects) { objectType in
+                    Label(objectType.label, systemImage: objectType.symbolName)
+                        .labelStyle(.titleAndIcon)
+                        .tag(objectType)
+                }
+            } label: {
+                Text("defaultObjectType:")
+                EmptyView()
+            }
+            .pickerStyle(.menu)
+            .fixedSize(horizontal: true, vertical: false)
             Divider()
             LabeledContent("defaultColor:") {
                 Button("dummy") {

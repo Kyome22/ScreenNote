@@ -20,6 +20,7 @@ protocol UserDefaultsRepository: AnyObject {
     var toolBarPosition: ToolBarPosition { get set }
     var showToggleMethod: Bool { get set }
     var clearAllObjects: Bool { get set }
+    var defaultObjectType: ObjectType { get set }
     var defaultColorIndex: Int { get set }
     var defaultOpacity: CGFloat { get set }
     var defaultLineWidth: CGFloat { get set }
@@ -64,6 +65,11 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         set { userDefaults.set(newValue, forKey: "clearAllObjects") }
     }
 
+    var defaultObjectType: ObjectType {
+        get { ObjectType(rawValue: userDefaults.integer(forKey: "defaultObjectType"))! }
+        set { userDefaults.set(newValue.rawValue, forKey: "defaultObjectType") }
+    }
+
     var defaultColorIndex: Int {
         get { userDefaults.integer(forKey: "defaultColorIndex") }
         set { userDefaults.set(newValue, forKey: "defaultColorIndex") }
@@ -102,6 +108,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             "toolBarPosition": ToolBarPosition.top.rawValue,
             "showToggleMethod": true,
             "clearAllObjects": false,
+            "defaultObjectType": ObjectType.pen.rawValue,
             "defaultColorIndex": Int(0),
             "defaultOpacity": Double(0.8),
             "defaultLineWidth": Double(4.0),
@@ -134,6 +141,7 @@ extension PreviewMock {
         var toolBarPosition: ToolBarPosition = .top
         var showToggleMethod: Bool = true
         var clearAllObjects: Bool = false
+        var defaultObjectType: ObjectType = .pen
         var defaultColorIndex: Int = 0
         var defaultOpacity: CGFloat = 0.8
         var defaultLineWidth: CGFloat = 4.0

@@ -77,7 +77,7 @@ final class ObjectModelImpl: ObjectModel {
 
     let colors: [[Color]]
 
-    private let objectTypeSubject = CurrentValueSubject<ObjectType, Never>(.pen)
+    private let objectTypeSubject: CurrentValueSubject<ObjectType, Never>
     var objectTypePublisher: AnyPublisher<ObjectType, Never> {
         objectTypeSubject.eraseToAnyPublisher()
     }
@@ -133,6 +133,7 @@ final class ObjectModelImpl: ObjectModel {
 
     init(_ userDefaultsRepository: UserDefaultsRepository) {
         self.userDefaultsRepository = userDefaultsRepository
+        objectTypeSubject = .init(userDefaultsRepository.defaultObjectType)
         colors = Color.palette
         let index = userDefaultsRepository.defaultColorIndex
         objectPropertiesSubject = .init(ObjectProperties(

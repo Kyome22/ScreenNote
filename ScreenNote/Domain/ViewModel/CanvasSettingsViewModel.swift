@@ -11,6 +11,7 @@ import SwiftUI
 protocol CanvasSettingsViewModel: ObservableObject {
     var clearAllObjects: Bool { get set }
     var showColorPopover: Bool { get set }
+    var defaultObjectType: ObjectType { get set }
     var defaultColorIndex: Int { get set }
     var defaultOpacity: CGFloat { get set }
     var defaultLineWidth: CGFloat { get set }
@@ -34,6 +35,9 @@ final class CanvasSettingsViewModelImpl: CanvasSettingsViewModel {
         didSet { userDefaultsRepository.clearAllObjects = clearAllObjects }
     }
     @Published var showColorPopover: Bool = false
+    @Published var defaultObjectType: ObjectType {
+        didSet { userDefaultsRepository.defaultObjectType = defaultObjectType }
+    }
     @Published var defaultColorIndex: Int
     @Published var defaultOpacity: CGFloat
     @Published var defaultLineWidth: CGFloat
@@ -51,6 +55,7 @@ final class CanvasSettingsViewModelImpl: CanvasSettingsViewModel {
         self.userDefaultsRepository = userDefaultsRepository
         clearAllObjects = userDefaultsRepository.clearAllObjects
         colors = Color.palette
+        defaultObjectType = userDefaultsRepository.defaultObjectType
         defaultColorIndex = userDefaultsRepository.defaultColorIndex
         defaultOpacity = userDefaultsRepository.defaultOpacity
         defaultLineWidth = userDefaultsRepository.defaultLineWidth
@@ -85,6 +90,7 @@ final class CanvasSettingsViewModelImpl: CanvasSettingsViewModel {
 extension PreviewMock {
     final class CanvasSettingsViewModelMock: CanvasSettingsViewModel {
         @Published var clearAllObjects: Bool = false
+        @Published var defaultObjectType: ObjectType = .pen
         @Published var defaultColorIndex: Int = 0
         @Published var showColorPopover: Bool = false
         @Published var defaultColor: Color = .clear
