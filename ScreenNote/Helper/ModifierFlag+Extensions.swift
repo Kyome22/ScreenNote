@@ -10,11 +10,7 @@ import SwiftUI
 import SpiceKey
 
 extension ModifierFlag {
-    var localizedTitle: String {
-        return String(localized: .init(title))
-    }
-
-    var label: LocalizedStringKey {
-        return LocalizedStringKey("\(string)\(localizedTitle)key")
+    var label: String {
+        String(localized: "\(string)\(title)key")
     }
 }

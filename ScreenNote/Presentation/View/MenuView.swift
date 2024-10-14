@@ -20,6 +20,8 @@ struct MenuView<MVM: MenuViewModel>: View {
             if #available(macOS 14.0, *) {
                 SettingsLink {
                     Text("settings")
+                }.preActionButtonStyle {
+                    viewModel.activateApp()
                 }
             } else {
                 Button("settings") {

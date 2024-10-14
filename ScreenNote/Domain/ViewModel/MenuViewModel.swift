@@ -16,6 +16,7 @@ protocol MenuViewModel: ObservableObject {
     init(_ windowModel: WindowModel)
 
     func showOrHide()
+    func activateApp()
     func openSettings()
     func openAbout()
     func sendIssueReport()
@@ -45,6 +46,10 @@ final class MenuViewModelImpl<IR: IssueReportModel>: MenuViewModel {
         }
     }
 
+    func activateApp() {
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
     func openSettings() {
         windowModel.openSettings()
     }
@@ -71,6 +76,7 @@ extension PreviewMock {
         init() {}
 
         func showOrHide() {}
+        func activateApp() {}
         func openSettings() {}
         func openAbout() {}
         func sendIssueReport() {}

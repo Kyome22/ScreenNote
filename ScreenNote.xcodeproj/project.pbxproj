@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C3F12E62CBD39690070CDA3 /* PreActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3F12E52CBD39690070CDA3 /* PreActionButtonStyle.swift */; };
 		1C6242DD2B050A790063C6AF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1C6242DC2B050A790063C6AF /* Localizable.xcstrings */; };
 		1C6242E12B0512690063C6AF /* ToolBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E02B0512690063C6AF /* ToolBarModel.swift */; };
 		1C6242E32B052A240063C6AF /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6242E22B052A240063C6AF /* CanvasViewModel.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C3F12E52CBD39690070CDA3 /* PreActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreActionButtonStyle.swift; sourceTree = "<group>"; };
 		1C6242DC2B050A790063C6AF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1C6242E02B0512690063C6AF /* ToolBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarModel.swift; sourceTree = "<group>"; };
 		1C6242E22B052A240063C6AF /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				1C6242EA2B087ED40063C6AF /* MenuView.swift */,
+				1C3F12E52CBD39690070CDA3 /* PreActionButtonStyle.swift */,
 				1C9A54642987FB0E008B5AAE /* ShortcutPanel.swift */,
 				1C9A54662987FBE4008B5AAE /* ShortcutView.swift */,
 				1C9A546829889DAF008B5AAE /* WorkspacePanel.swift */,
@@ -369,7 +372,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = "Studio Kyome";
 				TargetAttributes = {
 					1C9A540B29879F4A008B5AAE = {
@@ -475,6 +478,7 @@
 				1C9A54372987A532008B5AAE /* AppKit+Extensions.swift in Sources */,
 				1C8BB4A52994ABDE00EE5E66 /* ColorButtonStyle.swift in Sources */,
 				1C9A54332987A0C7008B5AAE /* Utils.swift in Sources */,
+				1C3F12E62CBD39690070CDA3 /* PreActionButtonStyle.swift in Sources */,
 				1C9A5488298D8243008B5AAE /* LineWidthPopover.swift in Sources */,
 				1C6242E52B0657A80063C6AF /* InputTextProperties.swift in Sources */,
 			);
@@ -693,7 +697,7 @@
 			repositoryURL = "https://github.com/Kyome22/SpiceKey.git";
 			requirement = {
 				kind = exactVersion;
-				version = 5.1.0;
+				version = 5.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

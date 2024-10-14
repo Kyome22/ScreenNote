@@ -219,40 +219,6 @@
         }
       }
     },
-    "command" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "command"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コマンド"
-          }
-        }
-      }
-    },
-    "control" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "control"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コントロール"
-          }
-        }
-      }
-    },
     "defaultColor:" : {
       "localizations" : {
         "en" : {
@@ -797,23 +763,6 @@
         }
       }
     },
-    "option" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "option"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "オプション"
-          }
-        }
-      }
-    },
     "pen" : {
       "localizations" : {
         "en" : {
@@ -1002,23 +951,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定…"
-          }
-        }
-      }
-    },
-    "shift" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "shift"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "シフト"
           }
         }
       }
