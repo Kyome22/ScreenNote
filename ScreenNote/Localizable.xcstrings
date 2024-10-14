@@ -27,6 +27,22 @@
         }
       }
     },
+    "%lfs" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%3.1lf s"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%3.1lf 秒"
+          }
+        }
+      }
+    },
     "aboutApp" : {
       "localizations" : {
         "en" : {

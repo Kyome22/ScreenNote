@@ -16,7 +16,7 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
         Form {
             Picker(selection: $viewModel.toggleMethod) {
                 ForEach(ToggleMethod.allCases) { toggleMethod in
-                    Text(toggleMethod.label)
+                    radioContent(toggleMethod)
                         .tag(toggleMethod)
                 }
             } label: {
@@ -60,6 +60,34 @@ struct GeneralSettingsView<GVM: GeneralSettingsViewModel>: View {
         }
         .formStyle(.columns)
         .fixedSize()
+    }
+
+    func radioContent(_ toggleMethod: ToggleMethod) -> some View {
+        Group {
+            switch toggleMethod {
+            case .longPressKey:
+                LabeledContent {
+                    Slider(value: $viewModel.longPressSeconds, in: (0.5 ... 1.5)) {
+                        EmptyView()
+                    } minimumValueLabel: {
+                        Text(verbatim: "")
+                            .foregroundColor(.clear)
+                    } maximumValueLabel: {
+                        Text("\(viewModel.longPressSeconds)s")
+                            .font(.system(.body, design: .monospaced))
+                    } onEditingChanged: { flag in
+                        if !flag {
+                            viewModel.endUpdatingLongPressSeconds()
+                        }
+                    }
+                    .controlSize(.small)
+                } label: {
+                    Text(toggleMethod.label)
+                }
+            case .pressBothSideKeys:
+                Text(toggleMethod.label)
+            }
+        }
     }
 }
 

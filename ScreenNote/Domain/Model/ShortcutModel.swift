@@ -41,9 +41,10 @@ final class ShortcutModelImpl: ShortcutModel {
         spiceKey?.unregister()
         let toggleMethod = userDefaultsRepository.toggleMethod
         let modifierFlag = userDefaultsRepository.modifierFlag
+        let longPressSeconds = userDefaultsRepository.longPressSeconds
         switch toggleMethod {
         case .longPressKey:
-            spiceKey = SpiceKey(modifierFlag.flags, 0.5, modifierKeysLongPressHandler: { [weak self] in
+            spiceKey = SpiceKey(modifierFlag.flags, longPressSeconds, modifierKeysLongPressHandler: { [weak self] in
                 self?.showOrHideCanvasSubject.send()
             })
             spiceKey?.register()

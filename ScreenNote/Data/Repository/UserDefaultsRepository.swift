@@ -17,6 +17,7 @@ protocol UserDefaultsRepository: AnyObject {
 
     var toggleMethod: ToggleMethod { get set }
     var modifierFlag: ModifierFlag { get set }
+    var longPressSeconds: Double { get set }
     var toolBarPosition: ToolBarPosition { get set }
     var showToggleMethod: Bool { get set }
     var clearAllObjects: Bool { get set }
@@ -43,6 +44,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             updateShortcutSubject.send()
         }
     }
+
     var modifierFlag: ModifierFlag {
         get { ModifierFlag(rawValue: userDefaults.integer(forKey: "modifierFlag"))! }
         set {
@@ -50,6 +52,15 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             updateShortcutSubject.send()
         }
     }
+
+    var longPressSeconds: Double {
+        get { userDefaults.double(forKey: "longPressSeconds") }
+        set {
+            userDefaults.set(newValue, forKey: "longPressSeconds")
+            updateShortcutSubject.send()
+        }
+    }
+
     var toolBarPosition: ToolBarPosition {
         get { ToolBarPosition(rawValue: userDefaults.integer(forKey: "toolBarPosition"))! }
         set { userDefaults.set(newValue.rawValue, forKey: "toolBarPosition") }
@@ -105,6 +116,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         self.userDefaults.register(defaults: [
             "toggleMethod": ToggleMethod.longPressKey.rawValue,
             "modifierFlag": ModifierFlag.control.rawValue,
+            "longPressSeconds": Double(0.5),
             "toolBarPosition": ToolBarPosition.top.rawValue,
             "showToggleMethod": true,
             "clearAllObjects": false,
@@ -138,6 +150,7 @@ extension PreviewMock {
 
         var toggleMethod: ToggleMethod = .longPressKey
         var modifierFlag: ModifierFlag = .control
+        var longPressSeconds: Double = 0.5
         var toolBarPosition: ToolBarPosition = .top
         var showToggleMethod: Bool = true
         var clearAllObjects: Bool = false
