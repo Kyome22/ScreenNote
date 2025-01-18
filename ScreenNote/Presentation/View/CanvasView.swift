@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct CanvasView<CVM: CanvasViewModel>: View {
-    @StateObject var viewMode: CVM
+    @StateObject var viewModel: CVM
     @FocusState private var isFocused: Bool
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             Canvas { context, size in
-                viewMode.objects.forEach { object in
+                viewModel.objects.forEach { object in
                     switch object.type {
                     case .select:
                         break
@@ -52,13 +52,13 @@ struct CanvasView<CVM: CanvasViewModel>: View {
                         context.fill(object.path, with: .color(object.color))
                     }
                 }
-                if let bounds = viewMode.selectedObjectsBounds {
+                if let bounds = viewModel.selectedObjectsBounds {
                     context.stroke(Path(bounds), with: .color(.gray), lineWidth: 1)
                     Path.anchorPaths(bounds: bounds).forEach { path in
                         context.fill(path, with: .color(.gray))
                     }
                 }
-                if let object = viewMode.rectangleForSelection {
+                if let object = viewModel.rectangleForSelection {
                     context.stroke(object.path,
                                    with: .color(Color(.dashWhite)),
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0]))
@@ -67,10 +67,10 @@ struct CanvasView<CVM: CanvasViewModel>: View {
                                    style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0))
                 }
             }
-            if let properties = viewMode.inputTextProperties {
-                TextField(" ", text: $viewMode.inputText)
+            if let properties = viewModel.inputTextProperties {
+                TextField(" ", text: $viewModel.inputText)
                     .textFieldStyle(.plain)
-                    .foregroundColor(viewMode.textColor)
+                    .foregroundColor(viewModel.textColor)
                     .font(.system(size: properties.fontSize))
                     .lineLimit(1)
                     .fixedSize()
@@ -86,7 +86,7 @@ struct CanvasView<CVM: CanvasViewModel>: View {
                         isFocused = true
                     }
                     .onSubmit {
-                        viewMode.endEditing(inputTextObject: properties.object,
+                        viewModel.endEditing(inputTextObject: properties.object,
                                             fontSize: properties.fontSize)
                     }
             }
@@ -96,23 +96,23 @@ struct CanvasView<CVM: CanvasViewModel>: View {
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged({ value in
-                    if viewMode.dragging {
-                        viewMode.dragMoved(startLocation: value.startLocation,
+                    if viewModel.dragging {
+                        viewModel.dragMoved(startLocation: value.startLocation,
                                            location: value.location)
                     } else {
-                        viewMode.dragging = true
-                        viewMode.dragBegan(location: value.startLocation)
+                        viewModel.dragging = true
+                        viewModel.dragBegan(location: value.startLocation)
                     }
                 })
                 .onEnded({ value in
-                    viewMode.dragEnded(startLocation: value.startLocation,
+                    viewModel.dragEnded(startLocation: value.startLocation,
                                        location: value.location)
-                    viewMode.dragging = false
+                    viewModel.dragging = false
                 })
         )
     }
 }
 
 #Preview {
-    CanvasView(viewMode: PreviewMock.CanvasViewModelMock())
+    CanvasView(viewModel: PreviewMock.CanvasViewModelMock())
 }
