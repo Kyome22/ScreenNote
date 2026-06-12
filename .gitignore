@@ -8,3 +8,6 @@ materials/
 xcuserdata/
 *.xcuserstate
 *.xccheckout
+
+# Swift Package Manager
+.build/
