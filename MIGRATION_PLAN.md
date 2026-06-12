@@ -7,7 +7,7 @@ shortcut intro panel + full-screen overlay NSPanel + Settings tabs). Copy its co
 
 ## Phase Status
 - [x] Phase 0 — Inventory (user approved)
-- [ ] Phase 1 — Scaffold
+- [x] Phase 1 — Scaffold
 - [ ] Phase 2 — DataSource
 - [ ] Phase 3 — Model
 - [ ] Phase 4 — UserInterface
