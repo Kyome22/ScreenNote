@@ -1,0 +1,33 @@
+{
+  "originHash" : "e0397a81f003a3c183de39f014773d32e4851f9bd5e7c5abcd455fb6621a2733",
+  "pins" : [
+    {
+      "identity" : "allocatedunfairlock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kyome22/AllocatedUnfairLock.git",
+      "state" : {
+        "revision" : "bf1fa2b1b6a449fd1f8adf2d846feb5fab7734ca",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "spicekey",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kyome22/SpiceKey.git",
+      "state" : {
+        "revision" : "246e9bdee634e6113c17e47e9184c8f61279718f",
+        "version" : "5.3.0"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "revision" : "92448c359f00ebe36ae97d3bd9086f13c7692b5a",
+        "version" : "1.13.2"
+      }
+    }
+  ],
+  "version" : 3
+}
