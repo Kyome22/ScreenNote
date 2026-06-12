@@ -8,7 +8,7 @@ shortcut intro panel + full-screen overlay NSPanel + Settings tabs). Copy its co
 ## Phase Status
 - [x] Phase 0 — Inventory (user approved)
 - [x] Phase 1 — Scaffold
-- [ ] Phase 2 — DataSource
+- [x] Phase 2 — DataSource
 - [ ] Phase 3 — Model
 - [ ] Phase 4 — UserInterface
 - [ ] Phase 5 — Cutover (user smoke test passed)
@@ -99,25 +99,25 @@ Plain AppState fields (not streamed): `undoStack: [[Object]]`, `redoStack: [[Obj
 ## File mapping (every old file)
 | Old path (ScreenNote/) | Action | New path / reason |
 |---|---|---|
-| Data/Entity/AlignMethod.swift | split | DataSource/Entities/AlignMethod.swift (+Codable raw enum); symbolName/help → UserInterface/Extensions/AlignMethod+Extension.swift |
-| Data/Entity/Anchor.swift | port | DataSource/Entities/Anchor.swift (pure CG logic) |
-| Data/Entity/ArrangeMethod.swift | split | DataSource/Entities/ArrangeMethod.swift; UI props → UserInterface/Extensions/ArrangeMethod+Extension.swift |
-| Data/Entity/CanvasVisible.swift | split | DataSource/Entities/CanvasVisible.swift; label → UserInterface/Extensions/CanvasVisible+Extension.swift |
-| Data/Entity/Curve.swift | port | DataSource/Entities/Curve.swift |
-| Data/Entity/FlipMethod.swift | split | DataSource/Entities/FlipMethod.swift; UI props → UserInterface/Extensions/FlipMethod+Extension.swift |
-| Data/Entity/InputTextProperties.swift | port | DataSource/Entities/InputTextProperties.swift |
-| Data/Entity/Line.swift | port | DataSource/Entities/Line.swift |
-| Data/Entity/Object.swift | split/rewrite | DataSource/Entities/Object.swift — `paletteIndex: Int` replaces `color_: Color`; bounds/isHit/copy/fontSize stay (hit-testing via CGPath); SwiftUI `path`/`strokeStyle`/`color` → UserInterface/Extensions/Object+Extension.swift |
-| Data/Entity/ObjectProperties.swift | port/rewrite | DataSource/Entities/ObjectProperties.swift (paletteIndex instead of Color) |
-| Data/Entity/ObjectType.swift | split | DataSource/Entities/ObjectType.swift; symbolName/label/help → UserInterface/Extensions/ObjectType+Extension.swift |
-| Data/Entity/RotateMethod.swift | split | DataSource/Entities/RotateMethod.swift (keep `angle`); UI props → UserInterface/Extensions/RotateMethod+Extension.swift |
-| Data/Entity/SettingsTabType.swift | port | DataSource/Entities/SettingsTabType.swift |
-| Data/Entity/TextOrientation.swift | split | DataSource/Entities/TextOrientation.swift (rotate/flip/size/endPosition); angle/scale/angle3D/axis → UserInterface/Extensions/TextOrientation+Extension.swift |
-| Data/Entity/ToggleMethod.swift | split | DataSource/Entities/ToggleMethod.swift; label/panelWidth → UserInterface/Extensions/ToggleMethod+Extension.swift |
-| Data/Entity/ToolBarDirection.swift | port | DataSource/Entities/ToolBarDirection.swift |
-| Data/Entity/ToolBarPosition.swift | split | DataSource/Entities/ToolBarPosition.swift; label → UserInterface/Extensions/ToolBarPosition+Extension.swift |
-| Data/Repository/UserDefaultsRepository.swift | rewrite | DataSource/Repositories/UserDefaultsRepository.swift (client-composed struct; persists + sends `shortcutSettings`) |
-| Data/Repository/LaunchAtLoginRepository.swift | rewrite | SMAppServiceClient + logic in GeneralSettings store (drop protocol) |
+| Data/Entity/AlignMethod.swift | split ✅(DataSource side) | DataSource/Entities/AlignMethod.swift (+Codable raw enum); symbolName/help → UserInterface/Extensions/AlignMethod+Extension.swift |
+| Data/Entity/Anchor.swift | port ✅(DataSource side) | DataSource/Entities/Anchor.swift (pure CG logic) |
+| Data/Entity/ArrangeMethod.swift | split ✅(DataSource side) | DataSource/Entities/ArrangeMethod.swift; UI props → UserInterface/Extensions/ArrangeMethod+Extension.swift |
+| Data/Entity/CanvasVisible.swift | split ✅(DataSource side) | DataSource/Entities/CanvasVisible.swift; label → UserInterface/Extensions/CanvasVisible+Extension.swift |
+| Data/Entity/Curve.swift | port ✅(DataSource side) | DataSource/Entities/Curve.swift |
+| Data/Entity/FlipMethod.swift | split ✅(DataSource side) | DataSource/Entities/FlipMethod.swift; UI props → UserInterface/Extensions/FlipMethod+Extension.swift |
+| Data/Entity/InputTextProperties.swift | port ✅(DataSource side) | DataSource/Entities/InputTextProperties.swift |
+| Data/Entity/Line.swift | port ✅(DataSource side) | DataSource/Entities/Line.swift |
+| Data/Entity/Object.swift | split/rewrite ✅(DataSource side) | DataSource/Entities/Object.swift — `paletteIndex: Int` replaces `color_: Color`; bounds/isHit/copy/fontSize stay (hit-testing via CGPath); SwiftUI `path`/`strokeStyle`/`color` → UserInterface/Extensions/Object+Extension.swift |
+| Data/Entity/ObjectProperties.swift | port/rewrite ✅(DataSource side) | DataSource/Entities/ObjectProperties.swift (paletteIndex instead of Color) |
+| Data/Entity/ObjectType.swift | split ✅(DataSource side) | DataSource/Entities/ObjectType.swift; symbolName/label/help → UserInterface/Extensions/ObjectType+Extension.swift |
+| Data/Entity/RotateMethod.swift | split ✅(DataSource side) | DataSource/Entities/RotateMethod.swift (keep `angle`); UI props → UserInterface/Extensions/RotateMethod+Extension.swift |
+| Data/Entity/SettingsTabType.swift | port ✅(DataSource side) | DataSource/Entities/SettingsTabType.swift |
+| Data/Entity/TextOrientation.swift | split ✅(DataSource side) | DataSource/Entities/TextOrientation.swift (rotate/flip/size/endPosition); angle/scale/angle3D/axis → UserInterface/Extensions/TextOrientation+Extension.swift |
+| Data/Entity/ToggleMethod.swift | split ✅(DataSource side) | DataSource/Entities/ToggleMethod.swift; label/panelWidth → UserInterface/Extensions/ToggleMethod+Extension.swift |
+| Data/Entity/ToolBarDirection.swift | port ✅(DataSource side) | DataSource/Entities/ToolBarDirection.swift |
+| Data/Entity/ToolBarPosition.swift | split ✅(DataSource side) | DataSource/Entities/ToolBarPosition.swift; label → UserInterface/Extensions/ToolBarPosition+Extension.swift |
+| Data/Repository/UserDefaultsRepository.swift | rewrite ✅(DataSource side) | DataSource/Repositories/UserDefaultsRepository.swift (client-composed struct; persists + sends `shortcutSettings`) |
+| Data/Repository/LaunchAtLoginRepository.swift | rewrite ✅(DataSource side) | SMAppServiceClient + logic in GeneralSettings store (drop protocol) |
 | Domain/ScreenNoteAppModel.swift | split | Model/AppDelegate.swift (lifecycle, observers) + Model/AppDependencies.swift (composition); `settingsTab` → local @State in SettingsView |
 | Domain/Model/ObjectModel.swift | split | state → DataSource/Entities/CanvasState.swift + AppState; behavior → Model/Services/ObjectService.swift; undo → AppState snapshot stacks |
 | Domain/Model/ShortcutModel.swift | rewrite | Model/Services/ShortcutService.swift + SpiceKeyClient |
@@ -131,10 +131,10 @@ Plain AppState fields (not streamed): `undoStack: [[Object]]`, `redoStack: [[Obj
 | Domain/ViewModel/WorkspaceViewModel.swift | drop | composition handled by Workspace store + bridge |
 | Helper/AppKit+Extensions.swift | split | NSTextField/NSTextView overrides → UserInterface/Extensions/NSTextField+Extension.swift, NSTextView+Extension.swift; `String.calculateSize` → DataSource/Extensions/String+Extension.swift (NSFont text measurement, needed by Object.fontSize/endEditing logic); NSColor.primaries → UserInterface/Extensions/NSColor+Extension.swift; NSStatusItem/NSMenu/NSMenuItem helpers → drop (dead since MenuBarExtra) |
 | Helper/Color+Extensions.swift | port | UserInterface/Extensions/Color+Extension.swift (palette) |
-| Helper/CoreGraphics+Extensions.swift | port | DataSource/Extensions/CGPoint+Extension.swift, CGSize+Extension.swift |
+| Helper/CoreGraphics+Extensions.swift | port ✅(DataSource side) | DataSource/Extensions/CGPoint+Extension.swift, CGSize+Extension.swift |
 | Helper/ModifierFlag+Extensions.swift | port | UserInterface/Extensions/ModifierFlag+Extension.swift (mind SpiceKey type-name collisions) |
-| Helper/Path+Extensions.swift | rewrite | DataSource/Extensions/CGPath+Extension.swift (allPoints/intersects/anchor rects on CGPath); SwiftUI Path conversion → UserInterface/Extensions/Path+Extension.swift |
-| Helper/String+Extensions.swift | drop | replaced by Bundle+Extension template |
+| Helper/Path+Extensions.swift | rewrite ✅(DataSource side) | DataSource/Extensions/CGPath+Extension.swift (allPoints/intersects/anchor rects on CGPath); SwiftUI Path conversion → UserInterface/Extensions/Path+Extension.swift |
+| Helper/String+Extensions.swift | drop ✅(DataSource side) | replaced by Bundle+Extension template |
 | Helper/Utils.swift | split | CGPoint/CGSize operators → DataSource/Extensions; logput → LogService; PreviewMock/NOT_IMPLEMENTED → drop |
 | Presentation/ScreenNoteApp.swift | rewrite | App/ScreenNoteApp.swift (shell) + UserInterface/Scenes/MenuBarScene.swift, SettingsScene.swift + UserInterface/ScreenNoteAppDelegate.swift (wraps Model AppDelegate + owns WorkspacePanelBridge) |
 | Presentation/View/CanvasView.swift | rewrite | UserInterface/Views/Workspace/CanvasView.swift (store-driven) |
