@@ -5,17 +5,20 @@ public struct CanvasState: Sendable, Equatable {
     public var objectType: ObjectType
     public var objectProperties: ObjectProperties
     public var inputTextProperties: InputTextProperties?
+    public var rectangleForSelection: Object?
 
     public init(
         objects: [Object] = [],
         objectType: ObjectType = .pen,
         objectProperties: ObjectProperties = .default,
-        inputTextProperties: InputTextProperties? = nil
+        inputTextProperties: InputTextProperties? = nil,
+        rectangleForSelection: Object? = nil
     ) {
         self.objects = objects
         self.objectType = objectType
         self.objectProperties = objectProperties
         self.inputTextProperties = inputTextProperties
+        self.rectangleForSelection = rectangleForSelection
     }
 
     public var selectedObjects: [Object] {

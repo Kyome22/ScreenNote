@@ -6,6 +6,7 @@ public struct AppState: Sendable {
     public var hasAlreadyBootstrap: Bool
     public var undoStack: [[Object]]
     public var redoStack: [[Object]]
+    public var dragContext = DragContext()
     public var canvasState = AsyncStreamBundle<CanvasState>()
     public var canvasVisible = AsyncStreamBundle<CanvasVisible>()
     public var shortcutSettings = AsyncStreamBundle<Void>(replaysLatestValue: false)

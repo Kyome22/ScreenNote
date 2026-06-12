@@ -9,7 +9,7 @@ shortcut intro panel + full-screen overlay NSPanel + Settings tabs). Copy its co
 - [x] Phase 0 — Inventory (user approved)
 - [x] Phase 1 — Scaffold
 - [x] Phase 2 — DataSource
-- [ ] Phase 3 — Model
+- [x] Phase 3 — Model
 - [ ] Phase 4 — UserInterface
 - [ ] Phase 5 — Cutover (user smoke test passed)
 - [ ] Phase 6 — Cleanup
@@ -118,17 +118,17 @@ Plain AppState fields (not streamed): `undoStack: [[Object]]`, `redoStack: [[Obj
 | Data/Entity/ToolBarPosition.swift | split ✅(DataSource side) | DataSource/Entities/ToolBarPosition.swift; label → UserInterface/Extensions/ToolBarPosition+Extension.swift |
 | Data/Repository/UserDefaultsRepository.swift | rewrite ✅(DataSource side) | DataSource/Repositories/UserDefaultsRepository.swift (client-composed struct; persists + sends `shortcutSettings`) |
 | Data/Repository/LaunchAtLoginRepository.swift | rewrite ✅(DataSource side) | SMAppServiceClient + logic in GeneralSettings store (drop protocol) |
-| Domain/ScreenNoteAppModel.swift | split | Model/AppDelegate.swift (lifecycle, observers) + Model/AppDependencies.swift (composition); `settingsTab` → local @State in SettingsView |
-| Domain/Model/ObjectModel.swift | split | state → DataSource/Entities/CanvasState.swift + AppState; behavior → Model/Services/ObjectService.swift; undo → AppState snapshot stacks |
-| Domain/Model/ShortcutModel.swift | rewrite | Model/Services/ShortcutService.swift + SpiceKeyClient |
-| Domain/Model/IssueReportModel.swift | rewrite | Model/Services/IssueReportService.swift + NSSharingServiceClient |
-| Domain/ViewModel/CanvasSettingsViewModel.swift | rewrite | Model/Stores/CanvasSettings.swift |
-| Domain/ViewModel/CanvasViewModel.swift | merge | Model/Stores/Workspace.swift |
-| Domain/ViewModel/GeneralSettingsViewModel.swift | rewrite | Model/Stores/GeneralSettings.swift |
-| Domain/ViewModel/MenuViewModel.swift | rewrite | Model/Stores/Menu.swift |
-| Domain/ViewModel/ToolBarModel.swift | merge | Model/Stores/Workspace.swift |
+| Domain/ScreenNoteAppModel.swift | split ✅(Model side) | Model/AppDelegate.swift (lifecycle, observers) + Model/AppDependencies.swift (composition); `settingsTab` → local @State in SettingsView |
+| Domain/Model/ObjectModel.swift | split ✅ | state → DataSource/Entities/CanvasState.swift + AppState; behavior → Model/Services/ObjectService.swift; undo → AppState snapshot stacks |
+| Domain/Model/ShortcutModel.swift | rewrite ✅ | Model/Services/ShortcutService.swift + SpiceKeyClient |
+| Domain/Model/IssueReportModel.swift | rewrite ✅(MailClient + Menu store; strings from UserInterface in Phase 4) | Model/Services/IssueReportService.swift + NSSharingServiceClient |
+| Domain/ViewModel/CanvasSettingsViewModel.swift | rewrite ✅ | Model/Stores/CanvasSettings.swift |
+| Domain/ViewModel/CanvasViewModel.swift | merge ✅ | Model/Stores/Workspace.swift |
+| Domain/ViewModel/GeneralSettingsViewModel.swift | rewrite ✅ | Model/Stores/GeneralSettings.swift |
+| Domain/ViewModel/MenuViewModel.swift | rewrite ✅ | Model/Stores/Menu.swift |
+| Domain/ViewModel/ToolBarModel.swift | merge ✅ | Model/Stores/Workspace.swift |
 | Domain/ViewModel/WindowModel.swift | rewrite | UserInterface/WorkspacePanelBridge.swift (panel fleet + NSWindowDelegate, per ScreenPointer) |
-| Domain/ViewModel/WorkspaceViewModel.swift | drop | composition handled by Workspace store + bridge |
+| Domain/ViewModel/WorkspaceViewModel.swift | drop ✅ | composition handled by Workspace store + bridge |
 | Helper/AppKit+Extensions.swift | split | NSTextField/NSTextView overrides → UserInterface/Extensions/NSTextField+Extension.swift, NSTextView+Extension.swift; `String.calculateSize` → DataSource/Extensions/String+Extension.swift (NSFont text measurement, needed by Object.fontSize/endEditing logic); NSColor.primaries → UserInterface/Extensions/NSColor+Extension.swift; NSStatusItem/NSMenu/NSMenuItem helpers → drop (dead since MenuBarExtra) |
 | Helper/Color+Extensions.swift | port | UserInterface/Extensions/Color+Extension.swift (palette) |
 | Helper/CoreGraphics+Extensions.swift | port ✅(DataSource side) | DataSource/Extensions/CGPoint+Extension.swift, CGSize+Extension.swift |
