@@ -10,7 +10,7 @@ shortcut intro panel + full-screen overlay NSPanel + Settings tabs). Copy its co
 - [x] Phase 1 — Scaffold
 - [x] Phase 2 — DataSource
 - [x] Phase 3 — Model
-- [ ] Phase 4 — UserInterface
+- [x] Phase 4 — UserInterface
 - [ ] Phase 5 — Cutover (user smoke test passed)
 - [ ] Phase 6 — Cleanup
 
@@ -129,30 +129,30 @@ Plain AppState fields (not streamed): `undoStack: [[Object]]`, `redoStack: [[Obj
 | Domain/ViewModel/ToolBarModel.swift | merge ✅ | Model/Stores/Workspace.swift |
 | Domain/ViewModel/WindowModel.swift | rewrite | UserInterface/WorkspacePanelBridge.swift (panel fleet + NSWindowDelegate, per ScreenPointer) |
 | Domain/ViewModel/WorkspaceViewModel.swift | drop ✅ | composition handled by Workspace store + bridge |
-| Helper/AppKit+Extensions.swift | split | NSTextField/NSTextView overrides → UserInterface/Extensions/NSTextField+Extension.swift, NSTextView+Extension.swift; `String.calculateSize` → DataSource/Extensions/String+Extension.swift (NSFont text measurement, needed by Object.fontSize/endEditing logic); NSColor.primaries → UserInterface/Extensions/NSColor+Extension.swift; NSStatusItem/NSMenu/NSMenuItem helpers → drop (dead since MenuBarExtra) |
-| Helper/Color+Extensions.swift | port | UserInterface/Extensions/Color+Extension.swift (palette) |
+| Helper/AppKit+Extensions.swift | split ✅ | NSTextField/NSTextView overrides → UserInterface/Extensions/NSTextField+Extension.swift, NSTextView+Extension.swift; `String.calculateSize` → DataSource/Extensions/String+Extension.swift (NSFont text measurement, needed by Object.fontSize/endEditing logic); NSColor.primaries → UserInterface/Extensions/NSColor+Extension.swift; NSStatusItem/NSMenu/NSMenuItem helpers → drop (dead since MenuBarExtra) |
+| Helper/Color+Extensions.swift | port ✅ | UserInterface/Extensions/Color+Extension.swift (palette) |
 | Helper/CoreGraphics+Extensions.swift | port ✅(DataSource side) | DataSource/Extensions/CGPoint+Extension.swift, CGSize+Extension.swift |
-| Helper/ModifierFlag+Extensions.swift | port | UserInterface/Extensions/ModifierFlag+Extension.swift (mind SpiceKey type-name collisions) |
+| Helper/ModifierFlag+Extensions.swift | port ✅ | UserInterface/Extensions/ModifierFlag+Extension.swift (mind SpiceKey type-name collisions) |
 | Helper/Path+Extensions.swift | rewrite ✅(DataSource side) | DataSource/Extensions/CGPath+Extension.swift (allPoints/intersects/anchor rects on CGPath); SwiftUI Path conversion → UserInterface/Extensions/Path+Extension.swift |
 | Helper/String+Extensions.swift | drop ✅(DataSource side) | replaced by Bundle+Extension template |
-| Helper/Utils.swift | split | CGPoint/CGSize operators → DataSource/Extensions; logput → LogService; PreviewMock/NOT_IMPLEMENTED → drop |
-| Presentation/ScreenNoteApp.swift | rewrite | App/ScreenNoteApp.swift (shell) + UserInterface/Scenes/MenuBarScene.swift, SettingsScene.swift + UserInterface/ScreenNoteAppDelegate.swift (wraps Model AppDelegate + owns WorkspacePanelBridge) |
-| Presentation/View/CanvasView.swift | rewrite | UserInterface/Views/Workspace/CanvasView.swift (store-driven) |
-| Presentation/View/MenuView.swift | rewrite | UserInterface/Views/Menu/MenuView.swift |
-| Presentation/View/PreActionButtonStyle.swift | port | UserInterface/Views/Components/PreActionButtonStyle.swift (drop #available) |
-| Presentation/View/ShortcutPanel.swift | port | UserInterface/Views/Shortcut/ShortcutPanel.swift (per ScreenPointer) |
-| Presentation/View/ShortcutView.swift | port | UserInterface/Views/Shortcut/ShortcutView.swift |
-| Presentation/View/WorkspacePanel.swift | rewrite | panel class → UserInterface/Views/Workspace/WorkspacePanel.swift; ownership/fade logic → WorkspacePanelBridge |
-| Presentation/View/WorkspaceView.swift | rewrite | UserInterface/Views/Workspace/WorkspaceView.swift |
-| Presentation/View/Settings/CanvasSettingsView.swift | rewrite | UserInterface/Views/Settings/CanvasSettingsView.swift |
-| Presentation/View/Settings/ColorButtonStyle.swift | port | UserInterface/Views/Settings/ColorButtonStyle.swift |
-| Presentation/View/Settings/GeneralSettingsView.swift | rewrite | UserInterface/Views/Settings/GeneralSettingsView.swift |
-| Presentation/View/Settings/SelectableColorButtonStyle.swift | port | UserInterface/Views/Settings/SelectableColorButtonStyle.swift |
-| Presentation/View/Settings/SettingsView.swift | rewrite | UserInterface/Views/Settings/SettingsView.swift (tab selection = local @State) |
-| Presentation/View/ToolBar/*.swift (popovers, styles, H/V toolbar) | rewrite | UserInterface/Views/Workspace/ToolBar/ (store-driven; popovers keep closure/Binding APIs where they only relay) |
-| Localizable.xcstrings | copy | UserInterface/Resources/Localizable.xcstrings |
-| Assets.xcassets | split | colors + StatusIcon → UserInterface/Resources/Media.xcassets; AppIcon → App/ shell |
-| Preview Content/ | drop | no #Preview in new code |
+| Helper/Utils.swift | split ✅ | CGPoint/CGSize operators → DataSource/Extensions; logput → LogService; PreviewMock/NOT_IMPLEMENTED → drop |
+| Presentation/ScreenNoteApp.swift | rewrite ✅ | App/ScreenNoteApp.swift (shell) + UserInterface/Scenes/MenuBarScene.swift, SettingsScene.swift + UserInterface/ScreenNoteAppDelegate.swift (wraps Model AppDelegate + owns WorkspacePanelBridge) |
+| Presentation/View/CanvasView.swift | rewrite ✅ | UserInterface/Views/Workspace/CanvasView.swift (store-driven) |
+| Presentation/View/MenuView.swift | rewrite ✅ | UserInterface/Views/Menu/MenuView.swift |
+| Presentation/View/PreActionButtonStyle.swift | port ✅ | UserInterface/Views/Components/PreActionButtonStyle.swift (drop #available) |
+| Presentation/View/ShortcutPanel.swift | port ✅ | UserInterface/Views/Shortcut/ShortcutPanel.swift (per ScreenPointer) |
+| Presentation/View/ShortcutView.swift | port ✅ | UserInterface/Views/Shortcut/ShortcutView.swift |
+| Presentation/View/WorkspacePanel.swift | rewrite ✅ | panel class → UserInterface/Views/Workspace/WorkspacePanel.swift; ownership/fade logic → WorkspacePanelBridge |
+| Presentation/View/WorkspaceView.swift | rewrite ✅ | UserInterface/Views/Workspace/WorkspaceView.swift |
+| Presentation/View/Settings/CanvasSettingsView.swift | rewrite ✅ | UserInterface/Views/Settings/CanvasSettingsView.swift |
+| Presentation/View/Settings/ColorButtonStyle.swift | port ✅ | UserInterface/Views/Settings/ColorButtonStyle.swift |
+| Presentation/View/Settings/GeneralSettingsView.swift | rewrite ✅ | UserInterface/Views/Settings/GeneralSettingsView.swift |
+| Presentation/View/Settings/SelectableColorButtonStyle.swift | port ✅ | UserInterface/Views/Settings/SelectableColorButtonStyle.swift |
+| Presentation/View/Settings/SettingsView.swift | rewrite ✅ | UserInterface/Views/Settings/SettingsView.swift (tab selection = local @State) |
+| Presentation/View/ToolBar/*.swift (popovers, styles, H/V toolbar) | rewrite ✅ | UserInterface/Views/Workspace/ToolBar/ (store-driven; popovers keep closure/Binding APIs where they only relay) |
+| Localizable.xcstrings | copy ✅ | UserInterface/Resources/Localizable.xcstrings |
+| Assets.xcassets | split ✅ | colors + StatusIcon → UserInterface/Resources/Media.xcassets; AppIcon → App/ shell |
+| Preview Content/ | drop ✅ | no #Preview in new code |
 | Info.plist | port | App/Info.plist (ITSAppUsesNonExemptEncryption only; GENERATE_INFOPLIST_FILE covers the rest) |
 | ScreenNote.entitlements | copy verbatim | App/ScreenNote.entitlements |
 

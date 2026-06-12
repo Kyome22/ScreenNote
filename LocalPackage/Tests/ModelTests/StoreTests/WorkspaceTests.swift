@@ -36,12 +36,11 @@ struct WorkspaceTests {
     }
 
     @MainActor @Test
-    func send_dragBegan_and_dragEnded_toggle_dragging() async {
+    func send_drag_actions_draw_an_object() async {
         let (store, appStateLock) = makeStore()
         await store.send(.dragBegan(CGPoint(x: 10, y: 10)))
-        #expect(store.dragging == true)
+        await store.send(.dragMoved(CGPoint(x: 10, y: 10), CGPoint(x: 50, y: 50)))
         await store.send(.dragEnded(CGPoint(x: 10, y: 10), CGPoint(x: 50, y: 50)))
-        #expect(store.dragging == false)
         #expect(appStateLock.withLock(\.canvasState.latestValue)?.objects.count == 1)
     }
 

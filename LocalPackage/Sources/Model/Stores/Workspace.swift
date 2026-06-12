@@ -11,7 +11,6 @@ public final class Workspace: Composable {
 
     public var canvasState: CanvasState
     public var inputText: String
-    public var dragging = false
     public var showColorPopover = false
     public var showLineWidthPopover = false
     public var showArrangePopover = false
@@ -62,7 +61,6 @@ public final class Workspace: Composable {
             observationTask = nil
 
         case let .dragBegan(location):
-            dragging = true
             objectService.dragBegan(location: location)
 
         case let .dragMoved(startLocation, location):
@@ -70,7 +68,6 @@ public final class Workspace: Composable {
 
         case let .dragEnded(startLocation, location):
             objectService.dragEnded(startLocation: startLocation, location: location)
-            dragging = false
 
         case let .inputTextChanged(inputText):
             self.inputText = inputText

@@ -1,13 +1,13 @@
 import CoreGraphics
 import DataSource
 
-struct ObjectService {
+public struct ObjectService: Sendable {
     private let appStateClient: AppStateClient
     private let userDefaultsRepository: UserDefaultsRepository
 
     private static let levelsOfUndo = 15
 
-    init(_ appDependencies: AppDependencies) {
+    public init(_ appDependencies: AppDependencies) {
         self.appStateClient = appDependencies.appStateClient
         self.userDefaultsRepository = .init(
             appDependencies.userDefaultsClient,
@@ -106,7 +106,7 @@ struct ObjectService {
         }
     }
 
-    func resetDefaultSettings() {
+    public func resetDefaultSettings() {
         appStateClient.withLock { appState in
             var state = appState.canvasState.latestValue ?? CanvasState()
             state.objectType = userDefaultsRepository.defaultObjectType
@@ -119,7 +119,7 @@ struct ObjectService {
         }
     }
 
-    func resetHistory() {
+    public func resetHistory() {
         appStateClient.withLock { appState in
             var state = appState.canvasState.latestValue ?? CanvasState()
             state.objectType = .pen
