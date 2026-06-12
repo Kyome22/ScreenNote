@@ -11,7 +11,7 @@ shortcut intro panel + full-screen overlay NSPanel + Settings tabs). Copy its co
 - [x] Phase 2 — DataSource
 - [x] Phase 3 — Model
 - [x] Phase 4 — UserInterface
-- [ ] Phase 5 — Cutover (user smoke test passed)
+- [x] Phase 5 — Cutover (user smoke test passed)
 - [ ] Phase 6 — Cleanup
 
 ## App facts
@@ -153,8 +153,8 @@ Plain AppState fields (not streamed): `undoStack: [[Object]]`, `redoStack: [[Obj
 | Localizable.xcstrings | copy ✅ | UserInterface/Resources/Localizable.xcstrings |
 | Assets.xcassets | split ✅ | colors + StatusIcon → UserInterface/Resources/Media.xcassets; AppIcon → App/ shell |
 | Preview Content/ | drop ✅ | no #Preview in new code |
-| Info.plist | port | App/Info.plist (ITSAppUsesNonExemptEncryption only; GENERATE_INFOPLIST_FILE covers the rest) |
-| ScreenNote.entitlements | copy verbatim | App/ScreenNote.entitlements |
+| Info.plist | port ✅ | App/Info.plist (ITSAppUsesNonExemptEncryption only; GENERATE_INFOPLIST_FILE covers the rest) |
+| ScreenNote.entitlements | copy verbatim ✅ | App/ScreenNote.entitlements |
 
 ## Tricky items
 ### Canvas state + undo history outliving the panel
