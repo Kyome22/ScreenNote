@@ -1,6 +1,7 @@
 import Foundation
 
 public struct UserDefaultsClient: DependencyClient {
+    var object: @Sendable (String) -> Any?
     var bool: @Sendable (String) -> Bool
     var integer: @Sendable (String) -> Int
     var double: @Sendable (String) -> Double
@@ -13,6 +14,7 @@ public struct UserDefaultsClient: DependencyClient {
     var persistentDomain: @Sendable (String) -> [String: Any]?
 
     public static let liveValue = Self(
+        object: { UserDefaults.standard.object(forKey: $0) },
         bool: { UserDefaults.standard.bool(forKey: $0) },
         integer: { UserDefaults.standard.integer(forKey: $0) },
         double: { UserDefaults.standard.double(forKey: $0) },
@@ -26,6 +28,7 @@ public struct UserDefaultsClient: DependencyClient {
     )
 
     public static let testValue = Self(
+        object: { _ in nil },
         bool: { _ in false },
         integer: { _ in 0 },
         double: { _ in 0 },

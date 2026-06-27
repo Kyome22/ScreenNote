@@ -24,4 +24,9 @@ extension ProcessInfo {
         false
 #endif
     }
+
+    public static var systemVersion: String {
+        let osv = ProcessInfo.processInfo.operatingSystemVersion
+        return "\(osv.majorVersion).\(osv.minorVersion).\(osv.patchVersion)"
+    }
 }

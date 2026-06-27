@@ -1,41 +1,43 @@
 import AppKit
 import DataSource
+import DeviceModel
 
 public final class AppDelegate: NSObject, NSApplicationDelegate {
     private let appDependencies = AppDependencies.shared
 
     public func applicationDidFinishLaunching(_ notification: Notification) {
-        appDependencies.appStateClient.withLock {
-            $0.name = Bundle.main.bundleDisplayName
-            $0.version = Bundle.main.bundleVersion
+        let appStateClient = appDependencies.appStateClient
+        appStateClient.withLock {
+            $0.environmentInfo = .init(
+                appName: Bundle.main.bundleDisplayName,
+                appVersion: Bundle.main.bundleVersion,
+                deviceName: DeviceModel.current()?.name ?? "Unknown",
+                systemVersion: ProcessInfo.systemVersion
+            )
         }
         let logService = LogService(appDependencies)
         logService.bootstrap()
-
-        let appStateClient = appDependencies.appStateClient
-        let spiceKeyClient = appDependencies.spiceKeyClient
-        let shortcutService = ShortcutService(appDependencies)
         let objectService = ObjectService(appDependencies)
-
-        objectService.resetHistory()
-        shortcutService.setShortcut()
-
+        let panelService = PanelService(appDependencies)
         Task {
-            await withTaskGroup { group in
-                group.addTask {
-                    for await _ in spiceKeyClient.toggles() {
-                        appStateClient.withLock { $0.shortcutCommand.send() }
-                    }
+            let stream = appStateClient.withLock(\.canvasVisibility.stream)
+            for await value in stream {
+                if value == .visible {
+                    objectService.prepareForNewCanvas()
+                    panelService.hideTriggerMethodPanel()
                 }
-                group.addTask {
-                    let stream = appStateClient.withLock(\.shortcutSettings.stream)
-                    for await _ in stream {
-                        shortcutService.setShortcut()
-                    }
-                }
+                panelService.toggleWorkspacePanel(to: value)
             }
         }
-
         logService.notice(.launchApp)
+        ShortcutService(appDependencies).register()
+        Task {
+            try? await Task.sleep(for: .seconds(1))
+            panelService.showTriggerMethodPanel()
+        }
+    }
+
+    public func applicationWillTerminate(_ notification: Notification) {
+        ShortcutService(appDependencies).unregister()
     }
 }

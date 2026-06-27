@@ -1,49 +1,24 @@
-import AllocatedUnfairLock
-import Foundation
+import AsyncAlgorithms
+
+public typealias AsyncShareStream<T: Sendable> = Sendable & AsyncSequence<T, AsyncStream<T>.__AsyncSequence_Failure>
 
 public struct AsyncStreamBundle<T>: Sendable where T: Sendable {
-    private let subscriptions = Subscriptions()
-    private let replaysLatestValue: Bool
+    public let stream: any AsyncShareStream<T>
+    private let continuation: AsyncStream<T>.Continuation
     public private(set) var latestValue: T? = nil
 
-    public init(replaysLatestValue: Bool = true) {
-        self.replaysLatestValue = replaysLatestValue
-    }
-
-    public var stream: AsyncStream<T> {
+    public init() {
         let (stream, continuation) = AsyncStream.makeStream(
             of: T.self,
             bufferingPolicy: .bufferingNewest(1)
         )
-        let replayedValue = replaysLatestValue ? latestValue : nil
-        subscriptions.add(continuation, replaying: replayedValue)
-        return stream
+        self.stream = stream.share(bufferingPolicy: .bufferingLatest(1))
+        self.continuation = continuation
     }
 
     public mutating func send(_ value: T) {
         latestValue = value
-        subscriptions.yield(value)
-    }
-
-    private final class Subscriptions: Sendable {
-        private let continuations = AllocatedUnfairLock<[UUID: AsyncStream<T>.Continuation]>(initialState: [:])
-
-        func add(_ continuation: AsyncStream<T>.Continuation, replaying value: T?) {
-            let id = UUID()
-            continuations.withLock { $0[id] = continuation }
-            continuation.onTermination = { [weak self] _ in
-                self?.continuations.withLock { $0[id] = nil }
-            }
-            if let value {
-                continuation.yield(value)
-            }
-        }
-
-        func yield(_ value: T) {
-            for continuation in continuations.withLock({ Array($0.values) }) {
-                continuation.yield(value)
-            }
-        }
+        continuation.yield(value)
     }
 }
 

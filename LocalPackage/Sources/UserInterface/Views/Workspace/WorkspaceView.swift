@@ -33,7 +33,9 @@ struct WorkspaceView: View {
             await store.send(.task(String(describing: Self.self)))
         }
         .onDisappear {
-            Task { await store.send(.onDisappear) }
+            Task {
+                await store.send(.onDisappear)
+            }
         }
     }
 }

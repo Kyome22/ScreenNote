@@ -3,18 +3,20 @@ import SwiftUI
 
 struct ObjectArrangePopover: View {
     let toolBarDirection: ToolBarDirection
-    let arrangeHandler: (ArrangeMethod) -> Void
+    let arrangeHandler: (ArrangeMethod) async -> Void
 
     var body: some View {
         HStack(spacing: 8) {
             ForEach(ArrangeMethod.allCases) { arrangeMethod in
                 Button {
-                    arrangeHandler(arrangeMethod)
+                    Task {
+                        await arrangeHandler(arrangeMethod)
+                    }
                 } label: {
                     Image(systemName: arrangeMethod.symbolName)
                 }
                 .buttonStyle(.toolBar(toolBarDirection))
-                .help(Text(arrangeMethod.help, bundle: .module))
+                .help(arrangeMethod.help)
             }
         }
         .padding(8)

@@ -1,4 +1,4 @@
-public enum ToggleMethod: Int, CaseIterable, Identifiable, Sendable, Equatable {
+public enum TriggerMethod: Int, CaseIterable, Identifiable, Sendable, Equatable {
     case longPressKey
     case pressBothSideKeys
 

@@ -27,8 +27,7 @@ struct SettingsView: View {
                 }
                 .tag(SettingsTabType.canvas)
         }
-        .padding(.horizontal, 40)
-        .padding(.vertical, 20)
+        .fixedSize(horizontal: true, vertical: false)
         .accessibilityIdentifier("Settings")
     }
 }

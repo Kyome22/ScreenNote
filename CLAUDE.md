@@ -10,7 +10,7 @@ Swift 6.2 (with `ExistentialAny` upcoming feature enabled).
 
 ## Build & Test
 
-The app shell lives in `ScreenNote.xcodeproj` (source under `App/`) and embeds the local Swift
+The app shell lives in `ScreenNote.xcodeproj` (source under `ScreenNote/`) and embeds the local Swift
 Package `LocalPackage/`, which contains essentially all source code.
 
 Fast loop (package only):

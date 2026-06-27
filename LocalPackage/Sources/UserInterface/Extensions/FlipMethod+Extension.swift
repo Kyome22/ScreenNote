@@ -11,10 +11,13 @@ extension FlipMethod {
         }
     }
 
-    var help: LocalizedStringKey {
-        switch self {
-        case .flipHorizontal: "flipHorizontal"
-        case .flipVertical:   "flipVertical"
+    var help: String {
+        let localizationValue: String.LocalizationValue = switch self {
+        case .flipHorizontal:
+            "flipHorizontal"
+        case .flipVertical:
+            "flipVertical"
         }
+        return String(localized: localizationValue, bundle: .module)
     }
 }

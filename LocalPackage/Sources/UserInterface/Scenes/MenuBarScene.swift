@@ -8,10 +8,10 @@ public struct MenuBarScene: Scene {
 
     public var body: some Scene {
         MenuBarExtra {
-            MenuView(store: .init(appDependencies))
+            MainMenuView(store: .init(appDependencies))
         } label: {
             Image("StatusIcon", bundle: .module)
-                .environment(\.displayScale, 2.0)
+                .environment(\.displayScale, 2)
         }
     }
 }

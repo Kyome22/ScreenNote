@@ -7,17 +7,18 @@ public final class Workspace: Composable {
     private let appStateClient: AppStateClient
     private let objectService: ObjectService
     private let logService: LogService
-    @ObservationIgnored private var observationTask: Task<Void, Never>?
 
+    @ObservationIgnored private var task: Task<Void, Never>?
+
+    public var toolBarPosition: ToolBarPosition
     public var canvasState: CanvasState
     public var inputText: String
-    public var showColorPopover = false
-    public var showLineWidthPopover = false
-    public var showArrangePopover = false
-    public var showAlignPopover = false
-    public var showFlipPopover = false
-    public var showRotatePopover = false
-    public let toolBarPosition: ToolBarPosition
+    public var showingColorPopover: Bool
+    public var showingLineWidthPopover: Bool
+    public var showingArrangePopover: Bool
+    public var showingAlignPopover: Bool
+    public var showingFlipPopover: Bool
+    public var showingRotatePopover: Bool
     public let action: (Action) async -> Void
 
     public var disabledWhileInputtingText: Bool {
@@ -30,23 +31,30 @@ public final class Workspace: Composable {
 
     public init(
         _ appDependencies: AppDependencies,
-        canvasState: CanvasState? = nil,
         toolBarPosition: ToolBarPosition? = nil,
+        canvasState: CanvasState = .init(),
+        inputText: String = "",
+        showingColorPopover: Bool = false,
+        showingLineWidthPopover: Bool = false,
+        showingArrangePopover: Bool = false,
+        showingAlignPopover: Bool = false,
+        showingFlipPopover: Bool = false,
+        showingRotatePopover: Bool = false,
         action: @escaping (Action) async -> Void = { _ in }
     ) {
         self.appStateClient = appDependencies.appStateClient
         self.objectService = .init(appDependencies)
         self.logService = .init(appDependencies)
-        let userDefaultsRepository = UserDefaultsRepository(
-            appDependencies.userDefaultsClient,
-            appDependencies.appStateClient
-        )
-        let initialCanvasState = canvasState
-            ?? appDependencies.appStateClient.withLock(\.canvasState.latestValue)
-            ?? CanvasState()
-        self.canvasState = initialCanvasState
-        self.inputText = initialCanvasState.inputTextProperties?.inputText ?? ""
+        let userDefaultsRepository = UserDefaultsRepository(appDependencies.userDefaultsClient)
         self.toolBarPosition = toolBarPosition ?? userDefaultsRepository.toolBarPosition
+        self.canvasState = canvasState
+        self.inputText = inputText
+        self.showingColorPopover = showingColorPopover
+        self.showingLineWidthPopover = showingLineWidthPopover
+        self.showingArrangePopover = showingArrangePopover
+        self.showingAlignPopover = showingAlignPopover
+        self.showingFlipPopover = showingFlipPopover
+        self.showingRotatePopover = showingRotatePopover
         self.action = action
     }
 
@@ -54,11 +62,20 @@ public final class Workspace: Composable {
         switch action {
         case let .task(screenName):
             logService.notice(.screenView(name: screenName))
-            observeCanvasState()
+            if let latestValue = appStateClient.withLock(\.canvasState.latestValue) {
+                applyCanvasState(latestValue)
+            }
+            task?.cancel()
+            task = Task { [weak self, appStateClient] in
+                let stream = appStateClient.withLock(\.canvasState.stream)
+                for await value in stream {
+                    self?.applyCanvasState(value)
+                }
+            }
 
         case .onDisappear:
-            observationTask?.cancel()
-            observationTask = nil
+            task?.cancel()
+            task = nil
 
         case let .dragBegan(location):
             objectService.dragBegan(location: location)
@@ -87,6 +104,9 @@ public final class Workspace: Composable {
         case let .objectTypeSelected(objectType):
             objectService.updateObjectType(objectType)
 
+        case .colorButtonTapped:
+            showingColorPopover = true
+
         case let .colorSelected(paletteIndex):
             objectService.updateColor(paletteIndex)
 
@@ -96,20 +116,35 @@ public final class Workspace: Composable {
         case let .opacityChanged(opacity):
             objectService.updateOpacity(opacity)
 
+        case .lineWidthButtonTapped:
+            showingLineWidthPopover = true
+
         case .lineWidthUpdateBegan:
             objectService.startUpdatingLineWidth()
 
         case let .lineWidthChanged(lineWidth):
             objectService.updateLineWidth(lineWidth)
 
+        case .arrangeButtonTapped:
+            showingArrangePopover = true
+
         case let .arrangeSelected(arrangeMethod):
             objectService.arrange(arrangeMethod)
+
+        case .alignButtonTapped:
+            showingAlignPopover = true
 
         case let .alignSelected(alignMethod):
             objectService.align(alignMethod)
 
+        case .flipButtonTapped:
+            showingFlipPopover = true
+
         case let .flipSelected(flipMethod):
             objectService.flip(flipMethod)
+
+        case .rotateButtonTapped:
+            showingRotatePopover = true
 
         case let .rotateSelected(rotateMethod):
             objectService.rotate(rotateMethod)
@@ -125,38 +160,6 @@ public final class Workspace: Composable {
 
         case .clearButtonTapped:
             objectService.clear()
-
-        case let .colorPopoverPresented(isPresented):
-            showColorPopover = isPresented
-
-        case let .lineWidthPopoverPresented(isPresented):
-            showLineWidthPopover = isPresented
-
-        case let .arrangePopoverPresented(isPresented):
-            showArrangePopover = isPresented
-
-        case let .alignPopoverPresented(isPresented):
-            showAlignPopover = isPresented
-
-        case let .flipPopoverPresented(isPresented):
-            showFlipPopover = isPresented
-
-        case let .rotatePopoverPresented(isPresented):
-            showRotatePopover = isPresented
-        }
-    }
-
-    private func observeCanvasState() {
-        observationTask?.cancel()
-        if let latestValue = appStateClient.withLock(\.canvasState.latestValue) {
-            applyCanvasState(latestValue)
-        }
-        let appStateClient = self.appStateClient
-        observationTask = Task { [weak self] in
-            let stream = appStateClient.withLock(\.canvasState.stream)
-            for await value in stream {
-                self?.applyCanvasState(value)
-            }
         }
     }
 
@@ -180,24 +183,24 @@ public final class Workspace: Composable {
         case undoButtonTapped
         case redoButtonTapped
         case objectTypeSelected(ObjectType)
+        case colorButtonTapped
         case colorSelected(Int)
         case opacityUpdateBegan
         case opacityChanged(CGFloat)
+        case lineWidthButtonTapped
         case lineWidthUpdateBegan
         case lineWidthChanged(CGFloat)
+        case arrangeButtonTapped
         case arrangeSelected(ArrangeMethod)
+        case alignButtonTapped
         case alignSelected(AlignMethod)
+        case flipButtonTapped
         case flipSelected(FlipMethod)
+        case rotateButtonTapped
         case rotateSelected(RotateMethod)
         case duplicateButtonTapped
         case deleteButtonTapped
         case selectAllButtonTapped
         case clearButtonTapped
-        case colorPopoverPresented(Bool)
-        case lineWidthPopoverPresented(Bool)
-        case arrangePopoverPresented(Bool)
-        case alignPopoverPresented(Bool)
-        case flipPopoverPresented(Bool)
-        case rotatePopoverPresented(Bool)
     }
 }

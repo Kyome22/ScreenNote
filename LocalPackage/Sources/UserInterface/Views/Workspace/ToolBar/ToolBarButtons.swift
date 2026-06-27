@@ -3,7 +3,7 @@ import Model
 import SwiftUI
 
 @MainActor struct ToolBarButtons {
-    var store: Workspace
+    @Bindable var store: Workspace
     let toolBarDirection: ToolBarDirection
 
     private var arrowEdge: Edge {
@@ -13,7 +13,9 @@ import SwiftUI
     var historyButtons: some View {
         HStack(spacing: 8) {
             Button {
-                Task { await store.send(.undoButtonTapped) }
+                Task {
+                    await store.send(.undoButtonTapped)
+                }
             } label: {
                 Image(systemName: "arrowshape.turn.up.backward.fill")
             }
@@ -21,8 +23,11 @@ import SwiftUI
             .help(Text("goBack", bundle: .module))
             .keyboardShortcut("z", modifiers: .command)
             .disabled(store.disabledWhileInputtingText)
+
             Button {
-                Task { await store.send(.redoButtonTapped) }
+                Task {
+                    await store.send(.redoButtonTapped)
+                }
             } label: {
                 Image(systemName: "arrowshape.turn.up.forward.fill")
             }
@@ -35,7 +40,9 @@ import SwiftUI
 
     func objectTypeButton(_ objectType: ObjectType) -> some View {
         Button {
-            Task { await store.send(.objectTypeSelected(objectType)) }
+            Task {
+                await store.send(.objectTypeSelected(objectType))
+            }
         } label: {
             Image(systemName: objectType.symbolName)
         }
@@ -43,37 +50,33 @@ import SwiftUI
             toolBarDirection,
             store.canvasState.objectType == objectType
         ))
-        .help(Text(objectType.label, bundle: .module))
+        .help(objectType.help)
     }
 
     var colorButton: some View {
         Button {
-            Task { await store.send(.colorPopoverPresented(true)) }
+            Task {
+                await store.send(.colorButtonTapped)
+            }
         } label: {
             Image(systemName: "drop.fill")
-                .foregroundColor(Color.palette(at: store.canvasState.objectProperties.paletteIndex))
+                .foregroundStyle(Color.palette(at: store.canvasState.objectProperties.paletteIndex))
                 .opacity(store.canvasState.objectProperties.opacity)
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .help(Text("colorPalette", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showColorPopover },
-                asyncSet: { await store.send(.colorPopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingColorPopover, arrowEdge: arrowEdge) {
             ColorPalettePopover(
                 selectedPaletteIndex: store.canvasState.objectProperties.paletteIndex,
                 opacity: store.canvasState.objectProperties.opacity,
                 selectColorHandler: { index in
-                    Task { await store.send(.colorSelected(index)) }
+                    await store.send(.colorSelected(index))
                 },
                 opacityUpdateBeganHandler: {
-                    Task { await store.send(.opacityUpdateBegan) }
+                    await store.send(.opacityUpdateBegan)
                 },
                 opacityChangedHandler: { opacity in
-                    Task { await store.send(.opacityChanged(opacity)) }
+                    await store.send(.opacityChanged(opacity))
                 }
             )
         }
@@ -81,28 +84,24 @@ import SwiftUI
 
     var lineWidthButton: some View {
         Button {
-            Task { await store.send(.lineWidthPopoverPresented(true)) }
+            Task {
+                await store.send(.lineWidthButtonTapped)
+            }
         } label: {
             Image(systemName: "lineweight")
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .help(Text("lineWidth", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showLineWidthPopover },
-                asyncSet: { await store.send(.lineWidthPopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingLineWidthPopover, arrowEdge: arrowEdge) {
             LineWidthPopover(
                 lineWidth: store.canvasState.objectProperties.lineWidth,
                 color: Color.palette(at: store.canvasState.objectProperties.paletteIndex),
                 opacity: store.canvasState.objectProperties.opacity,
                 lineWidthUpdateBeganHandler: {
-                    Task { await store.send(.lineWidthUpdateBegan) }
+                    await store.send(.lineWidthUpdateBegan)
                 },
                 lineWidthChangedHandler: { lineWidth in
-                    Task { await store.send(.lineWidthChanged(lineWidth)) }
+                    await store.send(.lineWidthChanged(lineWidth))
                 }
             )
         }
@@ -110,95 +109,81 @@ import SwiftUI
 
     var arrangeButton: some View {
         Button {
-            Task { await store.send(.arrangePopoverPresented(true)) }
+            Task {
+                await store.send(.arrangeButtonTapped)
+            }
         } label: {
             Image(systemName: "square.3.stack.3d.middle.filled")
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .disabled(store.disabledEditObject)
         .help(Text("arrange", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showArrangePopover },
-                asyncSet: { await store.send(.arrangePopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingArrangePopover, arrowEdge: arrowEdge) {
             ObjectArrangePopover(toolBarDirection: toolBarDirection) { arrangeMethod in
-                Task { await store.send(.arrangeSelected(arrangeMethod)) }
+                await store.send(.arrangeSelected(arrangeMethod))
             }
         }
     }
 
     var alignButton: some View {
         Button {
-            Task { await store.send(.alignPopoverPresented(true)) }
+            Task {
+                await store.send(.alignButtonTapped)
+            }
         } label: {
             Image(systemName: AlignMethod.horizontalAlignLeft.symbolName)
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .disabled(store.disabledEditObject)
         .help(Text("align", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showAlignPopover },
-                asyncSet: { await store.send(.alignPopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingAlignPopover, arrowEdge: arrowEdge) {
             ObjectAlignPopover(toolBarDirection: toolBarDirection) { alignMethod in
-                Task { await store.send(.alignSelected(alignMethod)) }
+                await store.send(.alignSelected(alignMethod))
             }
         }
     }
 
     var flipButton: some View {
         Button {
-            Task { await store.send(.flipPopoverPresented(true)) }
+            Task {
+                await store.send(.flipButtonTapped)
+            }
         } label: {
             Image(systemName: FlipMethod.flipHorizontal.symbolName)
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .disabled(store.disabledEditObject)
         .help(Text("flip", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showFlipPopover },
-                asyncSet: { await store.send(.flipPopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingFlipPopover, arrowEdge: arrowEdge) {
             ObjectFlipPopover(toolBarDirection: toolBarDirection) { flipMethod in
-                Task { await store.send(.flipSelected(flipMethod)) }
+                await store.send(.flipSelected(flipMethod))
             }
         }
     }
 
     var rotateButton: some View {
         Button {
-            Task { await store.send(.rotatePopoverPresented(true)) }
+            Task {
+                await store.send(.rotateButtonTapped)
+            }
         } label: {
             Image(systemName: RotateMethod.rotateRight.symbolName)
         }
         .buttonStyle(.toolBar(toolBarDirection))
         .disabled(store.disabledEditObject)
         .help(Text("rotate", bundle: .module))
-        .popover(
-            isPresented: Binding(
-                get: { store.showRotatePopover },
-                asyncSet: { await store.send(.rotatePopoverPresented($0)) }
-            ),
-            arrowEdge: arrowEdge
-        ) {
+        .popover(isPresented: $store.showingRotatePopover, arrowEdge: arrowEdge) {
             ObjectRotatePopover(toolBarDirection: toolBarDirection) { rotateMethod in
-                Task { await store.send(.rotateSelected(rotateMethod)) }
+                await store.send(.rotateSelected(rotateMethod))
             }
         }
     }
 
     var duplicateButton: some View {
         Button {
-            Task { await store.send(.duplicateButtonTapped) }
+            Task {
+                await store.send(.duplicateButtonTapped)
+            }
         } label: {
             Image(systemName: "plus.rectangle.fill.on.rectangle.fill")
         }
@@ -209,7 +194,9 @@ import SwiftUI
 
     var deleteButton: some View {
         Button {
-            Task { await store.send(.deleteButtonTapped) }
+            Task {
+                await store.send(.deleteButtonTapped)
+            }
         } label: {
             Image(systemName: "trash.fill")
         }
@@ -220,7 +207,9 @@ import SwiftUI
 
     var clearButton: some View {
         Button {
-            Task { await store.send(.clearButtonTapped) }
+            Task {
+                await store.send(.clearButtonTapped)
+            }
         } label: {
             Image(systemName: "rays")
         }
@@ -232,22 +221,28 @@ import SwiftUI
     var shortcutDummyButtons: some View {
         Group {
             dummyButton {
-                Task { await store.send(.selectAllButtonTapped) }
+                await store.send(.selectAllButtonTapped)
             }
             .keyboardShortcut("a", modifiers: .command)
             dummyButton {
-                Task { await store.send(.deleteButtonTapped) }
+                await store.send(.deleteButtonTapped)
             }
             .keyboardShortcut(.delete, modifiers: [])
             .disabled(store.disabledEditObject)
             dummyButton {
-                Task { await store.send(.clearButtonTapped) }
+                await store.send(.clearButtonTapped)
             }
             .keyboardShortcut(.delete, modifiers: .command)
         }
     }
 
-    private func dummyButton(actionHandler: @escaping () -> Void) -> some View {
-        Button(action: actionHandler, label: { EmptyView() })
+    private func dummyButton(actionHandler: @escaping () async -> Void) -> some View {
+        Button {
+            Task {
+                await actionHandler()
+            }
+        } label: {
+            EmptyView()
+        }
     }
 }

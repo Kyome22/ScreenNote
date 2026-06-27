@@ -7,8 +7,8 @@ struct LogService {
     private let loggingSystemClient: LoggingSystemClient
 
     init(_ appDependencies: AppDependencies) {
-        self.appStateClient = appDependencies.appStateClient
-        self.loggingSystemClient = appDependencies.loggingSystemClient
+        appStateClient = appDependencies.appStateClient
+        loggingSystemClient = appDependencies.loggingSystemClient
     }
 
     private var loggerLabel: String {

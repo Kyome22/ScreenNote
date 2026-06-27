@@ -3,18 +3,20 @@ import SwiftUI
 
 struct ObjectRotatePopover: View {
     let toolBarDirection: ToolBarDirection
-    let rotateHandler: (RotateMethod) -> Void
+    let rotateHandler: (RotateMethod) async -> Void
 
     var body: some View {
         HStack(spacing: 8) {
             ForEach(RotateMethod.allCases) { rotateMethod in
                 Button {
-                    rotateHandler(rotateMethod)
+                    Task {
+                        await rotateHandler(rotateMethod)
+                    }
                 } label: {
                     Image(systemName: rotateMethod.symbolName)
                 }
                 .buttonStyle(.toolBar(toolBarDirection))
-                .help(Text(rotateMethod.help, bundle: .module))
+                .help(rotateMethod.help)
             }
         }
         .padding(8)

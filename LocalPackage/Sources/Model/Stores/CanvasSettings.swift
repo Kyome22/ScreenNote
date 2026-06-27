@@ -8,9 +8,9 @@ public final class CanvasSettings: Composable {
     private let logService: LogService
 
     public var clearAllObjects: Bool
-    public var showColorPopover = false
     public var defaultObjectType: ObjectType
     public var defaultColorIndex: Int
+    public var showingColorPopover: Bool
     public var defaultOpacity: CGFloat
     public var defaultLineWidth: CGFloat
     public var backgroundColorIndex: Int
@@ -19,20 +19,26 @@ public final class CanvasSettings: Composable {
 
     public init(
         _ appDependencies: AppDependencies,
+        clearAllObjects: Bool? = nil,
+        defaultObjectType: ObjectType? = nil,
+        defaultColorIndex: Int? = nil,
+        showingColorPopover: Bool = false,
+        defaultOpacity: CGFloat? = nil,
+        defaultLineWidth: CGFloat? = nil,
+        backgroundColorIndex: Int? = nil,
+        backgroundOpacity: CGFloat? = nil,
         action: @escaping (Action) async -> Void = { _ in }
     ) {
-        self.userDefaultsRepository = .init(
-            appDependencies.userDefaultsClient,
-            appDependencies.appStateClient
-        )
+        self.userDefaultsRepository = .init(appDependencies.userDefaultsClient)
         self.logService = .init(appDependencies)
-        self.clearAllObjects = userDefaultsRepository.clearAllObjects
-        self.defaultObjectType = userDefaultsRepository.defaultObjectType
-        self.defaultColorIndex = userDefaultsRepository.defaultColorIndex
-        self.defaultOpacity = userDefaultsRepository.defaultOpacity
-        self.defaultLineWidth = userDefaultsRepository.defaultLineWidth
-        self.backgroundColorIndex = userDefaultsRepository.backgroundColorIndex
-        self.backgroundOpacity = userDefaultsRepository.backgroundOpacity
+        self.clearAllObjects = clearAllObjects ?? userDefaultsRepository.clearAllObjects
+        self.defaultObjectType = defaultObjectType ?? userDefaultsRepository.defaultObjectType
+        self.defaultColorIndex = defaultColorIndex ?? userDefaultsRepository.defaultColorIndex
+        self.showingColorPopover = showingColorPopover
+        self.defaultOpacity = defaultOpacity ?? userDefaultsRepository.defaultOpacity
+        self.defaultLineWidth = defaultLineWidth ?? userDefaultsRepository.defaultLineWidth
+        self.backgroundColorIndex = backgroundColorIndex ?? userDefaultsRepository.backgroundColorIndex
+        self.backgroundOpacity = backgroundOpacity ?? userDefaultsRepository.backgroundOpacity
         self.action = action
     }
 
@@ -49,34 +55,28 @@ public final class CanvasSettings: Composable {
             defaultObjectType = objectType
             userDefaultsRepository.defaultObjectType = objectType
 
+        case .defaultColorButtonTapped:
+            showingColorPopover = true
+
         case let .defaultColorSelected(index):
             defaultColorIndex = index
             userDefaultsRepository.defaultColorIndex = index
 
-        case let .defaultOpacityChanged(opacity):
-            defaultOpacity = opacity
-
-        case .defaultOpacityCommitted:
+        case let .defaultOpacityChanged(editing):
+            guard !editing else { return }
             userDefaultsRepository.defaultOpacity = defaultOpacity
 
-        case let .defaultLineWidthChanged(lineWidth):
-            defaultLineWidth = lineWidth
-
-        case .defaultLineWidthCommitted:
+        case let .defaultLineWidthChanged(editing):
+            guard !editing else { return }
             userDefaultsRepository.defaultLineWidth = defaultLineWidth
 
         case let .backgroundColorSelected(index):
             backgroundColorIndex = index
             userDefaultsRepository.backgroundColorIndex = index
 
-        case let .backgroundOpacityChanged(opacity):
-            backgroundOpacity = opacity
-
-        case .backgroundOpacityCommitted:
+        case let .backgroundOpacityChanged(editing):
+            guard !editing else { return }
             userDefaultsRepository.backgroundOpacity = backgroundOpacity
-
-        case let .colorPopoverPresented(isPresented):
-            showColorPopover = isPresented
         }
     }
 
@@ -84,14 +84,11 @@ public final class CanvasSettings: Composable {
         case task(String)
         case clearAllObjectsToggleSwitched(Bool)
         case defaultObjectTypePickerSelected(ObjectType)
+        case defaultColorButtonTapped
         case defaultColorSelected(Int)
-        case defaultOpacityChanged(CGFloat)
-        case defaultOpacityCommitted
-        case defaultLineWidthChanged(CGFloat)
-        case defaultLineWidthCommitted
+        case defaultOpacityChanged(Bool)
+        case defaultLineWidthChanged(Bool)
         case backgroundColorSelected(Int)
-        case backgroundOpacityChanged(CGFloat)
-        case backgroundOpacityCommitted
-        case colorPopoverPresented(Bool)
+        case backgroundOpacityChanged(Bool)
     }
 }

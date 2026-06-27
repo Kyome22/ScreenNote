@@ -1,5 +1,4 @@
 import SpiceKey
-import SwiftUI
 
 extension ModifierFlag {
     var label: String {

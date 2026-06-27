@@ -4,10 +4,14 @@ import SwiftUI
 extension TextOrientation {
     var angle: Angle {
         switch self {
-        case .up, .upMirrored:       Angle(degrees: 0)
-        case .right, .rightMirrored: Angle(degrees: 90)
-        case .down, .downMirrored:   Angle(degrees: 180)
-        case .left, .leftMirrored:   Angle(degrees: 270)
+        case .up, .upMirrored:
+            Angle(degrees: 0)
+        case .right, .rightMirrored:
+            Angle(degrees: 90)
+        case .down, .downMirrored:
+            Angle(degrees: 180)
+        case .left, .leftMirrored:
+            Angle(degrees: 270)
         }
     }
 

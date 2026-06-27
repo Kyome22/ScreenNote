@@ -27,17 +27,22 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.4"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.13.2"),
         .package(url: "https://github.com/Kyome22/AllocatedUnfairLock.git", exact: "1.0.0"),
-        .package(url: "https://github.com/Kyome22/SpiceKey.git", exact: "5.3.0"),
+        .package(url: "https://github.com/Kyome22/DeviceModel.git", exact: "1.2.0"),
+        .package(url: "https://github.com/Kyome22/SpiceKey.git", exact: "6.0.1"),
+        .package(url: "https://github.com/Kyome22/WindowSceneKit.git", exact: "3.0.0"),
     ],
     targets: [
         .target(
             name: "DataSource",
             dependencies: [
                 .product(name: "AllocatedUnfairLock", package: "AllocatedUnfairLock"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "SpiceKey", package: "SpiceKey"),
+                .product(name: "WindowSceneKit", package: "WindowSceneKit"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -45,6 +50,7 @@ let package = Package(
             name: "Model",
             dependencies: [
                 "DataSource",
+                .product(name: "DeviceModel", package: "DeviceModel"),
             ],
             swiftSettings: swiftSettings
         ),

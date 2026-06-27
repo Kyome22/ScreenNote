@@ -3,30 +3,20 @@ import SpiceKey
 
 public struct UserDefaultsRepository: Sendable {
     private let userDefaultsClient: UserDefaultsClient
-    private let appStateClient: AppStateClient
 
-    public var toggleMethod: ToggleMethod {
-        get { ToggleMethod(rawValue: userDefaultsClient.integer(.toggleMethod)) ?? .longPressKey }
-        nonmutating set {
-            userDefaultsClient.set(newValue.rawValue, .toggleMethod)
-            appStateClient.withLock { $0.shortcutSettings.send() }
-        }
+    public var triggerMethod: TriggerMethod {
+        get { TriggerMethod(rawValue: userDefaultsClient.integer(.triggerMethod)) ?? .longPressKey }
+        nonmutating set { userDefaultsClient.set(newValue.rawValue, .triggerMethod) }
     }
 
     public var modifierFlag: ModifierFlag {
         get { ModifierFlag(rawValue: userDefaultsClient.integer(.modifierFlag)) ?? .control }
-        nonmutating set {
-            userDefaultsClient.set(newValue.rawValue, .modifierFlag)
-            appStateClient.withLock { $0.shortcutSettings.send() }
-        }
+        nonmutating set { userDefaultsClient.set(newValue.rawValue, .modifierFlag) }
     }
 
-    public var longPressSeconds: Double {
-        get { userDefaultsClient.double(.longPressSeconds) }
-        nonmutating set {
-            userDefaultsClient.set(newValue, .longPressSeconds)
-            appStateClient.withLock { $0.shortcutSettings.send() }
-        }
+    public var longPressDuration: Double {
+        get { userDefaultsClient.double(.longPressDuration) }
+        nonmutating set { userDefaultsClient.set(newValue, .longPressDuration) }
     }
 
     public var toolBarPosition: ToolBarPosition {
@@ -34,9 +24,9 @@ public struct UserDefaultsRepository: Sendable {
         nonmutating set { userDefaultsClient.set(newValue.rawValue, .toolBarPosition) }
     }
 
-    public var showToggleMethod: Bool {
-        get { userDefaultsClient.bool(.showToggleMethod) }
-        nonmutating set { userDefaultsClient.set(newValue, .showToggleMethod) }
+    public var showsTriggerMethod: Bool {
+        get { userDefaultsClient.bool(.showsTriggerMethod) }
+        nonmutating set { userDefaultsClient.set(newValue, .showsTriggerMethod) }
     }
 
     public var clearAllObjects: Bool {
@@ -74,16 +64,17 @@ public struct UserDefaultsRepository: Sendable {
         nonmutating set { userDefaultsClient.set(newValue, .backgroundOpacity) }
     }
 
-    public init(_ userDefaultsClient: UserDefaultsClient, _ appStateClient: AppStateClient) {
+    public init(_ userDefaultsClient: UserDefaultsClient) {
         self.userDefaultsClient = userDefaultsClient
-        self.appStateClient = appStateClient
-        _ = Self.resetUserDefaultsIfNeeded
+        if ProcessInfo.needsResetUserDefaults {
+            userDefaultsClient.removePersistentDomain(Bundle.main.bundleIdentifier!)
+        }
         userDefaultsClient.register([
-            .toggleMethod: ToggleMethod.longPressKey.rawValue,
+            .triggerMethod: TriggerMethod.longPressKey.rawValue,
             .modifierFlag: ModifierFlag.control.rawValue,
-            .longPressSeconds: Double(0.5),
+            .longPressDuration: Double(0.5),
             .toolBarPosition: ToolBarPosition.top.rawValue,
-            .showToggleMethod: true,
+            .showsTriggerMethod: true,
             .clearAllObjects: false,
             .defaultObjectType: ObjectType.pen.rawValue,
             .defaultColorIndex: Int(0),
@@ -92,25 +83,34 @@ public struct UserDefaultsRepository: Sendable {
             .backgroundColorIndex: Int(0),
             .backgroundOpacity: Double(0.02),
         ])
-        _ = Self.showAllDataIfNeeded
+        if ProcessInfo.needsShowAllData {
+            showAllData()
+        }
+        migration()
     }
 
-    private static let resetUserDefaultsIfNeeded: Void = {
-        guard ProcessInfo.needsResetUserDefaults,
-              let bundleIdentifier = Bundle.main.bundleIdentifier else {
-            return
+    private func migration() {
+        if userDefaultsClient.object(.toggleMethod) != nil,
+           let triggerMethod = TriggerMethod(rawValue: userDefaultsClient.integer(.toggleMethod)) {
+            self.triggerMethod = triggerMethod
+            userDefaultsClient.removeObject(.toggleMethod)
         }
-        UserDefaults.standard.removePersistentDomain(forName: bundleIdentifier)
-    }()
+        if userDefaultsClient.object(.showToggleMethod) != nil {
+            showsTriggerMethod = userDefaultsClient.bool(.showToggleMethod)
+            userDefaultsClient.removeObject(.showToggleMethod)
+        }
+        if userDefaultsClient.object(.longPressSeconds) != nil {
+            longPressDuration = userDefaultsClient.double(.longPressSeconds)
+            userDefaultsClient.removeObject(.longPressSeconds)
+        }
+    }
 
-    private static let showAllDataIfNeeded: Void = {
-        guard ProcessInfo.needsShowAllData,
-              let bundleIdentifier = Bundle.main.bundleIdentifier,
-              let dictionary = UserDefaults.standard.persistentDomain(forName: bundleIdentifier) else {
+    private func showAllData() {
+        guard let dict = userDefaultsClient.persistentDomain(Bundle.main.bundleIdentifier!) else {
             return
         }
-        for (key, value) in dictionary.sorted(by: { $0.0 < $1.0 }) {
+        for (key, value) in dict.sorted(by: { $0.0 < $1.0 }) {
             Swift.print("\(key) => \(value)")
         }
-    }()
+    }
 }

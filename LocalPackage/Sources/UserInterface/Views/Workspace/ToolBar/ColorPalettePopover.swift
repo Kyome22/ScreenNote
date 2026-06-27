@@ -3,9 +3,9 @@ import SwiftUI
 struct ColorPalettePopover: View {
     let selectedPaletteIndex: Int
     let opacity: CGFloat
-    let selectColorHandler: (Int) -> Void
-    let opacityUpdateBeganHandler: () -> Void
-    let opacityChangedHandler: (CGFloat) -> Void
+    let selectColorHandler: (Int) async -> Void
+    let opacityUpdateBeganHandler: () async -> Void
+    let opacityChangedHandler: (CGFloat) async -> Void
 
     var body: some View {
         VStack {
@@ -15,7 +15,9 @@ struct ColorPalettePopover: View {
                         ForEach(Color.palette[column].indices, id: \.self) { row in
                             let index = column + 8 * row
                             Button {
-                                selectColorHandler(index)
+                                Task {
+                                    await selectColorHandler(index)
+                                }
                             } label: {
                                 EmptyView()
                             }
@@ -33,12 +35,14 @@ struct ColorPalettePopover: View {
                 Slider(
                     value: Binding<CGFloat>(
                         get: { opacity },
-                        set: { opacityChangedHandler($0) }
+                        asyncSet: { await opacityChangedHandler($0) }
                     ),
                     in: (0.2 ... 1)
                 ) { began in
                     if began {
-                        opacityUpdateBeganHandler()
+                        Task {
+                            await opacityUpdateBeganHandler()
+                        }
                     }
                 }
                 .frame(height: 20)

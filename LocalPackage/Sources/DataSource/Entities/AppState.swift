@@ -1,27 +1,26 @@
 import Foundation
+import SpiceKey
 
 public struct AppState: Sendable {
-    public var name: String
-    public var version: String
+    public var environmentInfo: EnvironmentInfo
     public var hasAlreadyBootstrap: Bool
+    public var spiceKey: SpiceKey?
     public var undoStack: [[Object]]
     public var redoStack: [[Object]]
     public var dragContext = DragContext()
+    public var canvasVisibility = AsyncStreamBundle<CanvasVisibility>()
     public var canvasState = AsyncStreamBundle<CanvasState>()
-    public var canvasVisible = AsyncStreamBundle<CanvasVisible>()
-    public var shortcutSettings = AsyncStreamBundle<Void>(replaysLatestValue: false)
-    public var shortcutCommand = AsyncStreamBundle<Void>(replaysLatestValue: false)
 
     init(
-        name: String = "",
-        version: String = "",
+        environmentInfo: EnvironmentInfo = .unknown,
         hasAlreadyBootstrap: Bool = false,
+        spiceKey: SpiceKey? = nil,
         undoStack: [[Object]] = [],
         redoStack: [[Object]] = []
     ) {
-        self.name = name
-        self.version = version
+        self.environmentInfo = environmentInfo
         self.hasAlreadyBootstrap = hasAlreadyBootstrap
+        self.spiceKey = spiceKey
         self.undoStack = undoStack
         self.redoStack = redoStack
     }

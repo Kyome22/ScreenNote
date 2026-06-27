@@ -23,12 +23,12 @@ struct MenuTests {
     @MainActor @Test
     func send_task_reflects_latest_canvas_visible_and_observes_stream() async {
         let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
-        appStateLock.withLock { $0.canvasVisible.send(.show) }
+        appStateLock.withLock { $0.canvasVisibility.send(.show) }
         let store = Menu(.testDependencies(appStateClient: .testDependency(appStateLock)))
         await store.send(.task("MenuView"))
-        #expect(store.canvasVisible == .show)
-        appStateLock.withLock { $0.canvasVisible.send(.hide) }
-        #expect(await waitUntil { store.canvasVisible == .hide })
+        #expect(store.canvasVisibility == .show)
+        appStateLock.withLock { $0.canvasVisibility.send(.hide) }
+        #expect(await waitUntil { store.canvasVisibility == .hide })
         await store.send(.onDisappear)
     }
 
@@ -36,7 +36,7 @@ struct MenuTests {
     func send_settingsLinkPreActionTriggered_activates_app() async {
         let events = AllocatedUnfairLock<[String]>(initialState: [])
         let store = Menu(.testDependencies(
-            nsApplicationClient: testDependency(of: NSApplicationClient.self) {
+            nsAppClient: testDependency(of: NSAppClient.self) {
                 $0.activate = { events.withLock { $0.append("activate") } }
             }
         ))
@@ -48,7 +48,7 @@ struct MenuTests {
     func send_aboutButtonTapped_orders_front_about_panel() async {
         let events = AllocatedUnfairLock<[String]>(initialState: [])
         let store = Menu(.testDependencies(
-            nsApplicationClient: testDependency(of: NSApplicationClient.self) {
+            nsAppClient: testDependency(of: NSAppClient.self) {
                 $0.orderFrontAboutPanel = { events.withLock { $0.append("about") } }
             }
         ))
@@ -74,7 +74,7 @@ struct MenuTests {
     func send_quitButtonTapped_terminates() async {
         let events = AllocatedUnfairLock<[String]>(initialState: [])
         let store = Menu(.testDependencies(
-            nsApplicationClient: testDependency(of: NSApplicationClient.self) {
+            nsAppClient: testDependency(of: NSAppClient.self) {
                 $0.terminate = { events.withLock { $0.append("terminate") } }
             }
         ))

@@ -1,18 +1,15 @@
 import CoreGraphics
 import DataSource
 
-public struct ObjectService: Sendable {
+struct ObjectService: Sendable {
     private let appStateClient: AppStateClient
     private let userDefaultsRepository: UserDefaultsRepository
 
     private static let levelsOfUndo = 15
 
-    public init(_ appDependencies: AppDependencies) {
-        self.appStateClient = appDependencies.appStateClient
-        self.userDefaultsRepository = .init(
-            appDependencies.userDefaultsClient,
-            appDependencies.appStateClient
-        )
+    init(_ appDependencies: AppDependencies) {
+        appStateClient = appDependencies.appStateClient
+        userDefaultsRepository = .init(appDependencies.userDefaultsClient)
     }
 
     func dragBegan(location: CGPoint) {
@@ -106,20 +103,7 @@ public struct ObjectService: Sendable {
         }
     }
 
-    public func resetDefaultSettings() {
-        appStateClient.withLock { appState in
-            var state = appState.canvasState.latestValue ?? CanvasState()
-            state.objectType = userDefaultsRepository.defaultObjectType
-            state.objectProperties = ObjectProperties(
-                paletteIndex: userDefaultsRepository.defaultColorIndex,
-                opacity: userDefaultsRepository.defaultOpacity,
-                lineWidth: userDefaultsRepository.defaultLineWidth
-            )
-            appState.canvasState.send(state)
-        }
-    }
-
-    public func resetHistory() {
+    private func resetHistory() {
         appStateClient.withLock { appState in
             var state = appState.canvasState.latestValue ?? CanvasState()
             state.objectType = .pen
@@ -134,6 +118,26 @@ public struct ObjectService: Sendable {
             appState.redoStack = []
             appState.canvasState.send(state)
         }
+    }
+
+    private func resetDefaultSettings() {
+        appStateClient.withLock { appState in
+            var state = appState.canvasState.latestValue ?? CanvasState()
+            state.objectType = userDefaultsRepository.defaultObjectType
+            state.objectProperties = ObjectProperties(
+                paletteIndex: userDefaultsRepository.defaultColorIndex,
+                opacity: userDefaultsRepository.defaultOpacity,
+                lineWidth: userDefaultsRepository.defaultLineWidth
+            )
+            appState.canvasState.send(state)
+        }
+    }
+
+    func prepareForNewCanvas() {
+        if userDefaultsRepository.clearAllObjects {
+            resetHistory()
+        }
+        resetDefaultSettings()
     }
 
     func undo() {

@@ -7,7 +7,7 @@ struct ColorPaletteButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         Rectangle()
             .frame(width: 16, height: 16)
-            .foregroundColor(color)
+            .foregroundStyle(color)
             .cornerRadius(2)
             .overlay(
                 RoundedRectangle(cornerRadius: 2)

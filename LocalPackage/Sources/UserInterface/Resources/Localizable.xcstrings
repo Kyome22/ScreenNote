@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    " " : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        }
-      }
-    },
     "%@%@key" : {
       "localizations" : {
         "en" : {
@@ -91,34 +81,34 @@
         }
       }
     },
-    "backgroundColor:" : {
+    "backgroundColor" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Color:"
+            "value" : "Background Color"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景色:"
+            "value" : "背景色"
           }
         }
       }
     },
-    "backgroundOpacity:" : {
+    "backgroundOpacity" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Opacity:"
+            "value" : "Background Opacity"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "背景の不透明度:"
+            "value" : "背景の不透明度"
           }
         }
       }
@@ -192,7 +182,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clear all objects each time."
+            "value" : "Clear all objects each time"
           }
         },
         "ja" : {
@@ -219,66 +209,66 @@
         }
       }
     },
-    "defaultColor:" : {
+    "defaultColor" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default Color:"
+            "value" : "Default Color"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デフォルトの描画色:"
+            "value" : "デフォルトの描画色"
           }
         }
       }
     },
-    "defaultLineWidth:" : {
+    "defaultLineWidth" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default Line Width:"
+            "value" : "Default Line Width"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デフォルトの線幅:"
+            "value" : "デフォルトの線幅"
           }
         }
       }
     },
-    "defaultObjectType:" : {
+    "defaultObjectType" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default Object Type:"
+            "value" : "Default Object Type"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デフォルトのツール:"
+            "value" : "デフォルトのツール"
           }
         }
       }
     },
-    "defaultOpacity:" : {
+    "defaultOpacity" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default Opacity:"
+            "value" : "Default Opacity"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デフォルトの不透明度:"
+            "value" : "デフォルトの不透明度"
           }
         }
       }
@@ -300,6 +290,7 @@
       }
     },
     "dummy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -327,38 +318,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "複製"
-          }
-        }
-      }
-    },
-    "environment%@%@%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# Environment\n- %@: ver %@\n- macOS: %@\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# 環境\n- %@: ver %@\n- macOS: %@\n"
-          }
-        }
-      }
-    },
-    "expectedResult" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# Expected Result\n\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# 本来期待される挙動\n\n"
           }
         }
       }
@@ -667,50 +626,34 @@
         }
       }
     },
-    "introduction:" : {
+    "introduction" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Introduction:"
+            "value" : "Introduction"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "導入:"
+            "value" : "導入"
           }
         }
       }
     },
-    "issueReport" : {
+    "launch" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Issue Report"
+            "value" : "Launch"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不具合の報告"
-          }
-        }
-      }
-    },
-    "launch:" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Launch:"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "起動:"
+            "value" : "起動"
           }
         }
       }
@@ -720,7 +663,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launch ScreenNote automatically at login."
+            "value" : "Launch ScreenNote automatically at login"
           }
         },
         "ja" : {
@@ -779,12 +722,28 @@
         }
       }
     },
+    "longPressDuration" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Long Press Duration"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長押し時間"
+          }
+        }
+      }
+    },
     "longPressModifierKey" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Long press a modifier key."
+            "value" : "Long press a modifier key"
           }
         },
         "ja" : {
@@ -795,34 +754,50 @@
         }
       }
     },
-    "modifierKey:" : {
+    "mailBody" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modifier Key:"
+            "value" : "# Environment\n- %@: ver %@\n- %@\n- macOS: %@\n\n# What You Tried\n- Relaunched the app: Yes/No\n- Restored at Runners Store: Yes/No\n- Uninstalled the app: Yes/No\n\n# Short Description\n\n\n# Steps to Reproduce the Issue\n\n\n# Expected Result\n\n"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "修飾キー:"
+            "value" : "# 環境\n- %@: ver %@\n- %@\n- macOS: %@\n\n# 試したこと\n- アプリの再起動：はい/いいえ\n- ランナーストアにて購入の復元：はい/いいえ\n- アプリのアンインストール：はい/いいえ\n\n# 不具合の簡単な説明\n\n\n# 不具合の再現手順（不具合が発生した際に行なっていた操作）\n\n\n# 本来期待される挙動\n\n"
           }
         }
       }
     },
-    "objects:" : {
+    "mailSubject%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objects:"
+            "value" : "%@ Issue Report"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オブジェクト:"
+            "value" : "%@ 不具合の報告"
+          }
+        }
+      }
+    },
+    "modifierKey" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier Key"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キー"
           }
         }
       }
@@ -864,7 +839,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Press left & right modifier keys at the same time."
+            "value" : "Press left & right modifier keys at the same time"
           }
         },
         "ja" : {
@@ -887,22 +862,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不具合の報告"
-          }
-        }
-      }
-    },
-    "reproduceIssue" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# Steps to Reproduce the Issue\n\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# 不具合の再現手順（不具合が発生した際に行なっていた操作）\n\n"
           }
         }
       }
@@ -1003,22 +962,6 @@
         }
       }
     },
-    "shortDescription" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# Short Description\n\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# 不具合の簡単な説明\n\n"
-          }
-        }
-      }
-    },
     "showCanvas" : {
       "localizations" : {
         "en" : {
@@ -1035,18 +978,18 @@
         }
       }
     },
-    "showToggleMethod" : {
+    "showTriggerMethod" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show toggle method at launch."
+            "value" : "Show trigger method at launch"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリ起動時にトグル方法を表示する"
+            "value" : "アプリ起動時にトリガー方法を表示"
           }
         }
       }
@@ -1067,22 +1010,6 @@
         }
       }
     },
-    "toggleMethod:" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toggle Method:"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "トグル方法:"
-          }
-        }
-      }
-    },
     "toolArrow" : {
       "localizations" : {
         "en" : {
@@ -1099,18 +1026,18 @@
         }
       }
     },
-    "toolBarPosition:" : {
+    "toolBarPosition" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tool Bar Position:"
+            "value" : "Tool Bar Position"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ツールバーの位置:"
+            "value" : "ツールバーの位置"
           }
         }
       }
@@ -1259,6 +1186,22 @@
         }
       }
     },
+    "triggerMethod" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trigger Method"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリガー方法"
+          }
+        }
+      }
+    },
     "verticalAlignBottom" : {
       "localizations" : {
         "en" : {
@@ -1306,23 +1249,7 @@
           }
         }
       }
-    },
-    "whatYouTried" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# What You Tried\n- Relaunched the app: Yes/No\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# 試したこと\n- アプリの再起動: はい/いいえ\n"
-          }
-        }
-      }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }

@@ -27,26 +27,25 @@ struct CanvasView: View {
                 if let object = store.canvasState.rectangleForSelection {
                     context.stroke(
                         object.path,
-                        with: .color(Color("DashWhite", bundle: .module)),
+                        with: .color(Color(.dashWhite)),
                         style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0])
                     )
                     context.stroke(
                         object.path,
-                        with: .color(Color("DashBlack", bundle: .module)),
+                        with: .color(Color(.dashBlack)),
                         style: StrokeStyle(lineWidth: 2, dash: [10.0, 30.0], dashPhase: 20.0)
                     )
                 }
             }
             if let properties = store.canvasState.inputTextProperties {
-                TextField(
-                    " ",
-                    text: Binding(
-                        get: { store.inputText },
-                        asyncSet: { await store.send(.inputTextChanged($0)) }
-                    )
-                )
+                TextField(text: Binding(
+                    get: { store.inputText },
+                    asyncSet: { await store.send(.inputTextChanged($0)) }
+                )) {
+                    Text(verbatim: " ")
+                }
                 .textFieldStyle(.plain)
-                .foregroundColor(textColor)
+                .foregroundStyle(textColor)
                 .font(.system(size: properties.fontSize))
                 .lineLimit(1)
                 .fixedSize()
@@ -99,7 +98,7 @@ struct CanvasView: View {
             context.rotate(by: orientation.angle)
             context.draw(
                 Text(object.text)
-                    .foregroundColor(object.color)
+                    .foregroundStyle(object.color)
                     .font(.system(size: object.fontSize)),
                 in: object.textRect(from: bounds)
             )

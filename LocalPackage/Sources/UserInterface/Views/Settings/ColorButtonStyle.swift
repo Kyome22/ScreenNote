@@ -1,17 +1,15 @@
 import SwiftUI
 
 struct ColorButtonStyle: ButtonStyle {
-    let color: Color
+    var color: Color
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        RoundedRectangle(cornerRadius: 4)
             .frame(width: 32, height: 16)
-            .foregroundStyle(Color.clear)
-            .background(color)
-            .cornerRadius(4)
+            .foregroundStyle(color)
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color.secondary)
+                    .strokeBorder(Color.secondary)
             )
             .opacity(configuration.isPressed ? 0.6 : 1.0)
     }

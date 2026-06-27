@@ -4,16 +4,16 @@ struct LineWidthPopover: View {
     let lineWidth: CGFloat
     let color: Color
     let opacity: CGFloat
-    let lineWidthUpdateBeganHandler: () -> Void
-    let lineWidthChangedHandler: (CGFloat) -> Void
+    let lineWidthUpdateBeganHandler: () async -> Void
+    let lineWidthChangedHandler: (CGFloat) async -> Void
 
     var body: some View {
         VStack {
             Rectangle()
-                .foregroundColor(Color.clear)
+                .foregroundStyle(Color.clear)
                 .overlay(
                     RoundedRectangle(cornerRadius: 0.5 * lineWidth)
-                        .foregroundColor(color)
+                        .foregroundStyle(color)
                         .opacity(opacity)
                         .frame(height: lineWidth)
                 )
@@ -24,12 +24,14 @@ struct LineWidthPopover: View {
                 Slider(
                     value: Binding<CGFloat>(
                         get: { lineWidth },
-                        set: { lineWidthChangedHandler($0) }
+                        asyncSet: { await lineWidthChangedHandler($0) }
                     ),
                     in: (1 ... 20)
                 ) { began in
                     if began {
-                        lineWidthUpdateBeganHandler()
+                        Task {
+                            await lineWidthUpdateBeganHandler()
+                        }
                     }
                 }
                 .frame(width: 150, height: 20)

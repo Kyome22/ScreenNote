@@ -1,18 +1,16 @@
 import SwiftUI
 
 struct SelectableColorButtonStyle: ButtonStyle {
-    let color: Color
-    let selection: Bool
+    var color: Color
+    var selection: Bool
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        RoundedRectangle(cornerRadius: 4)
             .frame(width: 32, height: 16)
-            .foregroundStyle(Color.clear)
-            .background(color)
-            .cornerRadius(4)
+            .foregroundStyle(color)
             .overlay(
                 RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color.accentColor.opacity(selection ? 0.6 : 0.0), lineWidth: 2)
+                    .strokeBorder(Color.accentColor.opacity(selection ? 0.6 : 0.0))
             )
             .opacity(configuration.isPressed ? 0.6 : 1.0)
     }

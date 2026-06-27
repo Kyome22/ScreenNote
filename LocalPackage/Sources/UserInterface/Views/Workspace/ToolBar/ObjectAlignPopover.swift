@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ObjectAlignPopover: View {
     let toolBarDirection: ToolBarDirection
-    let alignHandler: (AlignMethod) -> Void
+    let alignHandler: (AlignMethod) async -> Void
 
     var body: some View {
         VStack {
@@ -23,11 +23,13 @@ struct ObjectAlignPopover: View {
 
     private func alignButton(_ alignMethod: AlignMethod) -> some View {
         Button {
-            alignHandler(alignMethod)
+            Task {
+                await alignHandler(alignMethod)
+            }
         } label: {
             Image(systemName: alignMethod.symbolName)
         }
         .buttonStyle(.toolBar(toolBarDirection))
-        .help(Text(alignMethod.help, bundle: .module))
+        .help(alignMethod.help)
     }
 }

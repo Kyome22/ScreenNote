@@ -33,7 +33,7 @@
 			exceptions = (
 				B38A47DC8C682AA05A8334F2 /* Exceptions for "ScreenNote" folder in "ScreenNote" target */,
 			);
-			path = App;
+			path = ScreenNote;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -281,7 +281,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = App/ScreenNote.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ScreenNote/ScreenNote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 4.4.0;
@@ -302,7 +302,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = ScreenNote/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ScreenNote";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -328,7 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = App/ScreenNote.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ScreenNote/ScreenNote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 4.4.0;
@@ -349,7 +349,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = ScreenNote/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "ScreenNote";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;

@@ -52,7 +52,7 @@ These are the authoritative style rules for all Swift code in this repository.
       return nil
   }
   ```
-- Write simple value mappings as switch expressions with single-line cases (`case .cat: 5`).
+- In a `switch`, put each case's body on its own line under the `case` label — including simple value mappings (`case .cat:` then `5` on the next line), not on the same line as the `case`.
 - Prefer `if`/`switch` expressions for variable assignment whenever they fit.
 - Prefer leading-dot shorthand and semantic constants when the type is inferable (`.zero` over `0`).
 - Within a type, order members as: stored dependencies (`private let`), state properties, `init`, public methods, private helpers, nested types at the end.

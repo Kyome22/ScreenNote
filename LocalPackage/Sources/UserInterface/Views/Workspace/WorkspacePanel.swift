@@ -1,16 +1,11 @@
-import AppKit
 import DataSource
 import Model
 import SwiftUI
 
-final class WorkspaceHostingView<T: View>: NSHostingView<T> {
-    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
-}
-
 final class WorkspacePanel: NSPanel {
     override var canBecomeKey: Bool { true }
 
-    init(_ appDependencies: AppDependencies) {
+    init<Content: View>(_ appDependencies: AppDependencies, @ViewBuilder content: () -> Content) {
         super.init(
             contentRect: CGRect(x: 0, y: 0, width: 20, height: 20),
             styleMask: [.borderless, .nonactivatingPanel],
@@ -21,20 +16,17 @@ final class WorkspacePanel: NSPanel {
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         isOpaque = false
         hasShadow = false
-        let userDefaultsRepository = UserDefaultsRepository(
-            appDependencies.userDefaultsClient,
-            appDependencies.appStateClient
+        let userDefaultsRepository = UserDefaultsRepository(appDependencies.userDefaultsClient)
+        backgroundColor = NSColor(
+            white: 1.0 - CGFloat(userDefaultsRepository.backgroundColorIndex),
+            alpha: max(0.01, userDefaultsRepository.backgroundOpacity)
         )
-        let white = 1.0 - CGFloat(userDefaultsRepository.backgroundColorIndex)
-        let alpha = max(0.01, userDefaultsRepository.backgroundOpacity)
-        backgroundColor = NSColor(white: white, alpha: alpha)
         alphaValue = 0.0
-        let workspaceView = WorkspaceView(store: Workspace(appDependencies))
-        contentView = WorkspaceHostingView(rootView: workspaceView)
+        contentView = WorkspaceHostingView(rootView: content())
     }
 
-    func fadeIn() {
-        orderFrontRegardless()
+    override func orderFrontRegardless() {
+        super.orderFrontRegardless()
         if let visibleFrame = NSScreen.main?.visibleFrame {
             setFrame(visibleFrame, display: true, animate: false)
         }
@@ -45,14 +37,20 @@ final class WorkspacePanel: NSPanel {
         }
     }
 
-    func fadeOut() {
+    override func close() {
         resignKey()
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.2
             context.allowsImplicitAnimation = true
             animator().alphaValue = 0.0
-        } completionHandler: { [weak self] in
-            MainActor.assumeIsolated { self?.close() }
+        } completionHandler: {
+            MainActor.assumeIsolated {
+                super.close()
+            }
         }
     }
+}
+
+final class WorkspaceHostingView<T: View>: NSHostingView<T> {
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
 }
