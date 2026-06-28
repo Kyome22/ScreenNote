@@ -11,6 +11,3 @@ xcuserdata/
 
 # Swift Package Manager
 .build/
-
-# SSOT is LocalPackage/Package.resolved (watched by Dependabot); ignore the Xcode workspace copy
-/ScreenNote.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
