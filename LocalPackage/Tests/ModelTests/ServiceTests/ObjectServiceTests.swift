@@ -12,8 +12,7 @@ struct ObjectServiceTests {
         let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
         appStateLock.withLock { $0.canvasState.send(canvasState) }
         let service = ObjectService(.testDependencies(
-            appStateClient: .testDependency(appStateLock),
-            userDefaultsClient: TestUserDefaults().client()
+            appStateClient: .testDependency(appStateLock)
         ))
         return (service, appStateLock)
     }
@@ -70,24 +69,21 @@ struct ObjectServiceTests {
         #expect(state.objects[0].points == [CGPoint(x: 10, y: 10), CGPoint(x: 60, y: 40)])
     }
 
-    @Test func dragEnded_shape_tiny_drag_reverts() {
+    @Test(arguments: [
+        (CGPoint(x: 12, y: 12), 0),
+        (CGPoint(x: 100, y: 100), 1),
+    ])
+    func dragEnded_shape_keeps_object_only_when_drag_exceeds_threshold(
+        _ endLocation: CGPoint,
+        _ expectedCount: Int
+    ) {
         var initialState = CanvasState()
         initialState.objectType = .line
         let (service, appStateLock) = makeService(canvasState: initialState)
         service.dragBegan(location: CGPoint(x: 10, y: 10))
-        service.dragMoved(startLocation: CGPoint(x: 10, y: 10), location: CGPoint(x: 12, y: 12))
-        service.dragEnded(startLocation: CGPoint(x: 10, y: 10), location: CGPoint(x: 12, y: 12))
-        #expect(canvasState(appStateLock).objects.isEmpty)
-    }
-
-    @Test func dragEnded_shape_long_drag_keeps_object() {
-        var initialState = CanvasState()
-        initialState.objectType = .line
-        let (service, appStateLock) = makeService(canvasState: initialState)
-        service.dragBegan(location: CGPoint(x: 10, y: 10))
-        service.dragMoved(startLocation: CGPoint(x: 10, y: 10), location: CGPoint(x: 100, y: 100))
-        service.dragEnded(startLocation: CGPoint(x: 10, y: 10), location: CGPoint(x: 100, y: 100))
-        #expect(canvasState(appStateLock).objects.count == 1)
+        service.dragMoved(startLocation: CGPoint(x: 10, y: 10), location: endLocation)
+        service.dragEnded(startLocation: CGPoint(x: 10, y: 10), location: endLocation)
+        #expect(canvasState(appStateLock).objects.count == expectedCount)
     }
 
     @Test func dragBegan_select_on_empty_space_starts_selection_rectangle() {
@@ -312,15 +308,22 @@ struct ObjectServiceTests {
         #expect(abs(state.objects[0].bounds.width - 20) < 0.0001)
     }
 
-    @Test func rotate_rotates_text_orientation() {
+    @Test(arguments: [
+        (RotateMethod.rotateRight, TextOrientation.right),
+        (RotateMethod.rotateLeft, TextOrientation.left),
+    ])
+    func rotate_rotates_text_orientation(
+        _ rotateMethod: RotateMethod,
+        _ expectedOrientation: TextOrientation
+    ) {
         var initialState = CanvasState()
         initialState.objectType = .select
         var textObject = Object(0, 1.0, [CGPoint(x: 0, y: 0), CGPoint(x: 100, y: 40)], "hello", .up)
         textObject.isSelected = true
         initialState.objects = [textObject]
         let (service, appStateLock) = makeService(canvasState: initialState)
-        service.rotate(.rotateRight)
-        #expect(canvasState(appStateLock).objects[0].textOrientation == .right)
+        service.rotate(rotateMethod)
+        #expect(canvasState(appStateLock).objects[0].textOrientation == expectedOrientation)
     }
 
     @Test func duplicateSelectedObjects_appends_offset_copies() {
@@ -347,15 +350,20 @@ struct ObjectServiceTests {
         #expect(state.objects[0].bounds.minX == 50)
     }
 
-    @Test func selectAll_selects_all_objects_only_in_select_mode() {
+    @Test(arguments: [
+        (ObjectType.pen, false),
+        (ObjectType.select, true),
+    ])
+    func selectAll_selects_all_objects_only_in_select_mode(
+        _ objectType: ObjectType,
+        _ expectsAllSelected: Bool
+    ) {
         var initialState = CanvasState()
+        initialState.objectType = objectType
         initialState.objects = [rect(10, 10, 20), rect(50, 50, 20)]
         let (service, appStateLock) = makeService(canvasState: initialState)
         service.selectAll()
-        #expect(canvasState(appStateLock).objects.allSatisfy { !$0.isSelected })
-        service.updateObjectType(.select)
-        service.selectAll()
-        #expect(canvasState(appStateLock).objects.allSatisfy { $0.isSelected })
+        #expect(canvasState(appStateLock).objects.allSatisfy(\.isSelected) == expectsAllSelected)
     }
 
     @Test func clear_removes_all_objects_with_history() {
@@ -427,35 +435,60 @@ struct ObjectServiceTests {
         #expect(appStateLock.withLock(\.redoStack).isEmpty)
     }
 
-    @Test func resetHistory_clears_objects_properties_and_stacks() {
-        var initialState = CanvasState()
-        initialState.objectType = .select
-        initialState.objects = [rect(10, 10, 20)]
-        let (service, appStateLock) = makeService(canvasState: initialState)
+    @Test func prepareForNewCanvas_with_clearAllObjects_clears_objects_and_history() {
+        let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
+        var canvas = CanvasState()
+        canvas.objectType = .select
+        canvas.objects = [rect(10, 10, 20)]
+        let initialState = canvas
+        appStateLock.withLock { $0.canvasState.send(initialState) }
+        let service = ObjectService(.testDependencies(
+            appStateClient: .testDependency(appStateLock),
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.bool = { key in key == .clearAllObjects }
+                $0.integer = { key in key == .defaultObjectType ? ObjectType.pen.rawValue : 0 }
+            }
+        ))
         service.clear()
-        service.resetHistory()
-        let state = canvasState(appStateLock)
+        service.prepareForNewCanvas()
+        let state = appStateLock.withLock(\.canvasState.latestValue)!
         #expect(state.objects.isEmpty)
         #expect(state.objectType == .pen)
         #expect(appStateLock.withLock(\.undoStack).isEmpty)
         #expect(appStateLock.withLock(\.redoStack).isEmpty)
     }
 
-    @Test func resetDefaultSettings_applies_repository_defaults() {
+    @Test func prepareForNewCanvas_keeps_objects_when_clearAllObjects_is_off() {
+        var initialState = CanvasState()
+        initialState.objects = [rect(10, 10, 20)]
+        let (service, appStateLock) = makeService(canvasState: initialState)
+        service.prepareForNewCanvas()
+        #expect(canvasState(appStateLock).objects.count == 1)
+    }
+
+    @Test func prepareForNewCanvas_applies_repository_default_settings() {
         let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
         appStateLock.withLock { $0.canvasState.send(CanvasState()) }
-        let userDefaults = TestUserDefaults()
-        let appDependencies = AppDependencies.testDependencies(
+        let service = ObjectService(.testDependencies(
             appStateClient: .testDependency(appStateLock),
-            userDefaultsClient: userDefaults.client()
-        )
-        let repository = UserDefaultsRepository(userDefaults.client(), .testDependency(appStateLock))
-        repository.defaultObjectType = .arrow
-        repository.defaultColorIndex = 9
-        repository.defaultOpacity = 0.4
-        repository.defaultLineWidth = 12.0
-        let service = ObjectService(appDependencies)
-        service.resetDefaultSettings()
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.integer = { key in
+                    switch key {
+                    case .defaultObjectType: ObjectType.arrow.rawValue
+                    case .defaultColorIndex: 9
+                    default: 0
+                    }
+                }
+                $0.double = { key in
+                    switch key {
+                    case .defaultOpacity: 0.4
+                    case .defaultLineWidth: 12.0
+                    default: 0
+                    }
+                }
+            }
+        ))
+        service.prepareForNewCanvas()
         let state = appStateLock.withLock(\.canvasState.latestValue)!
         #expect(state.objectType == .arrow)
         #expect(state.objectProperties == ObjectProperties(paletteIndex: 9, opacity: 0.4, lineWidth: 12.0))

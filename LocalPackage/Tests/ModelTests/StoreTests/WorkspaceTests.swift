@@ -10,8 +10,7 @@ struct WorkspaceTests {
         let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
         appStateLock.withLock { $0.canvasState.send(CanvasState()) }
         let store = Workspace(.testDependencies(
-            appStateClient: .testDependency(appStateLock),
-            userDefaultsClient: TestUserDefaults().client()
+            appStateClient: .testDependency(appStateLock)
         ))
         return (store, appStateLock)
     }
@@ -84,15 +83,12 @@ struct WorkspaceTests {
         await store.send(.onDisappear)
     }
 
-    @MainActor @Test
-    func send_popoverPresented_actions_update_flags() async {
+    @MainActor @Test(arguments: PopoverButton.allCases)
+    func send_buttonTapped_presents_corresponding_popover(_ button: PopoverButton) async {
         let (store, _) = makeStore()
-        await store.send(.colorPopoverPresented(true))
-        await store.send(.alignPopoverPresented(true))
-        #expect(store.showColorPopover == true)
-        #expect(store.showAlignPopover == true)
-        await store.send(.colorPopoverPresented(false))
-        #expect(store.showColorPopover == false)
+        #expect(button.isPresented(in: store) == false)
+        await store.send(button.action)
+        #expect(button.isPresented(in: store) == true)
     }
 
     @MainActor @Test
@@ -127,5 +123,37 @@ struct WorkspaceTests {
         #expect(appStateLock.withLock(\.canvasState.latestValue)?.objects.isEmpty == true)
         await store.send(.redoButtonTapped)
         #expect(appStateLock.withLock(\.canvasState.latestValue)?.objects.count == 1)
+    }
+}
+
+enum PopoverButton: CaseIterable {
+    case color
+    case lineWidth
+    case arrange
+    case align
+    case flip
+    case rotate
+
+    var action: Workspace.Action {
+        switch self {
+        case .color: .colorButtonTapped
+        case .lineWidth: .lineWidthButtonTapped
+        case .arrange: .arrangeButtonTapped
+        case .align: .alignButtonTapped
+        case .flip: .flipButtonTapped
+        case .rotate: .rotateButtonTapped
+        }
+    }
+
+    @MainActor
+    func isPresented(in store: Workspace) -> Bool {
+        switch self {
+        case .color: store.showingColorPopover
+        case .lineWidth: store.showingLineWidthPopover
+        case .arrange: store.showingArrangePopover
+        case .align: store.showingAlignPopover
+        case .flip: store.showingFlipPopover
+        case .rotate: store.showingRotatePopover
+        }
     }
 }

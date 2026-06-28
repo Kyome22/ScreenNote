@@ -1,91 +1,133 @@
 import AllocatedUnfairLock
+import SpiceKey
 import Testing
 
 @testable import DataSource
 @testable import Model
 
 struct GeneralSettingsTests {
-    @MainActor private func makeStore(
-        smAppServiceClient: SMAppServiceClient = .testValue
-    ) -> (GeneralSettings, AllocatedUnfairLock<AppState>, TestUserDefaults) {
-        let appStateLock = AllocatedUnfairLock<AppState>(initialState: .init())
-        let userDefaults = TestUserDefaults()
-        let store = GeneralSettings(.testDependencies(
-            appStateClient: .testDependency(appStateLock),
-            smAppServiceClient: smAppServiceClient,
-            userDefaultsClient: userDefaults.client()
+    @MainActor @Test
+    func send_triggerMethodPickerSelected_persists_and_registers_shortcut() async {
+        let appState = AllocatedUnfairLock<AppState>(initialState: .init())
+        let triggerMethod = AllocatedUnfairLock<Int>(initialState: TriggerMethod.longPressKey.rawValue)
+        let sut = GeneralSettings(.testDependencies(
+            appStateClient: .testDependency(appState),
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.integer = { key in key == .triggerMethod ? triggerMethod.withLock(\.self) : 0 }
+                $0.set = { value, key in
+                    if key == .triggerMethod, let rawValue = value as? Int {
+                        triggerMethod.withLock { $0 = rawValue }
+                    }
+                }
+            }
         ))
-        return (store, appStateLock, userDefaults)
+        await sut.send(.triggerMethodPickerSelected(.pressBothSideKeys))
+        #expect(sut.triggerMethod == .pressBothSideKeys)
+        #expect(triggerMethod.withLock(\.self) == TriggerMethod.pressBothSideKeys.rawValue)
+        #expect(appState.withLock(\.spiceKey)?.isBothSide == true)
     }
 
     @MainActor @Test
-    func init_reads_repository_values() {
-        let (store, _, _) = makeStore()
-        #expect(store.toggleMethod == .longPressKey)
-        #expect(store.modifierFlag == .control)
-        #expect(store.longPressSeconds == 0.5)
-        #expect(store.toolBarPosition == .top)
-        #expect(store.showToggleMethod == true)
-        #expect(store.launchAtLogin == false)
+    func send_modifierFlagPickerSelected_persists_and_registers_shortcut() async {
+        let appState = AllocatedUnfairLock<AppState>(initialState: .init())
+        let modifierFlag = AllocatedUnfairLock<Int?>(initialState: nil)
+        let sut = GeneralSettings(.testDependencies(
+            appStateClient: .testDependency(appState),
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.double = { _ in 0.5 }
+                $0.set = { value, key in
+                    let rawValue = value as? Int
+                    if key == .modifierFlag { modifierFlag.withLock { $0 = rawValue } }
+                }
+            }
+        ))
+        await sut.send(.modifierFlagPickerSelected(.command))
+        #expect(sut.modifierFlag == .command)
+        #expect(modifierFlag.withLock(\.self) == ModifierFlag.command.rawValue)
+        #expect(appState.withLock(\.spiceKey) != nil)
     }
 
     @MainActor @Test
-    func send_toggleMethodPickerSelected_persists_and_streams() async {
-        let (store, appStateLock, _) = makeStore()
-        await store.send(.toggleMethodPickerSelected(.pressBothSideKeys))
-        #expect(store.toggleMethod == .pressBothSideKeys)
-        #expect(appStateLock.withLock(\.shortcutSettings.latestValue) != nil)
+    func send_longPressDurationChanged_persists_only_when_editing_ends() async {
+        let appState = AllocatedUnfairLock<AppState>(initialState: .init())
+        let longPressDuration = AllocatedUnfairLock<Double>(initialState: 0.5)
+        let sut = GeneralSettings(.testDependencies(
+            appStateClient: .testDependency(appState),
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.double = { key in key == .longPressDuration ? longPressDuration.withLock(\.self) : 0 }
+                $0.set = { value, key in
+                    if key == .longPressDuration, let rawValue = value as? Double {
+                        longPressDuration.withLock { $0 = rawValue }
+                    }
+                }
+            }
+        ))
+        sut.longPressDuration = 1.2
+        await sut.send(.longPressDurationChanged(true))
+        #expect(longPressDuration.withLock(\.self) == 0.5)
+        await sut.send(.longPressDurationChanged(false))
+        #expect(longPressDuration.withLock(\.self) == 1.2)
     }
 
     @MainActor @Test
-    func send_modifierFlagPickerSelected_persists_and_streams() async {
-        let (store, appStateLock, _) = makeStore()
-        await store.send(.modifierFlagPickerSelected(.command))
-        #expect(store.modifierFlag == .command)
-        #expect(appStateLock.withLock(\.shortcutSettings.latestValue) != nil)
+    func send_toolBarPositionPickerSelected_persists_without_registering_shortcut() async {
+        let appState = AllocatedUnfairLock<AppState>(initialState: .init())
+        let toolBarPosition = AllocatedUnfairLock<Int?>(initialState: nil)
+        let sut = GeneralSettings(.testDependencies(
+            appStateClient: .testDependency(appState),
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.set = { value, key in
+                    let rawValue = value as? Int
+                    if key == .toolBarPosition { toolBarPosition.withLock { $0 = rawValue } }
+                }
+            }
+        ))
+        await sut.send(.toolBarPositionPickerSelected(.left))
+        #expect(sut.toolBarPosition == .left)
+        #expect(toolBarPosition.withLock(\.self) == ToolBarPosition.left.rawValue)
+        #expect(appState.withLock(\.spiceKey) == nil)
     }
 
     @MainActor @Test
-    func send_longPressSecondsChanged_defers_persistence_until_committed() async {
-        let (store, appStateLock, userDefaults) = makeStore()
-        await store.send(.longPressSecondsChanged(1.2))
-        let repository = UserDefaultsRepository(userDefaults.client(), .testDependency(appStateLock))
-        #expect(repository.longPressSeconds == 0.5)
-        await store.send(.longPressSecondsCommitted)
-        #expect(repository.longPressSeconds == 1.2)
-    }
-
-    @MainActor @Test
-    func send_toolBarPositionPickerSelected_persists() async {
-        let (store, appStateLock, userDefaults) = makeStore()
-        await store.send(.toolBarPositionPickerSelected(.left))
-        let repository = UserDefaultsRepository(userDefaults.client(), .testDependency(appStateLock))
-        #expect(repository.toolBarPosition == .left)
-        #expect(appStateLock.withLock(\.shortcutSettings.latestValue) == nil)
+    func send_showTriggerMethodToggleSwitched_persists() async {
+        let showsTriggerMethod = AllocatedUnfairLock<Bool?>(initialState: nil)
+        let sut = GeneralSettings(.testDependencies(
+            userDefaultsClient: testDependency(of: UserDefaultsClient.self) {
+                $0.set = { value, key in
+                    let rawValue = value as? Bool
+                    if key == .showsTriggerMethod { showsTriggerMethod.withLock { $0 = rawValue } }
+                }
+            }
+        ))
+        await sut.send(.showTriggerMethodToggleSwitched(false))
+        #expect(sut.showsTriggerMethod == false)
+        #expect(showsTriggerMethod.withLock(\.self) == false)
     }
 
     @MainActor @Test
     func send_launchAtLoginToggleSwitched_success_updates_state() async {
         let enabled = AllocatedUnfairLock<Bool>(initialState: false)
-        let client = testDependency(of: SMAppServiceClient.self) {
-            $0.isEnabled = { enabled.withLock(\.self) }
-            $0.register = { enabled.withLock { $0 = true } }
-            $0.unregister = { enabled.withLock { $0 = false } }
-        }
-        let (store, _, _) = makeStore(smAppServiceClient: client)
-        await store.send(.launchAtLoginToggleSwitched(true))
-        #expect(store.launchAtLogin == true)
+        let sut = GeneralSettings(.testDependencies(
+            smAppServiceClient: testDependency(of: SMAppServiceClient.self) {
+                $0.isEnabled = { enabled.withLock(\.self) }
+                $0.register = { enabled.withLock { $0 = true } }
+                $0.unregister = { enabled.withLock { $0 = false } }
+            }
+        ))
+        await sut.send(.launchAtLoginToggleSwitched(true))
+        #expect(sut.launchesAtLogin == true)
     }
 
     @MainActor @Test
     func send_launchAtLoginToggleSwitched_failure_reverts_state() async {
-        let client = testDependency(of: SMAppServiceClient.self) {
-            $0.isEnabled = { false }
-            $0.register = { throw LaunchAtLoginRepository.SwitchError.switchFailed(false) }
-            $0.unregister = {}
-        }
-        let (store, _, _) = makeStore(smAppServiceClient: client)
-        await store.send(.launchAtLoginToggleSwitched(true))
-        #expect(store.launchAtLogin == false)
+        let sut = GeneralSettings(.testDependencies(
+            smAppServiceClient: testDependency(of: SMAppServiceClient.self) {
+                $0.isEnabled = { false }
+                $0.register = { throw LaunchAtLoginRepository.SwitchError.switchFailed(false) }
+                $0.unregister = {}
+            }
+        ))
+        await sut.send(.launchAtLoginToggleSwitched(true))
+        #expect(sut.launchesAtLogin == false)
     }
 }
