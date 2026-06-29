@@ -289,23 +289,6 @@
         }
       }
     },
-    "dummy" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dummy"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ダミー"
-          }
-        }
-      }
-    },
     "duplicate" : {
       "localizations" : {
         "en" : {

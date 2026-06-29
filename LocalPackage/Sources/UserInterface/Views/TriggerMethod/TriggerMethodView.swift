@@ -32,8 +32,7 @@ struct TriggerMethodView: View {
             }
         }
         .padding(20)
-        .background(Color(.panelBackground))
-        .cornerRadius(12)
+        .background(Color(.panelBackground), in: .rect(cornerRadius: 12))
         .fixedSize()
     }
 }

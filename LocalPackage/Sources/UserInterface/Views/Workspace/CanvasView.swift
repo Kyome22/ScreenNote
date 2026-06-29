@@ -61,7 +61,9 @@ struct CanvasView: View {
                     isFocused = true
                 }
                 .onSubmit {
-                    Task { await store.send(.inputTextSubmitted) }
+                    Task {
+                        await store.send(.inputTextSubmitted)
+                    }
                 }
             }
         }
@@ -71,15 +73,21 @@ struct CanvasView: View {
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     if dragging {
-                        Task { await store.send(.dragMoved(value.startLocation, value.location)) }
+                        Task {
+                            await store.send(.dragMoved(value.startLocation, value.location))
+                        }
                     } else {
                         dragging = true
-                        Task { await store.send(.dragBegan(value.startLocation)) }
+                        Task {
+                            await store.send(.dragBegan(value.startLocation))
+                        }
                     }
                 }
                 .onEnded { value in
                     dragging = false
-                    Task { await store.send(.dragEnded(value.startLocation, value.location)) }
+                    Task {
+                        await store.send(.dragEnded(value.startLocation, value.location))
+                    }
                 }
         )
     }
@@ -89,7 +97,7 @@ struct CanvasView: View {
         case .select:
             break
         case .text:
-            if object.isHidden { break }
+            guard !object.isHidden else { break }
             let bounds = object.bounds
             let offset = object.textOffset(from: bounds)
             let orientation = object.textOrientation

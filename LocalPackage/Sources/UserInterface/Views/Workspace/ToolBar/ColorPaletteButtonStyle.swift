@@ -5,10 +5,9 @@ struct ColorPaletteButtonStyle: ButtonStyle {
     let selection: Bool
 
     func makeBody(configuration: Configuration) -> some View {
-        Rectangle()
-            .frame(width: 16, height: 16)
+        RoundedRectangle(cornerRadius: 2)
             .foregroundStyle(color)
-            .cornerRadius(2)
+            .frame(width: 16, height: 16)
             .overlay(
                 RoundedRectangle(cornerRadius: 2)
                     .stroke(selection ? Color.primary : Color.clear)

@@ -2,18 +2,19 @@ import DataSource
 import SwiftUI
 
 struct ToolBarRadioButtonStyle: ButtonStyle {
-    let width: CGFloat
-    let selection: Bool
+    var toolBarDirection: ToolBarDirection
+    var backgroundColor: Color
+
+    init(toolBarDirection: ToolBarDirection, selection: Bool) {
+        self.toolBarDirection = toolBarDirection
+        self.backgroundColor = selection ? Color.accentColor : Color.gray
+    }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: 15, design: .monospaced))
-            .frame(width: width, height: 30, alignment: .center)
-            .background(
-                (selection ? Color.accentColor : Color.gray)
-                    .opacity(configuration.isPressed ? 0.8 : 0.6)
-            )
-            .cornerRadius(6)
+            .frame(width: toolBarDirection.buttonWidth, height: 30, alignment: .center)
+            .background(backgroundColor.opacity(configuration.isPressed ? 0.8 : 0.6), in: .rect(cornerRadius: 6))
     }
 }
 
@@ -22,6 +23,6 @@ extension ButtonStyle where Self == ToolBarRadioButtonStyle {
         _ toolBarDirection: ToolBarDirection,
         _ selection: Bool
     ) -> ToolBarRadioButtonStyle {
-        ToolBarRadioButtonStyle(width: toolBarDirection == .vertical ? 30 : 40, selection: selection)
+        ToolBarRadioButtonStyle(toolBarDirection: toolBarDirection, selection: selection)
     }
 }

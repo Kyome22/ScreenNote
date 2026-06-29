@@ -1,5 +1,5 @@
 import DataSource
-import Foundation
+import SwiftUI
 
 extension ObjectType {
     var symbolName: String {
@@ -71,5 +71,37 @@ extension ObjectType {
             "helpLineOval"
         }
         return String(localized: localizationValue, bundle: .module)
+    }
+
+    var key: KeyEquivalent {
+        switch self {
+        case .select:
+            "s"
+        case .text:
+            "t"
+        case .pen:
+            "p"
+        case .line:
+            "l"
+        case .arrow:
+            "a"
+        case .fillRect:
+            "r"
+        case .lineRect:
+            "R"
+        case .fillOval:
+            "o"
+        case .lineOval:
+            "O"
+        }
+    }
+
+    var modifiers: EventModifiers {
+        switch self {
+        case .select, .text, .pen, .line, .arrow,.fillRect, .fillOval:
+            []
+        case .lineRect, .lineOval:
+            [.shift]
+        }
     }
 }

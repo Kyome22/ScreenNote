@@ -128,25 +128,25 @@ public final class Workspace: Composable {
         case .arrangeButtonTapped:
             showingArrangePopover = true
 
-        case let .arrangeSelected(arrangeMethod):
+        case let .arrangeMethodSelected(arrangeMethod):
             objectService.arrange(arrangeMethod)
 
         case .alignButtonTapped:
             showingAlignPopover = true
 
-        case let .alignSelected(alignMethod):
+        case let .alignMethodSelected(alignMethod):
             objectService.align(alignMethod)
 
         case .flipButtonTapped:
             showingFlipPopover = true
 
-        case let .flipSelected(flipMethod):
+        case let .flipMethodSelected(flipMethod):
             objectService.flip(flipMethod)
 
         case .rotateButtonTapped:
             showingRotatePopover = true
 
-        case let .rotateSelected(rotateMethod):
+        case let .rotateMethodSelected(rotateMethod):
             objectService.rotate(rotateMethod)
 
         case .duplicateButtonTapped:
@@ -191,13 +191,13 @@ public final class Workspace: Composable {
         case lineWidthUpdateBegan
         case lineWidthChanged(CGFloat)
         case arrangeButtonTapped
-        case arrangeSelected(ArrangeMethod)
+        case arrangeMethodSelected(ArrangeMethod)
         case alignButtonTapped
-        case alignSelected(AlignMethod)
+        case alignMethodSelected(AlignMethod)
         case flipButtonTapped
-        case flipSelected(FlipMethod)
+        case flipMethodSelected(FlipMethod)
         case rotateButtonTapped
-        case rotateSelected(RotateMethod)
+        case rotateMethodSelected(RotateMethod)
         case duplicateButtonTapped
         case deleteButtonTapped
         case selectAllButtonTapped

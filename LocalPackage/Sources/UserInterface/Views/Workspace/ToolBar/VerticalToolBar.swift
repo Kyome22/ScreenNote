@@ -1,75 +1,71 @@
-import AppKit
 import Model
 import SwiftUI
 
 struct VerticalToolBar: View {
     var store: Workspace
 
-    private var buttons: ToolBarButtons {
-        ToolBarButtons(store: store, toolBarDirection: .vertical)
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            buttons.historyButtons
+            HStack(spacing: 8) {
+                UndoButton(store: store)
+                RedoButton(store: store)
+            }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
-                    buttons.objectTypeButton(.text)
-                        .keyboardShortcut("t", modifiers: [])
-                    buttons.objectTypeButton(.pen)
-                        .keyboardShortcut("p", modifiers: [])
+                    ObjectTypeButton(store: store, objectType: .text)
+                    ObjectTypeButton(store: store, objectType: .pen)
                 }
                 HStack(spacing: 8) {
-                    buttons.objectTypeButton(.line)
-                        .keyboardShortcut("l", modifiers: [])
-                    buttons.objectTypeButton(.arrow)
-                        .keyboardShortcut("a", modifiers: [])
+                    ObjectTypeButton(store: store, objectType: .line)
+                    ObjectTypeButton(store: store, objectType: .arrow)
                 }
                 HStack(spacing: 8) {
-                    buttons.objectTypeButton(.fillRect)
-                        .keyboardShortcut("r", modifiers: [])
-                    buttons.objectTypeButton(.lineRect)
-                        .keyboardShortcut("R", modifiers: [.shift])
+                    ObjectTypeButton(store: store, objectType: .fillRect)
+                    ObjectTypeButton(store: store, objectType: .lineRect)
                 }
                 HStack(spacing: 8) {
-                    buttons.objectTypeButton(.fillOval)
-                        .keyboardShortcut("o", modifiers: [])
-                    buttons.objectTypeButton(.lineOval)
-                        .keyboardShortcut("O", modifiers: [.shift])
+                    ObjectTypeButton(store: store, objectType: .fillOval)
+                    ObjectTypeButton(store: store, objectType: .lineOval)
                 }
             }
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 8) {
-                    buttons.objectTypeButton(.select)
-                        .keyboardShortcut("s", modifiers: [])
-                    buttons.colorButton
+                    ObjectTypeButton(store: store, objectType: .select)
+                    ColorButton(store: store)
                 }
                 HStack(spacing: 8) {
-                    buttons.lineWidthButton
-                    buttons.arrangeButton
+                    LineWidthButton(store: store)
+                    ArrangeButton(store: store)
                 }
                 HStack(spacing: 8) {
-                    buttons.alignButton
-                    buttons.flipButton
+                    AlignButton(store: store)
+                    FlipButton(store: store)
                 }
                 HStack(spacing: 8) {
-                    buttons.rotateButton
-                    buttons.duplicateButton
+                    RotateButton(store: store)
+                    DuplicateButton(store: store)
                 }
                 HStack(spacing: 8) {
-                    buttons.deleteButton
-                    buttons.clearButton
+                    DeleteButton(store: store)
+                    ClearButton(store: store)
                 }
             }
             VStack(alignment: .leading, spacing: 8) {
-                buttons.shortcutDummyButtons
+                DummyButton(key: "a", modifiers: .command) {
+                    await store.send(.selectAllButtonTapped)
+                }
+                DummyButton(key: .delete, modifiers: []) {
+                    await store.send(.deleteButtonTapped)
+                }
+                DummyButton(key: .delete, modifiers: .command) {
+                    await store.send(.clearButtonTapped)
+                }
             }
             .overlay(Rectangle())
             .opacity(0)
         }
-        .padding(.vertical, 8)
-        .frame(width: 80)
         .frame(maxHeight: .infinity, alignment: .top)
-        .background(Color(NSColor.controlBackgroundColor).opacity(0.8))
+        .padding(8)
+        .background(Color(nsColor: .controlBackgroundColor).opacity(0.8), in: .rect(cornerRadius: 8))
     }
 }
