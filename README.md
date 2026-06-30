@@ -4,7 +4,7 @@ Paint Tool for Desktop
 
 AppStore [Download](https://apps.apple.com/us/app/screennote/id1258500140)
 
-![image](screenshot.png)
+<img width="480" height="300" alt="Image" src="https://github.com/user-attachments/assets/1a3564e4-b19b-4aaf-a96f-e5b2210102db" />
 
 ## Requirements
 
