@@ -41,21 +41,13 @@ struct PanelServiceTests {
         #expect(requests.withLock(\.self) == expected)
     }
 
-    @Test(arguments: [
-        (true, ["close|triggerMethodPanel"]),
-        (false, [String]()),
-    ])
-    func hideTriggerMethodPanel_requests_close_only_when_enabled(
-        _ showsTriggerMethod: Bool,
-        _ expected: [String]
-    ) {
+    @Test func hideTriggerMethodPanel_requests_close_only_when_enabled() {
         let requests = AllocatedUnfairLock<[String]>(initialState: [])
         let service = makeService(
-            showsTriggerMethod: showsTriggerMethod,
             onRequest: { entry in requests.withLock { $0.append(entry) } }
         )
         service.hideTriggerMethodPanel()
-        #expect(requests.withLock(\.self) == expected)
+        #expect(requests.withLock(\.self) == ["close|triggerMethodPanel"])
     }
 
     @MainActor @Test(arguments: [

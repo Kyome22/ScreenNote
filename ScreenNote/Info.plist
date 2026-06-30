@@ -4,5 +4,7 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>SUBSCRIPTION_GROUP_ID</key>
+	<string>22198681</string>
 </dict>
 </plist>

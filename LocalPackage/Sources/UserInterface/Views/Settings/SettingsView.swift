@@ -26,8 +26,17 @@ struct SettingsView: View {
                     }
                 }
                 .tag(SettingsTabType.canvas)
+            DonationSettingsView(store: .init(appDependencies))
+                .tabItem {
+                    Label {
+                        Text("donationTab", bundle: .module)
+                    } icon: {
+                        Image(systemName: "mug")
+                    }
+                }
+                .tag(SettingsTabType.donation)
         }
-        .fixedSize(horizontal: true, vertical: false)
+        .fixedSize()
         .accessibilityIdentifier("Settings")
     }
 }

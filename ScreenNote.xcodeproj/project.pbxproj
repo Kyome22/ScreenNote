@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C85B3412FF3A42000C2CA98 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C85B3402FF3A42000C2CA98 /* StoreKit.framework */; };
 		1D72665DA73CBB5FF4E345D3 /* UnitTest.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 2F5EC76BC20720D85FFC4CBE /* UnitTest.xctestplan */; };
 		2E1DD8FF915C5C1CAC33C26A /* UserInterface in Frameworks */ = {isa = PBXBuildFile; productRef = A7FF690EE17E89589FC79C10 /* UserInterface */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2F5EC76BC20720D85FFC4CBE /* UnitTest.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UnitTest.xctestplan; sourceTree = "<group>"; };
 		1B4E232DAE55FB6AF50354B8 /* ScreenNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C85B3402FF3A42000C2CA98 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2F5EC76BC20720D85FFC4CBE /* UnitTest.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UnitTest.xctestplan; sourceTree = "<group>"; };
 		3D634CE2C0817E3C07CA7AD1 /* LocalPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalPackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -22,6 +24,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				ScreenNote.storekit,
 			);
 			target = 2C2B5A733290B2B3EC1EB980 /* ScreenNote */;
 		};
@@ -43,22 +46,12 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				2E1DD8FF915C5C1CAC33C26A /* UserInterface in Frameworks */,
+				1C85B3412FF3A42000C2CA98 /* StoreKit.framework in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D0F8B1BF6DDDA129ED748DD1 = {
-			isa = PBXGroup;
-			children = (
-				2F5EC76BC20720D85FFC4CBE /* UnitTest.xctestplan */,
-				3D634CE2C0817E3C07CA7AD1 /* LocalPackage */,
-				E694E0D34E3C392BF3F8EB03 /* ScreenNote */,
-				17559CB1753CEB3677163E40 /* Frameworks */,
-				0310F1E11637704D8C9F12AA /* Products */,
-			);
-			sourceTree = "<group>";
-		};
 		0310F1E11637704D8C9F12AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,8 +63,20 @@
 		17559CB1753CEB3677163E40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C85B3402FF3A42000C2CA98 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0F8B1BF6DDDA129ED748DD1 = {
+			isa = PBXGroup;
+			children = (
+				2F5EC76BC20720D85FFC4CBE /* UnitTest.xctestplan */,
+				3D634CE2C0817E3C07CA7AD1 /* LocalPackage */,
+				E694E0D34E3C392BF3F8EB03 /* ScreenNote */,
+				17559CB1753CEB3677163E40 /* Frameworks */,
+				0310F1E11637704D8C9F12AA /* Products */,
+			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -117,7 +122,9 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en, Base, ja,
+				en,
+				Base,
+				ja,
 			);
 			mainGroup = D0F8B1BF6DDDA129ED748DD1;
 			minimizedProjectReferenceProxies = 1;
@@ -149,6 +156,66 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		25615444011A3A4236020B8A /* Release configuration for PBXProject "ScreenNote" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VJ5N2X84K8;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
 		28709F7425B33DD8009C9C21 /* Debug configuration for PBXProject "ScreenNote" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -217,66 +284,6 @@
 			};
 			name = Debug;
 		};
-		25615444011A3A4236020B8A /* Release configuration for PBXProject "ScreenNote" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VJ5N2X84K8;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = Release;
-		};
 		61D807A105E8AE7DEC505935 /* Debug configuration for PBXNativeTarget "ScreenNote" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -303,7 +310,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenNote/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ScreenNote";
+				INFOPLIST_KEY_CFBundleDisplayName = ScreenNote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2026 Takuto Nakamura";
@@ -350,7 +357,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScreenNote/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "ScreenNote";
+				INFOPLIST_KEY_CFBundleDisplayName = ScreenNote;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2019-2026 Takuto Nakamura";
@@ -374,19 +381,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A6ECE07E6562221D421660A5 /* Build configuration list for PBXProject "ScreenNote" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				28709F7425B33DD8009C9C21 /* Debug configuration for PBXProject "ScreenNote" */,
-				25615444011A3A4236020B8A /* Release configuration for PBXProject "ScreenNote" */,
-			);
-			defaultConfigurationName = Release;
-		};
 		4AA75A8DFAE45B15E4622300 /* Build configuration list for PBXNativeTarget "ScreenNote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61D807A105E8AE7DEC505935 /* Debug configuration for PBXNativeTarget "ScreenNote" */,
 				DE6F16F84B36E6677AC3692F /* Release configuration for PBXNativeTarget "ScreenNote" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		A6ECE07E6562221D421660A5 /* Build configuration list for PBXProject "ScreenNote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28709F7425B33DD8009C9C21 /* Debug configuration for PBXProject "ScreenNote" */,
+				25615444011A3A4236020B8A /* Release configuration for PBXProject "ScreenNote" */,
 			);
 			defaultConfigurationName = Release;
 		};

@@ -44,6 +44,12 @@
             "state" : "new",
             "value" : "© 2019-2026 Takuto Nakamura"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2019-2026 Takuto Nakamura"
+          }
         }
       }
     }

@@ -209,6 +209,22 @@
         }
       }
     },
+    "continuousSupport" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuous Support"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "継続的なサポート"
+          }
+        }
+      }
+    },
     "defaultColor" : {
       "localizations" : {
         "en" : {
@@ -285,6 +301,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "削除: ⌫"
+          }
+        }
+      }
+    },
+    "donationDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ScreenNote provides all features for free to everyone.\nYou can support this project by offering hot cocoa."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ScreenNote はすべての機能を無償で提供しています。\nココアを贈ることでこのプロジェクトをサポートできます。"
+          }
+        }
+      }
+    },
+    "donationTab" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "寄付"
           }
         }
       }
@@ -625,6 +673,22 @@
         }
       }
     },
+    "lang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ja"
+          }
+        }
+      }
+    },
     "launch" : {
       "localizations" : {
         "en" : {
@@ -769,6 +833,22 @@
         }
       }
     },
+    "manageSubscription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage Subscriptions"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サブスクリプションを管理"
+          }
+        }
+      }
+    },
     "modifierKey" : {
       "localizations" : {
         "en" : {
@@ -781,6 +861,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修飾キー"
+          }
+        }
+      }
+    },
+    "oneTimeDonation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One-Time Donation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "１回限りの寄付"
           }
         }
       }
@@ -833,6 +929,22 @@
         }
       }
     },
+    "privacyPolicy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        }
+      }
+    },
     "reportAnIssue" : {
       "localizations" : {
         "en" : {
@@ -845,6 +957,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不具合の報告"
+          }
+        }
+      }
+    },
+    "restoreSubscription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Subscription"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サブスクリプションを復元"
           }
         }
       }
@@ -989,6 +1117,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ScreenNoteを終了"
+          }
+        }
+      }
+    },
+    "termsOfService" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Service"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約"
+          }
+        }
+      }
+    },
+    "thankYouDonation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your donation!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ご寄付ありがとうございます！"
+          }
+        }
+      }
+    },
+    "thankYouSupporting" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your kind support!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温かいご支援ありがとうございます！"
           }
         }
       }

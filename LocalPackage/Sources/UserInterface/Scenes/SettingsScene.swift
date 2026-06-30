@@ -7,5 +7,6 @@ public struct SettingsScene: Scene {
         Settings {
             SettingsView()
         }
+        .windowResizability(.contentSize)
     }
 }

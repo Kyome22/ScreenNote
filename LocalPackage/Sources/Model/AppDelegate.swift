@@ -14,6 +14,7 @@ public final class AppDelegate: NSObject, NSApplicationDelegate {
                 deviceName: DeviceModel.current()?.name ?? "Unknown",
                 systemVersion: ProcessInfo.systemVersion
             )
+            $0.subscriptionGroupID = Bundle.main.subscriptionGroupID
         }
         let logService = LogService(appDependencies)
         logService.bootstrap()

@@ -19,9 +19,7 @@ struct PanelService {
     }
 
     func hideTriggerMethodPanel() {
-        if userDefaultsRepository.showsTriggerMethod {
-            windowSceneMessengerClient.request(.close, .triggerMethodPanel)
-        }
+        windowSceneMessengerClient.request(.close, .triggerMethodPanel)
     }
 
     @MainActor

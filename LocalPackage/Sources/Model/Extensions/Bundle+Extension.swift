@@ -10,4 +10,5 @@ extension Bundle {
 
     var bundleDisplayName: String { bundleString(key: "CFBundleDisplayName") }
     var bundleVersion: String { bundleString(key: "CFBundleVersion") }
+    var subscriptionGroupID: String { bundleString(key: "SUBSCRIPTION_GROUP_ID") }
 }
