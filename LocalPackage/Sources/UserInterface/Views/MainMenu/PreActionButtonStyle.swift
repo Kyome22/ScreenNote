@@ -3,10 +3,6 @@ import SwiftUI
 struct PreActionButtonStyle: PrimitiveButtonStyle {
     var preAction: () async -> Void
 
-    init(preAction: @escaping () async -> Void) {
-        self.preAction = preAction
-    }
-
     func makeBody(configuration: Configuration) -> some View {
         Button(role: configuration.role) {
             Task {
