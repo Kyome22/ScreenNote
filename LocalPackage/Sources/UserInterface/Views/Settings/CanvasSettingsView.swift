@@ -63,7 +63,7 @@ struct CanvasSettingsView: View {
                     Text("defaultOpacity", bundle: .module)
                 } minimumValueLabel: {
                     Text(String(format: "%4.1f", store.defaultOpacity))
-                        .font(.system(.body, design: .monospaced))
+                        .monospaced()
                 } maximumValueLabel: {
                     Text(Image(systemName: "checkerboard.rectangle"))
                         .foregroundStyle(Color.primary.opacity(store.defaultOpacity))
@@ -78,7 +78,7 @@ struct CanvasSettingsView: View {
                         Text("defaultLineWidth", bundle: .module)
                     } minimumValueLabel: {
                         Text(String(format: "%4.1f", store.defaultLineWidth))
-                            .font(.system(.body, design: .monospaced))
+                            .monospaced()
                     } maximumValueLabel: {
                         Text(verbatim: "")
                             .foregroundStyle(.clear)
@@ -121,7 +121,7 @@ struct CanvasSettingsView: View {
                     Text("backgroundOpacity", bundle: .module)
                 } minimumValueLabel: {
                     Text(String(format: "%4.2f", store.backgroundOpacity))
-                        .font(.system(.body, design: .monospaced))
+                        .monospaced()
                 } maximumValueLabel: {
                     Text(Image(systemName: "checkerboard.rectangle"))
                         .foregroundStyle(Color.primary.opacity(store.backgroundOpacity))

@@ -42,7 +42,7 @@ struct ColorButton: View {
                 }
                 HStack(spacing: 8) {
                     Text(String(format: "%3.1f", opacity))
-                        .font(.system(.body, design: .monospaced))
+                        .monospaced()
                     Slider(
                         value: Binding<CGFloat>(
                             get: { opacity },

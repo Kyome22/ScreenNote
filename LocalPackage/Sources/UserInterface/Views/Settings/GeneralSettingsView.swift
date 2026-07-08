@@ -50,7 +50,7 @@ struct GeneralSettingsView: View {
                         .foregroundStyle(.clear)
                 } maximumValueLabel: {
                     Text("\(store.longPressDuration)s", bundle: .module)
-                        .font(.system(.body, design: .monospaced))
+                        .monospaced()
                 } onEditingChanged: { editing in
                     Task {
                         await store.send(.longPressDurationChanged(editing))
