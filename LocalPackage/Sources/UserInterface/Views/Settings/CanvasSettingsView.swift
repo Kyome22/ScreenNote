@@ -21,7 +21,7 @@ struct CanvasSettingsView: View {
                     Text("canvas", bundle: .module)
                 }
 
-                Picker(selection: Binding(
+                Picker(selection: Binding<ObjectType>(
                     get: { store.defaultObjectType },
                     asyncSet: { await store.send(.defaultObjectTypePickerSelected($0)) }
                 )) {

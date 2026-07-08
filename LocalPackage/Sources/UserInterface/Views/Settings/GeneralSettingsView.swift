@@ -9,7 +9,7 @@ struct GeneralSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Picker(selection: Binding(
+                Picker(selection: Binding<TriggerMethod>(
                     get: { store.triggerMethod },
                     asyncSet: { await store.send(.triggerMethodPickerSelected($0)) }
                 )) {
@@ -21,7 +21,7 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(.radioGroup)
 
-                Picker(selection: Binding(
+                Picker(selection: Binding<ModifierFlag>(
                     get: { store.modifierFlag },
                     asyncSet: { await store.send(.modifierFlagPickerSelected($0)) }
                 )) {
@@ -60,7 +60,7 @@ struct GeneralSettingsView: View {
             }
 
             Section {
-                Picker(selection: Binding(
+                Picker(selection: Binding<ToolBarPosition>(
                     get: { store.toolBarPosition },
                     asyncSet: { await store.send(.toolBarPositionPickerSelected($0)) }
                 )) {
