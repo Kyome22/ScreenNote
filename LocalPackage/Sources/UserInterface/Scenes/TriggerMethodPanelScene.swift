@@ -11,7 +11,7 @@ public struct TriggerMethodPanelScene: Scene {
     public var body: some Scene {
         WindowScene(isPresented: $isPresented, key: .triggerMethodPanel) { _ in
             TriggerMethodPanel(appDependencies) { triggerMethod, modifierFlag in
-                TriggerMethodView(triggerMethod: triggerMethod, modifierFlag: modifierFlag )
+                TriggerMethodView(triggerMethod: triggerMethod, modifierFlag: modifierFlag)
             }
         }
     }
