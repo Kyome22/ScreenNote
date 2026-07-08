@@ -29,7 +29,7 @@ struct SettingsView: View {
             DonationSettingsView(store: .init(appDependencies))
                 .tabItem {
                     Label {
-                        Text("donationTab", bundle: .module)
+                        Text("donation", bundle: .module)
                     } icon: {
                         Image(systemName: "mug")
                     }

@@ -44,7 +44,7 @@ struct MainMenuView: View {
                     await store.send(.quitButtonTapped)
                 }
             } label: {
-                Text("terminateApp", bundle: .module)
+                Text("quitApp", bundle: .module)
             }
         }
         .task {
