@@ -89,6 +89,15 @@ public struct UserDefaultsRepository: Sendable {
         migration()
     }
 
+    private func showAllData() {
+        guard let dict = userDefaultsClient.persistentDomain(Bundle.main.bundleIdentifier!) else {
+            return
+        }
+        for (key, value) in dict.sorted(by: { $0.0 < $1.0 }) {
+            Swift.print("\(key) => \(value)")
+        }
+    }
+
     private func migration() {
         if userDefaultsClient.object(.toggleMethod) != nil,
            let triggerMethod = TriggerMethod(rawValue: userDefaultsClient.integer(.toggleMethod)) {
@@ -102,15 +111,6 @@ public struct UserDefaultsRepository: Sendable {
         if userDefaultsClient.object(.longPressSeconds) != nil {
             longPressDuration = userDefaultsClient.double(.longPressSeconds)
             userDefaultsClient.removeObject(.longPressSeconds)
-        }
-    }
-
-    private func showAllData() {
-        guard let dict = userDefaultsClient.persistentDomain(Bundle.main.bundleIdentifier!) else {
-            return
-        }
-        for (key, value) in dict.sorted(by: { $0.0 < $1.0 }) {
-            Swift.print("\(key) => \(value)")
         }
     }
 }
