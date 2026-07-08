@@ -1,3 +1,4 @@
+import DataSource
 import Foundation
 
 extension URL {
@@ -12,4 +13,11 @@ extension URL {
     public static let manageSubscriptions = URL(
         string: "itms-apps://apps.apple.com/account/subscriptions"
     )!
+
+    public static func mail(to content: IssueReportContent) -> URL {
+        URL(string: "mailto:kyomesuke@icloud.com")!.appending(queryItems: [
+            .init(name: "subject", value: content.subject),
+            .init(name: "body", value: content.body)
+        ])
+    }
 }

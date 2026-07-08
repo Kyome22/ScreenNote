@@ -61,8 +61,7 @@ public final class MainMenu: Composable {
             nsAppClient.orderFrontStandardAboutPanel(nil)
 
         case let .reportIssueButtonTapped(content):
-            guard let url = content.mailtoURL else { return }
-            _ = nsWorkspaceClient.open(url)
+            _ = nsWorkspaceClient.open(URL.mail(to: content))
 
         case .quitButtonTapped:
             nsAppClient.terminate(nil)
@@ -77,19 +76,5 @@ public final class MainMenu: Composable {
         case aboutButtonTapped
         case reportIssueButtonTapped(IssueReportContent)
         case quitButtonTapped
-
-        public struct IssueReportContent: Sendable {
-            var subject: String
-            var body: String
-
-            var mailtoURL: URL? {
-                URL(string: "mailto:kyomesuke@icloud.com?subject=\(subject)&body=\(body)")
-            }
-
-            public init(subject: String, body: String) {
-                self.subject = subject
-                self.body = body
-            }
-        }
     }
 }
