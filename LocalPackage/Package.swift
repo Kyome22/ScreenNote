@@ -60,9 +60,6 @@ let package = Package(
                 "DataSource",
                 "Model",
             ],
-            resources: [
-                .process("Resources"),
-            ],
             swiftSettings: swiftSettings
         ),
         .testTarget(
